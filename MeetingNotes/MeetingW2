@@ -1,0 +1,49 @@
+Meeting date: 9/06/2022  14:30 - 16:00
+Meeting location: Microsoft Teams
+Meeting objective: Iteration 0 
+
+1. Watch intro video 
+https://www.youtube.com/watch?v=7HWpVtX4m6Q 
+ 
+2. Stub functions: 
+Adi - 1,2 
+Sean -  3,4 
+Eiman - 5,6
+Minjun - 7,8 
+Dong Fu - 9  
+
+Completed 1,2,3,4,5,6,7,8,9 
+Create the function that returns its argument names as a combined string 
+Write one function, push it, then merge it. Then do the second one because we need 9 merges 
+ 
+3. Develop data structure in data.md 
+* Users 
+* User {we need to decide what info is in here} 
+  {   
+    'uId': 7, 
+    'nameFirst': 'Cristiano', 
+    'nameLast': 'Ronaldo',
+    'email': 'crisronaldosui@gmail.com', 
+    'password': 'suiiiiiiiiii'
+    'handleStr': 'cristianoronaldo', 
+    'userRole': 'Admin', 
+    'isOnline': 'true',
+   }  
+* Channels 
+* Channel{same} 
+  { 
+ 
+  'channelId': 1,
+  'channelName: 'Discussion', 
+  'latestMsgStr': 'Hi!', 
+  'isPublic': 'false', 
+  'start' : 5, 
+  } 
+ 
+4. read the rubric 
+
+5. Decide on time for weekly Thursday evening meeting 
+ 
+ 
+ 
+
