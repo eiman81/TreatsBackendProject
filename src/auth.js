@@ -1,9 +1,13 @@
-// stub function for auth login V1
-function authLoginV1(email, password) {
-  return 'email' + 'password';
+function authRegisterV1(email, password, nameFirst, nameLast) {
+  return {
+    authUserId: 1,
+  }
 }
 
-// stub function for auth register V1
-function authRegisterV1(email, password, nameFirst, nameLast) {
-    return 'email' + 'password' + 'nameFirst' + 'nameLast';
+function authLoginV1(email, password) {
+  return {
+    authUserId: 1,
+  }
 }
+
+export { authLoginV1, authRegisterV1 };
