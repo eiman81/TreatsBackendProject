@@ -35,6 +35,13 @@ test('authRegisterV1: correct output for "ZERO 0"', () => {
   expect(authUserId).toBe('zero0');
 });
 
+test('authRegisterV1: correct output for "$mOney 0"', () => {
+  clear();
+  const a = authRegisterV1('money0@unsw.edu.au', '12345678', '$mOney', '$0');
+  const authUserId = a.authUserId;
+  expect(authUserId).toBe('money0');
+});
+
 test('authRegisterV1: error for email address not valid', () => {
   clear();
   const a = authRegisterV1('not$%valid@unsw.edu.au', 'notvalid123', 'not', 'valid');
