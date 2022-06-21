@@ -14,10 +14,10 @@ function channelsListV1(authUserId) {
 
 function channelsListallV1(authUserId) {
   let valid = 0;
-  for (const user of getData.users) {
+  for (const user of (getData()).users) {
     if (user.uId === authUserId) {
       valid = 1;
-      return getData.channels;
+      return (getData()).channels;
     }
   }
 

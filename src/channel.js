@@ -2,7 +2,7 @@ import { getData } from "./dataStore";
 
 function channelDetailsV1(authUserId, channelId) {
   let valid = 0;
-  for (const user of getData.users) {
+  for (const user of (getData()).users) {
     if (user.uId === authUserId) {
       valid = 1;
     }
@@ -12,7 +12,7 @@ function channelDetailsV1(authUserId, channelId) {
     return {error: 'error'};
   
   } else {
-    for (const channel of getData.channels) {
+    for (const channel of (getData()).channels) {
       if (channel.channelId === channelId) {
         if (channel.allMembers.includes(authUserId)) {
           let channeldetails = {
