@@ -44,7 +44,7 @@ test('authRegisterV1: correct output for "$mOney 0"', () => {
 
 test('authRegisterV1: error for email address not valid', () => {
   clear();
-  const a = authRegisterV1('not$%valid@unsw.edu.au', 'notvalid123', 'not', 'valid');
+  const a = authRegisterV1('not$%@valid@unsw.edu.au', 'notvalid123', 'not', 'valid');
   const authUserId = a.authUserId;
   expect(authUserId).toBe({ error: 'error' });
 });
