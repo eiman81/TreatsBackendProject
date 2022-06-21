@@ -38,6 +38,8 @@ Write one function, push it, then merge it. Then do the second one because we ne
   'latestMsgStr': 'Hi!', 
   'isPublic': 'false', 
   'start' : 5, 
+   ownerMembers: ,
+   allMembers:
   } 
  
 4. read the rubric 

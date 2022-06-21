@@ -6,9 +6,15 @@ function channelsCreateV1(authUserId, name, isPublic) {
   };
 }
 
-export function channelsListV1(authUserId) {
+function channelsListV1(authUserId) {
+  return {
+    channels: []
+  };
+}
+
+function channelsListallV1(authUserId) {
   let valid = 0;
-  for (const user of DataTransfer.user) {
+  for (const user of getData.users) {
     if (user.uId === authUserId) {
       valid = 1;
       return getData.channels;
@@ -19,12 +25,6 @@ export function channelsListV1(authUserId) {
     let emptyArray = [];
     return emptyArray;
   }
-}
-
-export function channelsListallV1(authUserId) {
-  return {
-    channels: [] // see interface for contents
-  };
 }
 
 export { channelsCreateV1, channelsListV1, channelsListallV1 };
