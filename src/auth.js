@@ -9,8 +9,8 @@ function authRegisterV1(email, password, nameFirst, nameLast) {
   } else if (nameFirst.length > 50 || nameFirst.length < 1 || nameLast.length > 50 || nameLast.length < 1) {
     return { error: 'error' };
   } else if (data.users !== null) {
-    for (let user in data.users) {
-      if (email === user.email) {
+    for (let i = 0; i < data.users.length; i++) {
+      if (email === data.users[i].email) {
         return { error: 'error' };
       }
     }
@@ -30,13 +30,13 @@ function authRegisterV1(email, password, nameFirst, nameLast) {
     }
   }
   let lowest = -995;
-  for (let user in data.users) {
-    if (user.uId <= lowest) {
-      lowest = user.uId;
+  for (let i = 0; i < data.users.length; i++) {
+    if (data.users[i].uId <= lowest) {
+      lowest = data.users[i].uId;
     }
   }
   const userId = lowest - 5;
-  data.users.push = {
+  data.users.push({
     uId: userId,
     nameFirst: nameFirst,
     nameLast: nameLast,
@@ -45,7 +45,7 @@ function authRegisterV1(email, password, nameFirst, nameLast) {
     username: handle,
     userRole: null,
     isOnline: null,
-  }
+  });
   setData(data);
   return {
     authUserId: userId,
