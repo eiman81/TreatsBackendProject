@@ -12,7 +12,7 @@ test('authRegisterV1: correct output for same name', () => {
   
   const a = authRegisterV1('another_cristiano@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
   const authUserId = a.authUserId;
-  expect(authUserId).toBe('cristianoronaldo');
+  expect(authUserId).toBe('cristianoronaldo0');
 });
 
 test('authRegisterV1: correct output for "Mohammed MayweatherJr"', () => {
