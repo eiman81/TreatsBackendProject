@@ -2,17 +2,15 @@ import { getData, setData } from './dataStore';
 
 function authRegisterV1(email, password, nameFirst, nameLast) {
   const data = getData();
-  let emailFormat = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
-  let validEmail = (email) => {regex.test(email)};
-  if (validEmail === false) {
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) === false) {
     return { error: 'error' };
   } else if (password.length < 6) {
     return { error: 'error' };
   } else if (nameFirst.length > 50 || nameFirst.length < 1 || nameLast.length > 50 || nameLast.length < 1) {
     return { error: 'error' };
   } else if (data.users !== null) {
-    for (existingEmail in data.users.email) {
-      if (email === existingEmail) {
+    for (let user in data.users) {
+      if (email === user.email) {
         return { error: 'error' };
       }
     }
@@ -32,21 +30,22 @@ function authRegisterV1(email, password, nameFirst, nameLast) {
     }
   }
   let lowest = -995;
-  for (const user in data.users) {
+  for (let user in data.users) {
     if (user.uId <= lowest) {
       lowest = user.uId;
     }
   }
+  const userId = lowest - 5;
   data.users.push = {
-    uId: lowest - 5,
+    uId: userId,
     nameFirst: nameFirst,
     nameLast: nameLast,
     email: email,
     password: password,
     username: handle,
     userRole: null,
+    isOnline: null,
   }
-  const userId = lowest - 5;
   setData(data);
   return {
     authUserId: userId,
