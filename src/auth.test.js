@@ -1,99 +1,93 @@
-import { clearV1, authRegisterV1 } from './auth';
-//import { clear } from './other';
+import { authRegisterV1 } from './auth';
+import { clearV1 } from './dataStore';
 
-test('authRegisterV1: correct output for "Cristiano Ronaldo"', () => {
-  
+test('authRegisterV1: correct output for 1st user', () => {
+  clearV1();
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
-  const authUserId = a.authUserId;
-  expect(authUserId).toBe('cristianoronaldo');
+  expect(a).toBe(-1000);
 });
 
-test('authRegisterV1: correct output for same name', () => {
-  
-  const a = authRegisterV1('another_cristiano@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
-  const authUserId = a.authUserId;
-  expect(authUserId).toBe('cristianoronaldo0');
-});
-
-test('authRegisterV1: correct output for "Mohammed MayweatherJr"', () => {
-  
-  const a = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr');
-  const authUserId = a.authUserId;
-  expect(authUserId).toBe('mohammedmayweatherjr');
-});
-
-test('authRegisterV1: correct output for "Guy Thathasareallylongname"', () => {
-  
-  const a = authRegisterV1('guy@unsw.edu.au', 'guywithlong', 'Guy', 'Thathasareallylongname');
-  const authUserId = a.authUserId;
-  expect(authUserId).toBe('guythathasareallylon');
-});
-
-test('authRegisterV1: correct output for "ZERO 0"', () => {
-  
-  const a = authRegisterV1('zero0@unsw.edu.au', '12345678', 'ZERO', '0');
-  const authUserId = a.authUserId;
-  expect(authUserId).toBe('zero0');
-});
-
-test('authRegisterV1: correct output for "$mOney 0"', () => {
-  
-  const a = authRegisterV1('money0@unsw.edu.au', '12345678', '$mOney', '$0');
-  const authUserId = a.authUserId;
-  expect(authUserId).toBe('money0');
+test('authRegisterV1: correct output for 4th user', () => {
+  clearV1();
+  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
+  const b = authRegisterV1('another_cristiano@unsw.edu.au', 'cristiano7', 'Cristiano', 'Ronaldo');
+  const c = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr');
+  const d = authRegisterV1('zero0@unsw.edu.au', '12345678', 'ZERO', '0');
+  expect(d).toBe(-1020);
 });
 
 test('authRegisterV1: error for email address not valid', () => {
-  
+  clearV1();
   const a = authRegisterV1('not$%@valid@unsw.edu.au', 'notvalid123', 'not', 'valid');
-  const authUserId = a.authUserId;
-  expect(authUserId).toBe({ error: 'error' });
+  expect(a).toBe({ error: 'error' });
 });
 
 test('authRegisterV1: error for email address already in use', () => {
-  
-  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', 'copycat123', 'Copy', 'cat');
-  const authUserId = a.authUserId;
-  expect(authUserId).toBe({ error: 'error' });
+  clearV1();
+  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
+  const b = authRegisterV1('cristiano.ronaldo@unsw.edu.au', 'copycat123', 'Copy', 'cat');
+  expect(b).toBe({ error: 'error' });
 });
 
-test('authRegisterV1: error for length of password', () => {
-  
+test('authRegisterV1: error for length of password', () => { 
+  clearV1();
   const a = authRegisterV1('john.newton0@unsw.edu.au', '123', 'John', 'Newton');
-  const authUserId = a.authUserId;
-  expect(authUserId).toBe({ error: 'error' });
+  expect(a).toBe({ error: 'error' });
 });
 
 test('authRegisterV1: error for length of first name (<1)', () => {
-  
+  clearV1();
   const a = authRegisterV1('smith@unsw.edu.au', 'smith1234', '', 'Smith');
-  const authUserId = a.authUserId;
-  expect(authUserId).toBe({ error: 'error' });
+  expect(a).toBe({ error: 'error' });
 });
 
 test('authRegisterV1: error for length of first name (>50)', () => {
-  
+  clearV1();
   const a = authRegisterV1('long.smith@unsw.edu.au', 'longsmith1234', 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz', 'Smith');
-  const authUserId = a.authUserId;
-  expect(authUserId).toBe({ error: 'error' });
+  expect(a).toBe({ error: 'error' });
 });
 
-
 test('authRegisterV1: error for length of last name (<1)', () => {
-  
+  clearV1();
   const a = authRegisterV1('jake@unsw.edu.au', 'jake1234', 'Jake', '');
-  const authUserId = a.authUserId;
-  expect(authUserId).toBe({ error: 'error' });
+  expect(a).toBe({ error: 'error' });
 });
 
 test('authRegisterV1: error for length of last name (>50)', () => {
-  
+  clearV1();
   const a = authRegisterV1('long.jake@unsw.edu.au', 'longjake1234', 'Jake', 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz');
-  const authUserId = a.authUserId;
-  expect(authUserId).toBe({ error: 'error' });
+  expect(a).toBe({ error: 'error' });
 });
 
 
+
+test('authRegisterV1: correct handle for "Mohammed MayweatherJr"', () => {
+  clearV1();
+  const a = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr');
+  const b = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
+  expect(userProfileV1(a, b).handle).toBe('cristianoronaldo');
+});
+
+test('authRegisterV1: correct handle for "Guy Thathasareallylongname"', () => { 
+  clearV1();
+  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
+  const b = authRegisterV1('guy@unsw.edu.au', 'guywithlong', 'Guy', 'Thathasareallylongname');
+  expect(userProfileV1(a, b).handle).toBe('guythathasareallylon');
+});
+
+test('authRegisterV1: correct handle for "ZERO 0"', () => {
+  clearV1();
+  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
+  const b = authRegisterV1('zero0@unsw.edu.au', '12345678', 'ZERO', '0');
+  expect(userProfileV1(a, b).handle).toBe('zero0');
+});
+
+test('authRegisterV1: correct handle for "$mOney 0"', () => {
+  clearV1();
+  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
+  const b = authRegisterV1('money0@unsw.edu.au', 'money123', '$mOney', '$0');
+  expect(userProfileV1(a, b).handle).toBe('money0');
+});
 
 
 
