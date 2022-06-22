@@ -1,11 +1,13 @@
+import { getData } from "./dataStore";
+
 function userProfileV1(authUserId, uId) {
-  return {
-    uId: 1, 
-    email: 'example@gmail.com',
-    nameFirst: 'Hayden', 
-    nameLast: 'Smith', 
-    handleStr: 'haydensmith'
+  let store = getData();
+  const userdata = store['user'][uId]
+  if (userdata === undefined) {
+    return {error: 'error'}
   }
+  
+  return {user: uId, user: email, user: nameFirst, user: nameLast};
 }
 
 export { userProfileV1 }
