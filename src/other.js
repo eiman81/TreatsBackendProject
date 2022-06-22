@@ -1,5 +1,9 @@
+import {getData, setData} from "./dataStore";
+
 function clearV1() {
-  return {};
+  let nodata = {};
+  setData(nodata);
+  return getData();
 }
 
 export { clearV1 };
