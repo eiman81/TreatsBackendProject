@@ -47,9 +47,7 @@ function authRegisterV1(email, password, nameFirst, nameLast) {
     isOnline: null,
   });
   setData(data);
-  return {
-    authUserId: userId,
-  }
+  return userId;
 }
 
 function authLoginV1(email, password) {
