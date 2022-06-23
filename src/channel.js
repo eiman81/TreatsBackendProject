@@ -8,6 +8,13 @@ function channelDetailsV1(authUserId, channelId) {
 }
 
 function channelJoinV1(authUserId, channelId) {
+  //check if user id is valid
+  
+  //check if channel id is valid
+
+  //check if user is already in channel
+
+  //add user to channel
   return {};
 }
 
