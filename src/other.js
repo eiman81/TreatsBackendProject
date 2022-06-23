@@ -5,9 +5,7 @@ function clearV1() {
     users: [],
     channels: [],
   };
-  
   setData(nodata);
-  return getData();
 }
 
 export { clearV1 };
