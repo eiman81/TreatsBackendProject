@@ -1,4 +1,5 @@
 import { authRegisterV1, authLoginV1 } from './auth';
+import { userProfileV1 } from './users'
 import { clearV1 } from './other';
 
 test('authRegisterV1: correct output for 1st user', () => {
@@ -63,28 +64,28 @@ test('authRegisterV1: correct handle for "Mohammed MayweatherJr"', () => {
   clearV1();  
   const a = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr');
   const b = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
-  expect(userProfileV1(a, b).handle).toStrictEqual('cristianoronaldo');
+  expect(userProfileV1(a, b).username).toStrictEqual('cristianoronaldo');
 });
 
 test('authRegisterV1: correct handle for "Guy Thathasareallylongname"', () => { 
   clearV1();  
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
   const b = authRegisterV1('guy@unsw.edu.au', 'guywithlong', 'Guy', 'Thathasareallylongname');
-  expect(userProfileV1(a, b).handle).toStrictEqual('guythathasareallylon');
+  expect(userProfileV1(a, b).username).toStrictEqual('guythathasareallylon');
 });
 
 test('authRegisterV1: correct handle for "ZERO 0"', () => {
   clearV1();  
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
   const b = authRegisterV1('zero0@unsw.edu.au', '12345678', 'ZERO', '0');
-  expect(userProfileV1(a, b).handle).toStrictEqual('zero0');
+  expect(userProfileV1(a, b).username).toStrictEqual('zero0');
 });
 
 test('authRegisterV1: correct handle for "$mOney 0"', () => {
   clearV1(); 
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
   const b = authRegisterV1('money0@unsw.edu.au', 'money123', '$mOney', '$0');
-  expect(userProfileV1(a, b).handle).toStrictEqual('money0');
+  expect(userProfileV1(a, b).username).toStrictEqual('money0');
 });
 
 
