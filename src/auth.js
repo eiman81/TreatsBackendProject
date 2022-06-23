@@ -54,7 +54,7 @@ function authRegisterV1(email, password, nameFirst, nameLast) {
 
 function authLoginV1(email, password) {
   return {
-    authUserId: 1;
+    authUserId: 1,
   }
 }
 
