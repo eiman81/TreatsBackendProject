@@ -29,6 +29,10 @@ test('Clear test', ()=> {
         channels: channel
     }
     setData(data);
-    let nodata = {};
+    let nodata = {
+        users: [],
+        channels: []
+    };
+    
     expect(clearV1()).toStrictEqual(nodata);
 });
