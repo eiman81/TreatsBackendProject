@@ -1,4 +1,4 @@
-import { setData } from "./dataStore.js";
+import { getData, setData } from "./dataStore.js";
 import { clearV1 } from './other.js';
 
 test('Clear test', ()=> {
@@ -33,6 +33,6 @@ test('Clear test', ()=> {
         users: [],
         channels: []
     };
-    
-    expect(clearV1()).toStrictEqual(nodata);
+    clearV1();
+    expect(getData()).toStrictEqual(nodata); 
 });
