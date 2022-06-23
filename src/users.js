@@ -1,11 +1,14 @@
+import { getData } from "./dataStore";
+
 function userProfileV1(authUserId, uId) {
-  return {
-    uId: 1, 
-    email: 'example@gmail.com',
-    nameFirst: 'Hayden', 
-    nameLast: 'Smith', 
-    handleStr: 'haydensmith'
+  const data = getData();
+  for (let i = 0; i < data.users.length; i++) {
+    if (data.users[i].uId === uId) {
+      return data.users[i];
+    }
   }
+  return {error: 'error'}; 
 }
 
 export { userProfileV1 }
+

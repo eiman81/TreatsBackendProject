@@ -16,12 +16,10 @@ function authRegisterV1(email, password, nameFirst, nameLast) {
     }
   }
   let handle = '';
-  handle = '${nameFirst} ${nameLast}';
-  handle = handle.replace(/[^a-zA-Z0-9 ]/g, '');
-  handle.toLowerCase();
-  if (handle > 20) {
-    handle = handle.slice(0,20);
-  }
+  handle = nameFirst + nameLast;
+  handle = handle.toLowerCase();
+  handle = handle.replace(/[^a-zA-Z0-9 ]/g, '');  
+  handle = handle.slice(0,20);
   let i = 0;
   for (const user in data.users) {
     if (handle === user.username) {
