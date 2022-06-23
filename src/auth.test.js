@@ -4,7 +4,7 @@ import { clearV1 } from './other';
 test('authRegisterV1: correct output for 1st user', () => {
   clearV1();
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
-  expect(a).toStrictEqual({authUserId: -1000});
+  expect(a).toStrictEqual(-1000);
 });
 
 test('authRegisterV1: correct output for 4th user', () => {
@@ -13,7 +13,7 @@ test('authRegisterV1: correct output for 4th user', () => {
   const b = authRegisterV1('another_cristiano@unsw.edu.au', 'cristiano7', 'Cristiano', 'Ronaldo');
   const c = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr');
   const d = authRegisterV1('zero0@unsw.edu.au', '12345678', 'ZERO', '0');
-  expect(d).toStrictEqual({authUserId: -1015});
+  expect(d).toStrictEqual(-1015);
 });
 
 test('authRegisterV1: error for email address not valid', () => {
