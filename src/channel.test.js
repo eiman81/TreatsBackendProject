@@ -1,8 +1,8 @@
 //tests for channelJOin
 /*
-invalid user invalid channel 
+invalid user invalid channel X
 
-valid user invalid channel
+valid user invalid channel X
 
 invalid user valid channel X
 
@@ -10,9 +10,9 @@ valid user valid channel X
 
 
 
-user already in channel
+user already in channel X
 
-user not in channel
+user not in channel X
 
 
 user without PermissionStatus, private channel
@@ -61,7 +61,7 @@ const validchannel = {
     channelId: count,
     channelName: 'Discussion',
     latestMsg: 'Hi Everyone!',
-    isPublic: 'false',
+    isPublic: 'true',
     password: null,//'comp1531' //empty if 'isPublic' is true
     ownerMembers: [validuser1],
     allMembers: [validuser1],
@@ -84,7 +84,7 @@ const invaliduser = {
     channelId: 7890,
     channelName: 'Argument',
     latestMsg: 'Shut Up!!',
-    isPublic: 'false',
+    isPublic: 'true',
     password: null,//'comp1531' //empty if 'isPublic' is true
     ownerMembers: [],
     allMembers: [],
@@ -125,4 +125,10 @@ test('channelJoinV1: invalid user, invalid channel', () => {
     expect(result).toBe({error: 'error'});
   });
 
-
+test('channelJoinV1: authorised user already a member of channel', () => {
+    clearV1();
+    
+    let result = channelJoinV1(validuser1.uId, validchannel.channelId)
+    
+    expect(result).toBe({error: 'error'});
+  });
