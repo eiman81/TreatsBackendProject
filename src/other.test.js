@@ -34,5 +34,5 @@ test('Clear test', ()=> {
         channels: []
     };
     clearV1();
-    expect(getData()).toStrictEqual(nodata);
+    expect(getData()).toStrictEqual(nodata); 
 });
