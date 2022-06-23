@@ -1,5 +1,5 @@
 import { authRegisterV1, authLoginV1 } from './auth';
-import { clearV1 } from './dataStore';
+import { clearV1 } from './other';
 
 test('authRegisterV1: correct output for 1st user', () => {
   clearV1();
@@ -86,7 +86,6 @@ test('authRegisterV1: correct handle for "$mOney 0"', () => {
   const b = authRegisterV1('money0@unsw.edu.au', 'money123', '$mOney', '$0');
   expect(userProfileV1(a, b).handle).toStrictEqual('money0');
 });
-
 
 
 
