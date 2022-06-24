@@ -88,5 +88,24 @@ test('authRegisterV1: correct handle for "$mOney 0"', () => {
   expect(userProfileV1(a, b).username).toStrictEqual('money0');
 });
 
+test('authLoginV1: correct input', () => {
+  clearV1();
+  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
+  const b = authLoginV1('cristiano.ronaldo@unsw.edu.au', '123456');
+  expect(b).toStrictEqual(a);
+});
 
+test('authLoginV1: error for wrong email', () => {
+  clearV1();
+  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
+  const b = authLoginV1('cristianoronaldo0@unsw.edu.au', '123456');
+  expect(b).toStrictEqual({ error: 'error' });
+});
+
+test('authLoginV1: error for wrong password', () => {
+  clearV1();
+  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
+  const b = authLoginV1('cristiano.ronaldo@unsw.edu.au', '123456789');
+  expect(b).toStrictEqual({ error: 'error' });
+});
 
