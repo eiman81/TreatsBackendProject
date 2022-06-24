@@ -1,5 +1,11 @@
+import { setData} from "./dataStore";
+
 function clearV1() {
-  return {};
+  let nodata = {
+    users: [],
+    channels: [],
+  };
+  setData(nodata);
 }
 
-export { clearV1 };
+export { clearV1 }; 
