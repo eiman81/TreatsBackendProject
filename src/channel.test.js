@@ -24,7 +24,8 @@ user with PermissionStatus, private channel
 */
 
 import { getData, setData } from "./dataStore.js";
-import { channelInviteV1, channelJoinV1, channelsCreateV1 } from './channel';
+import { channelInviteV1, channelJoinV1 } from './channel';
+import { channelsCreateV1 } from './channels'
 import { authRegisterV1 } from './auth';
 import { clearV1 } from './other';
 /*
@@ -116,7 +117,9 @@ let channels = store.channels
 
 const validuser1 = authRegisterV1('another_cristiano@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
 const validuser2 = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr');
-
+const validchannel = channelsCreateV1(validuser1, 'Discussion', true)
+const privatechannel = channelsCreateV1(validuser2, 'Discussion', false)
+/*
 const validchannel = {
     channelId: 3,
     channelName: 'Discussion',
@@ -126,7 +129,7 @@ const validchannel = {
     ownerMembers: [validuser1],
     allMembers: [validuser1],
 }
-
+*/
 
 //create invalid users
 const invaliduser = {
@@ -149,7 +152,7 @@ const invaliduser = {
     ownerMembers: [],
     allMembers: [],
 }
-
+/*
 const privatechannel = {
     channelId: 4,
     channelName: 'floyds priv channel',
@@ -159,7 +162,7 @@ const privatechannel = {
     ownerMembers: [validuser2],
     allMembers: [validuser2],
 }
-
+*/
 
 let data = {
     users: [validuser1, validuser2],
@@ -167,8 +170,8 @@ let data = {
 }
 setData(data);
 
-const cases = [[validuser2, validchannel.channelId, {}], 
-               [invaliduser.uId, validchannel.channelId, {error: 'error'}], 
+const cases = [[validuser2, validchannel, {}], 
+               [invaliduser.uId, validchannel, {error: 'error'}], 
                [validuser2, invalidchannel.channelId, {error: 'error'}], 
                [invaliduser.uId, invalidchannel.channelId,{error: 'error'}]];
 
@@ -182,7 +185,11 @@ describe("'channelJoinV1' utility", () => {
   );
 });
 
-
+data = {
+    users: [validuser1, validuser2],
+    channels: [validchannel, privatechannel],
+}
+setData(data);
 
 test('channelJoinV1: authorised user already a member of channel', () => {
     clearV1();
