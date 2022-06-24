@@ -22,10 +22,6 @@ let channel = {
    ownerMemebers: [authid],
    allMembers: [authid]
 }
-let getData = {
-    users: [{uId: authid}, {uId: authid2}],
-    channels: [channel]
-}
 
 let channeldetails = {
     name: channel.channelName,
