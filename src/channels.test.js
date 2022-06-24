@@ -7,7 +7,7 @@ test('ChannelsListallV1 userId not found', ()=> {
     const authid = authRegisterV1('sean@gmail.com', '2737', 'Sean', 'OConnor');
     const authid1 = -1005;
     channelsCreateV1(authid, 'first', true);
-    expect(channelsListallV1(authid1)).toBe([]);
+    expect(channelsListallV1(authid1)).toStrictEqual([]);
 })
 
 test('ChannelsListallV1 userId invalid', ()=> {
@@ -15,12 +15,12 @@ test('ChannelsListallV1 userId invalid', ()=> {
     const authid = authRegisterV1('sean@gmail.com', '2737', 'Sean', 'OConnor');
     const authid1 = -1005;
     channelsCreateV1(authid, 'first', true);
-    expect(channelsListallV1(authid1)).toBe([]);
+    expect(channelsListallV1(authid1)).toStrictEqual([]);
 })
 
 test('ChannelsListallV1 working', ()=> {
     clearV1();
-    const authid = authRegisterV1('sean@gmail.com', '2737', 'Sean', 'OConnor');
+    const authid = authRegisterV1('sean@gmail.com', '27334ff7', 'Sean', 'OConnor');
     const channel = channelsCreateV1(authid, 'first', true);
     let list = [ 
         {
@@ -33,6 +33,5 @@ test('ChannelsListallV1 working', ()=> {
             allMembers: [authid]
         }
     ];
-
-    expect(channelsListallV1(authid)).toBe(list);
+    expect(channelsListallV1(authid)).toStrictEqual(list);
 })

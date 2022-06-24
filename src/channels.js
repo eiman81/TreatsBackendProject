@@ -17,7 +17,8 @@ function channelsListallV1(authUserId) {
   for (const user of (getData()).users) {
     if (user.uId === authUserId) {
       valid = 1;
-      return (getData()).channels;
+      let channels = getData().channels
+      return channels;
     }
   }
 
