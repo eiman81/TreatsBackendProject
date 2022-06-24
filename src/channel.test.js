@@ -2,9 +2,6 @@ import {channelsCreateV1} from './channels.js';
 import {authRegisterV1} from './auth.js';
 import { channelDetailsV1 } from './channel.js';
 import { clearV1 } from './other.js'
-import { getData } from "./dataStore";
-
-
 
 test('ChannelDetail error both invalid codes', ()=> {
     clearV1();
