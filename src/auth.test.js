@@ -67,6 +67,14 @@ test('authRegisterV1: correct handle for "Mohammed MayweatherJr"', () => {
   expect(userProfileV1(a, b).username).toStrictEqual('cristianoronaldo');
 });
 
+test('authRegisterV1: correct handle for same name', () => {
+  clearV1();  
+  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '1234567', 'Cristiano', 'Ronaldo');
+  const b = authRegisterV1('cristiano.ronaldo0@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
+  const c = authRegisterV1('cristiano.ronaldo1@unsw.edu.au', '1234567', 'Cristiano', 'Ronaldo');
+  expect(userProfileV1(a, c).username).toStrictEqual('cristianoronaldo1');
+});
+
 test('authRegisterV1: correct handle for "Guy Thathasareallylongname"', () => { 
   clearV1();  
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
