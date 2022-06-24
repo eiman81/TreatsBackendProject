@@ -6,7 +6,7 @@ test('ChannelsListallV1 userId not found', ()=> {
     clearV1();
     const authid = authRegisterV1('sean@gmail.com', '2737', 'Sean', 'OConnor');
     const authid1 = -1005;
-    const channel = channelsCreateV1(authid, 'first', true);
+    channelsCreateV1(authid, 'first', true);
     expect(channelsListallV1(authid1)).toBe([]);
 })
 
@@ -14,7 +14,7 @@ test('ChannelsListallV1 userId invalid', ()=> {
     clearV1();
     const authid = authRegisterV1('sean@gmail.com', '2737', 'Sean', 'OConnor');
     const authid1 = -1005;
-    const channel = channelsCreateV1(authid, 'first', true);
+    channelsCreateV1(authid, 'first', true);
     expect(channelsListallV1(authid1)).toBe([]);
 })
 
