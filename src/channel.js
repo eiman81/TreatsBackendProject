@@ -1,34 +1,12 @@
 import { getData, setData } from "./dataStore.js";
 import { userProfileV1 } from "./users";
 function channelDetailsV1(authUserId, channelId) {
-  let valid = 0;
-  for (const user of (getData()).users) {
-    if (user.uId === authUserId) {
-      valid = 1;
-    }
-  }
-
-  if (valid === 0) {
-    return {error: 'error'};
-  
-  } else {
-    for (const channel of (getData()).channels) {
-      if (channel.channelId === channelId) {
-        if (channel.allMembers.includes(authUserId)) {
-          let channeldetails = {
-            name: channel.channelName,
-            isPublic: channel.isPublic,
-            ownerMembers: channel.ownerMembers,
-            allMembers: channel.allMembers
-          }
-          return channeldetails;
-          
-        } else {
-          return {error: 'error'};
-        }
-      }
-    } 
-  }
+  return {
+    name: 'secret candy crush team', 
+    isPublic: true,
+    ownerMembers: [],
+    allMembers: [],
+  };
 }
 
 
