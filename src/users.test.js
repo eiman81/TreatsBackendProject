@@ -1,6 +1,6 @@
-import { userProfileV1 } from './users';
-import { authRegisterV1 } from './auth';
-import { clearV1 } from './other';
+import { userProfileV1 } from './users.js';
+import { authRegisterV1 } from './auth.js';
+import { clearV1 } from './other.js';
 
 test('Test 1: successful userProfileV1', () => {
   clearV1();

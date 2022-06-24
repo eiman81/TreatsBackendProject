@@ -1,4 +1,4 @@
-import { getData, setData } from './dataStore';
+import { getData, setData } from './dataStore.js';
 
 function authRegisterV1(email, password, nameFirst, nameLast) {
   const data = getData();
@@ -20,12 +20,14 @@ function authRegisterV1(email, password, nameFirst, nameLast) {
   handle = handle.toLowerCase();
   handle = handle.replace(/[^a-zA-Z0-9 ]/g, '');  
   handle = handle.slice(0,20);
-  let i = 0;
-  for (const user in data.users) {
-    if (handle === user.username) {
-      i++;
-      handle = handle + i.toString();
+  let count = 0;
+  for (let i = 0; i < data.users.length; i++) {
+    if (handle === data.users[i].username.slice(0, handle.length)) {
+      count++;
     }
+  }
+  if (count > 0) {
+    handle = handle + (count - 1).toString();
   }
   let lowest = -995;
   for (let i = 0; i < data.users.length; i++) {
