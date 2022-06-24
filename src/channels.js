@@ -47,6 +47,7 @@ function channelsCreateV1(authUserId, name, isPublic) {
     'isPublic': isPublic,
     'ownerMembers' : [authUserId],
     'allMembers': [authUserId],
+    'numberOfMessages': null,
   });
   
   setData(data);
