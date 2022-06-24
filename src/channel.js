@@ -12,9 +12,10 @@ function channelDetailsV1(authUserId, channelId) {
     return {error: 'error'};
   
   } else {
-    for (const channel of (getData()).channels) {
-      if (channel.channelId === channelId) {
-        if (channel.allMembers.includes(authUserId)) {
+    for (const channel of (getData().channels)) {
+      if (channel.channelId === channelId) {  
+        let members = channel.allMembers;
+        if (members.includes(authUserId)) {
           let channeldetails = {
             name: channel.channelName,
             isPublic: channel.isPublic,
