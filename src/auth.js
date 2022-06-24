@@ -90,8 +90,23 @@ Error   -Occurs when
 Return Value:
     Returns <authUserId> on <all test pass>
 */ 
-  return {
-    authUserId: 1,
+  const data = getData();
+  let validEmail = false;
+  let found = 0;
+  for (let i = 0; i < data.users.length; i++) {
+    if (email === data.users[i].email) {
+      found = i;
+      validEmail = true;
+    }
+  }
+  if (validEmail === false) {
+    return { error: 'error' };
+  } else {
+    if (password != data.users[found].password) {
+      return { error: 'error' };
+    } else {
+      return data.users[found].uId;
+    }
   }
 }
 

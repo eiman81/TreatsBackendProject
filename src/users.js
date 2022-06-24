@@ -15,24 +15,15 @@ Error   -Occurs when
 Return Value:
     Returns <user> on <all test pass>
 */       
-  let valid = 0;
-  for (const user of (getData()).users) {
-    if (user.uId === authUserId) {
-      valid = 1;
-      let profile = {
-        uId: userId,
-        email: email,
-        nameFirst: nameFirst,
-        nameLast: nameLast,
-        username: handle,
-      }
-      return profile;
+  const data = getData();
+  for (let i = 0; i < data.users.length; i++) {
+    if (data.users[i].uId === uId) {
+      return data.users[i];
     }
   }
-  if (valid = 0) {
-    return {error: 'error'}; 
-  }
+  return {error: 'error'}; 
 }
+
 
 
 export { userProfileV1 }
