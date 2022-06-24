@@ -1,6 +1,6 @@
 import {channelsCreateV1, channelsListallV1} from './channels';
 import {authRegisterV1} from './auth';
-import {clearV1} from './dataStore'
+import {clearV1} from './other.js';
 
 test('ChannelsListallV1 userId not found', ()=> {
     clearV1();
