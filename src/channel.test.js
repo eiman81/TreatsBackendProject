@@ -24,7 +24,7 @@ user with PermissionStatus, private channel
 */
 
 import { getData, setData } from "./dataStore.js";
-import { channelInviteV1, channelJoinV1, channelDetailsV1 } from './channel';
+import { channelInviteV1, channelJoinV1, channelDetailsV1 } from './channel.js';
 import { channelsCreateV1 } from './channels.js'
 import { authRegisterV1 } from './auth.js';
 import { clearV1 } from './other.js';
