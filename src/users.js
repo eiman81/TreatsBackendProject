@@ -14,11 +14,7 @@ Error   -Occurs when
 
 Return Value:
     Returns <user> on <all test pass>
-<<<<<<< HEAD
-*/       
-=======
 */  
->>>>>>> master
   const data = getData();
   for (let i = 0; i < data.users.length; i++) {
     if (data.users[i].uId === uId) {
@@ -28,11 +24,4 @@ Return Value:
   return {error: 'error'}; 
 }
 
-<<<<<<< HEAD
-
-
 export { userProfileV1 }
-=======
-export { userProfileV1 }
-
->>>>>>> master
