@@ -1,0 +1,40 @@
+*/
+
+Assigned each member 2 functions to work on and there associated tests
+
+Minjun - authLoginV1, authRegisterV1, userProfileV1
+Eiman - channelsCreateV1, channelsListV1
+Sean - channelsListallV1, channelDetailsV1, clearV1
+Ady - channelJoinV1, channelInviteV1
+Dongfu - channelMessagesV1, userProfileV1
+
+15/6/22:
+- As most people preferred facebook messenger rather than Microsoft teams, we decided
+to communicate mostly through facebook messenger. 
+- If anyone had difficulty with issues, they should text the chat
+- As a team, we went through the specifications of iteration 1 thoroughly in person.
+Any confusion about specs, we asked our lab tutor and posted on the forum.
+
+16/6/22:
+- we started thinking and writing basic tests for our assigned functions.
+- we discussed the best way to merge our code into master, which was:
+    To merge to master the person doing the next round of functions will approve 
+    the request.
+
+22/6/22:
+- most of us got our tests finalised, we started our implementation of the code.
+
+24/6/22:
+- finalising everything before submittion.
+- recollecting all assumptions we made and choosing the best ones to add to our 
+  assumptions
+
+
+- Also, throughout this iteration, we made sure everyone follows the format 
+created in Week 2.
+- We took close care in pulling from master everything we edit our branches so that
+  the master doesn't get messy.
+
+*/
+
+

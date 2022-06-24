@@ -1,4 +1,4 @@
-import {getData, setData} from "./dataStore";
+import { setData} from "./dataStore.js";
 
 function clearV1() {
 /*
@@ -10,7 +10,8 @@ Exceptions:
 
 Return Value:
     Returns <{}> on <all test pass>
-*/       
+*/     
+
   let nodata = {
     users: [],
     channels: [],

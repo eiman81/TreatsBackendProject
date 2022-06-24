@@ -31,13 +31,15 @@ Write one function, push it, then merge it. Then do the second one because we ne
    }  
 * Channels 
 * Channel{same} 
-  { 
+  
  
   'channelId': 1,
   'channelName: 'Discussion', 
   'latestMsgStr': 'Hi!', 
   'isPublic': 'false', 
   'start' : 5, 
+  'ownerMembers': [],
+  'allMembers': []
   } 
  
 4. read the rubric 

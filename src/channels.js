@@ -1,3 +1,5 @@
+import { getData, setData } from "./dataStore.js";
+
 function channelsCreateV1(authUserId, name, isPublic) {
 /*
 < Given a authUserId, the channel name and choose whether it is public, creates a new channel with the given name. 
@@ -16,16 +18,13 @@ Return Value:
     Returns <channelId> on <all test pass>
 */     
   const data = getData();
-    
   if (isPublic !== false && isPublic !== true) {
     return { error: 'error' };
   }
-
+  
   if (name.length < 1 || name.length > 20) {
     return { error: 'error' };
   }
-
-
   let idMatched = false;
   for (let i = 0; i < data.users.length; i++) {
     if (authUserId === data.users[i].uId) {
@@ -36,7 +35,6 @@ Return Value:
   if (idMatched === false) {
     return { error: 'error' };
   }
-
   let i = 0;
   for (const channels in data.channels) {
     if (name === channels.channelId) {
@@ -53,7 +51,6 @@ Return Value:
     }
   }
   let channelId = highest + 5;
-
   data.channels.push({
     'channelId': channelId,
     'channelName': name,
@@ -62,7 +59,6 @@ Return Value:
     'ownerMembers' : [authUserId],
     'allMembers': [authUserId],
   });
-
   setData(data);
   return highest + 5;
 }
@@ -81,7 +77,7 @@ Return Value:
     Returns <channels> on <all test pass>
 */       
   return {
-    channels: [] // see interface for contents
+    channels: []
   };
 }
 
@@ -97,7 +93,7 @@ Error   -Occurs when
 
 Return Value:
     Returns <channels> on <all test pass>
-*/       
+*/     
   let valid = 0;
   for (const user of (getData()).users) {
     if (user.uId === authUserId) {
