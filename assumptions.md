@@ -26,3 +26,8 @@ the data object itself. This meant that clear wouldn't delete the users and chan
 in data object. This assumption was made as if clear deleted the keys, everytime a user
 or channel is created, we would need to create the keys users and channels to input
 data about the user or channel. This would be not very good code.
+
+6. An assumption made for channelsListV1 function is that if a userid has been entered which 
+doesn't match with any user, the function returns an error, as if it didn't and just entered an 
+empty array, the user would just think that they aren't part of any channels even though that's 
+not the case, and they just provided a wrong id.
