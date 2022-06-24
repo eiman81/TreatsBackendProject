@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { getData, setData } from './dataStore';
-=======
 import { getData, setData } from './dataStore.js';
->>>>>>> master
 
 function authRegisterV1(email, password, nameFirst, nameLast) {
 /*
