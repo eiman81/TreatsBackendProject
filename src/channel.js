@@ -22,9 +22,9 @@ function channelJoinV1(authUserId, channelId) {
       return {error: 'error'}
     } else{
       //add user to channel
-      
       users = store.channels.allMembers
-      users.push("val")
+      users.push(userProfileV1(null,authUserId))
+      return {}
     }
   } else {
     return {error: 'error'}
@@ -32,15 +32,12 @@ function channelJoinV1(authUserId, channelId) {
 }
 
 
-
-
 function channelInviteV1(authUserId, channelId, uId) {
-  if (authUserId in getData().users()){
+  if (authUserId in getData().users && authUserId in channelDetailsV1(authUserId, channelId).allMembers){
     channelJoinV1(uId,channelId);
   } else {
-    return {};
+    return {error:'error'};
   }
-  
 }
 
 function channelMessagesV1(authUserId, channelId, start) {
