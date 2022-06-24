@@ -1,5 +1,6 @@
 import { getData, setData } from "./dataStore.js";
 import { userProfileV1 } from "./users";
+
 function channelDetailsV1(authUserId, channelId) {
   let valid = 0;
   for (const user of (getData()).users) {
@@ -12,9 +13,10 @@ function channelDetailsV1(authUserId, channelId) {
     return {error: 'error'};
   
   } else {
-    for (const channel of (getData()).channels) {
-      if (channel.channelId === channelId) {
-        if (channel.allMembers.includes(authUserId)) {
+    for (const channel of (getData().channels)) {
+      if (channel.channelId === channelId) {  
+        let members = channel.allMembers;
+        if (members.includes(authUserId)) {
           let channeldetails = {
             name: channel.channelName,
             isPublic: channel.isPublic,
@@ -30,6 +32,7 @@ function channelDetailsV1(authUserId, channelId) {
     } 
   }
 }
+
 
 
 function channelJoinV1(authUserId, channelId) {

@@ -1,6 +1,40 @@
-import {channelsCreateV1, channelsListallV1} from './channels.js';
-import {authRegisterV1} from './auth.js';
+import {channelsCreateV1, channelsListallV1} from './channels';
+import {authRegisterV1} from './auth';
 import {clearV1} from './other.js';
+
+test('ChannelsListallV1 userId not found', ()=> {
+    clearV1();
+    const authid = authRegisterV1('sean@gmail.com', '2737', 'Sean', 'OConnor');
+    const authid1 = -1005;
+    channelsCreateV1(authid, 'first', true);
+    expect(channelsListallV1(authid1)).toStrictEqual([]);
+})
+
+test('ChannelsListallV1 userId invalid', ()=> {
+    clearV1();
+    const authid = authRegisterV1('sean@gmail.com', '2737', 'Sean', 'OConnor');
+    const authid1 = -1005;
+    channelsCreateV1(authid, 'first', true);
+    expect(channelsListallV1(authid1)).toStrictEqual([]);
+})
+
+test('ChannelsListallV1 working', ()=> {
+    clearV1();
+    const authid = authRegisterV1('sean@gmail.com', '27334ff7', 'Sean', 'OConnor');
+    const channel = channelsCreateV1(authid, 'first', true);
+    let list = [ 
+        {
+            channelId: channel,
+            channelName: 'first',
+            latestMsg: null,
+            isPublic: true,
+        //  start: 5,
+            ownerMembers: [authid],
+            allMembers: [authid]
+        }
+    ];
+    expect(channelsListallV1(authid)).toStrictEqual(list);
+});
 
 test('channelsCreateV1: error for name less than 1 character', () => {
   clearV1();
