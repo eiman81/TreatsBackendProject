@@ -35,14 +35,17 @@ Return Value:
   if (idMatched === false) {
     return { error: 'error' };
   }
-  let i = 0;
-  for (const channels in data.channels) {
-    if (name === channels.channelId) {
-      i++;
-      name = name + i.toString();
+  
+  
+  let count = 0;
+  for (let i = 0; i < data.channels.length; i++) {
+    if (name === data.channels[i].channelName.slice(0, name.length)) {
+      count++;
     }
   }
-
+  if (count > 0 ) {
+    name = name + (count - 1).toString();
+  }
 
   let highest = 995;
   for (let i = 0; i < data.channels.length; i++) {
@@ -55,6 +58,7 @@ Return Value:
     'channelId': channelId,
     'channelName': name,
     'latestMsg': null,
+    'numberOfMessages': null,
     'isPublic': isPublic,
     'ownerMembers' : [authUserId],
     'allMembers': [authUserId],
@@ -64,21 +68,32 @@ Return Value:
 }
 
 function channelsListV1(authUserId) {
-/*
-< Given a authUserId, Provide an array of all channels (and their associated details) that the authorised user is part of >
+  
+  const data = getData();
+  
+  let channelsList = [];
+  
+  let idMatched = false;
+  for (let i = 0; i < data.users.length; i++) {
+    if (authUserId === data.users[i].uId) {
+      idMatched = true;
+      break;
+    }
+  }
+  if (idMatched === false) {
+    return { error: 'error' };
+  }
 
-Arguments:
-    <authUserId> (<integer>)    - <input authUserId>
-
-Exceptions:
-Error   -Occurs when
-
-Return Value:
-    Returns <channels> on <all test pass>
-*/       
-  return {
-    channels: []
-  };
+  for (let c = 0; c < data.channels.length; c++) {
+    for (let i = 0; i < data.channels[c].allMembers.length; i++) {
+      if (data.channels[c].allMembers[i] === authUserId) {
+        channelsList.push(data.channels[c]);
+        break;
+      }
+    }
+  }
+  
+  return channelsList;
 }
 
 function channelsListallV1(authUserId) {
