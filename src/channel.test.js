@@ -25,7 +25,7 @@ user with PermissionStatus, private channel
 
 
 import { channelJoinV1, channelsCreateV1 } from './channel';
-import { authRegisterV1, authLoginV1 } from './auth';
+//import { authRegisterV1, authLoginV1 } from './auth';
 import { clearV1 } from './other';
 
 // Setup
@@ -90,6 +90,15 @@ const invaliduser = {
     allMembers: [],
 }
 
+const privatechannel = {
+    channelId: count,
+    channelName: 'floyds priv channel',
+    latestMsg: 'sup',
+    isPublic: 'false',
+    password: 'floyd',//'comp1531' //empty if 'isPublic' is true
+    ownerMembers: [validuser2],
+    allMembers: [validuser2],
+}
 // testing
 test('channelJoinV1: valid user (who is not already in channel), valid channel', () => {
   clearV1();
@@ -132,3 +141,12 @@ test('channelJoinV1: authorised user already a member of channel', () => {
     
     expect(result).toBe({error: 'error'});
   });
+
+  test('channelJoinV1: nonpermitted attempts to join private', () => {
+    clearV1();
+    
+    let result = channelJoinV1(validuser1.uId, privatechannel.channelId)
+    
+    expect(result).toBe({error: 'error'});
+  });
+
