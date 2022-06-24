@@ -170,7 +170,7 @@ let data = {
 }
 setData(data);
 
-const cases = [[validuser2, validchannel, {}], 
+const cases = [[validuser2, validchannel, {error: 'error'}], 
                [invaliduser.uId, validchannel, {error: 'error'}], 
                [validuser2, invalidchannel.channelId, {error: 'error'}], 
                [invaliduser.uId, invalidchannel.channelId,{error: 'error'}]];
@@ -227,7 +227,7 @@ test('channelInviteV1: invalid authuserId, valid uId, valid channel', () => {
     
     let result = channelInviteV1(validuser1.uId, validuser2, validchannel.channelId)
     
-    expect(result).toStrictEqual({});
+    expect(result).toStrictEqual({error: 'error'});
   });
 
   test('channelInviteV1: valid authuserId (not in channel), valid uId, valid channel', () => {
