@@ -24,7 +24,7 @@ user with PermissionStatus, private channel
 */
 
 import { getData, setData } from "./dataStore.js";
-import { channelJoinV1, channelsCreateV1 } from './channel';
+import { channelInviteV1, channelJoinV1, channelsCreateV1 } from './channel';
 import { authRegisterV1, authLoginV1 } from './auth';
 import { clearV1 } from './other';
 
@@ -103,15 +103,13 @@ const privatechannel = {
 
 let data = {
     users: [validuser1, validuser2],
-    channels: [validchannel],
+    channels: [validchannel, privatechannel],
 }
 setData(data);
 /*
 let store = getData()
-users = store.users()
-channels = store.channels()
-users.push(validuser1, validuser2)
-channels.push(validchannel, privatechannel)
+let users = store.users
+let channels = store.channels
 */
 // testing
 test('channelJoinV1: valid user (who is not already in channel), valid channel', () => {
@@ -164,3 +162,34 @@ test('channelJoinV1: authorised user already a member of channel', () => {
     expect(result).toStrictEqual({error: 'error'});
   });
 
+// Channel invite works by verifying authuserid of the invite sender
+// before calling the channelJoin command as both functions carry out the 
+// same behaviour.
+// As such under the assumption that my tests for channelJoinV1 are
+// thorough, we only have to test for channelInviteV1 abillity to discern
+// a valid authUserID and that the inviter is already in the channel.
+
+test('channelInviteV1: invalid authuserId, valid uId, valid channel', () => {
+    clearV1();
+    
+    let result = channelInviteV1(invaliduser.uId, validuser2, validchannel.channelId)
+    
+    expect(result).toStrictEqual({error: 'error'});
+  });
+
+  test('channelInviteV1: valid authuserId (in channel), valid uId, valid channel', () => {
+    clearV1();
+    
+    let result = channelInviteV1(validuser1.uId, validuser2, validchannel.channelId)
+    
+    expect(result).toStrictEqual({});
+  });
+
+  test('channelInviteV1: valid authuserId (not in channel), valid uId, valid channel', () => {
+    clearV1();
+    
+    let result = channelInviteV1(validuser2.uId, validuser1, validchannel.channelId)
+    
+    expect(result).toStrictEqual({error: 'error'});
+  });
+  
