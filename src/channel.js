@@ -1,5 +1,5 @@
 import { getData, setData } from "./dataStore.js";
-import { userProfileV1 } from "./users";
+import { userProfileV1 } from "./users.js";
 
 function channelDetailsV1(authUserId, channelId) {
   let valid = 0;

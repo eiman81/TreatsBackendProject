@@ -1,4 +1,4 @@
-import { setData} from "./dataStore";
+import { setData} from "./dataStore.js";
 
 function clearV1() {
   let nodata = {
