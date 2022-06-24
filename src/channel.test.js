@@ -23,13 +23,14 @@ user with PermissionStatus, private channel
 
 */
 
-
+import { getData, setData } from "./dataStore.js";
 import { channelJoinV1, channelsCreateV1 } from './channel';
-//import { authRegisterV1, authLoginV1 } from './auth';
+import { authRegisterV1, authLoginV1 } from './auth';
 import { clearV1 } from './other';
 
 // Setup
 // create first valid user
+
 let count = 1
 const validuser1  = {
     uId: 1,
@@ -99,13 +100,26 @@ const privatechannel = {
     ownerMembers: [validuser2],
     allMembers: [validuser2],
 }
+
+let data = {
+    users: [validuser1, validuser2],
+    channels: [validchannel],
+}
+setData(data);
+/*
+let store = getData()
+users = store.users()
+channels = store.channels()
+users.push(validuser1, validuser2)
+channels.push(validchannel, privatechannel)
+*/
 // testing
 test('channelJoinV1: valid user (who is not already in channel), valid channel', () => {
   clearV1();
   
   let result = channelJoinV1(validuser2.uId, validchannel.channelId)
   
-  expect(result).toBe({});
+  expect(result).toStrictEqual({});
 });
 
 
@@ -114,16 +128,16 @@ test('channelJoinV1: invalid user, valid channel', () => {
     
     let result = channelJoinV1(invaliduser.uId, validchannel.channelId)
     
-    expect(result).toBe({error: 'error'});
+    expect(result).toStrictEqual({error: 'error'});
   });
   
 
 test('channelJoinV1: valid user, invalid channel', () => {
     clearV1();
     
-    let result = channelJoinV1(validuser.uId, invalidchannel.channelId)
+    let result = channelJoinV1(validuser2.uId, invalidchannel.channelId)
     
-    expect(result).toBe({error: 'error'});
+    expect(result).toStrictEqual({error: 'error'});
   });
 
 test('channelJoinV1: invalid user, invalid channel', () => {
@@ -131,7 +145,7 @@ test('channelJoinV1: invalid user, invalid channel', () => {
     
     let result = channelJoinV1(invaliduser.uId, invalidchannel.channelId)
     
-    expect(result).toBe({error: 'error'});
+    expect(result).toStrictEqual({error: 'error'});
   });
 
 test('channelJoinV1: authorised user already a member of channel', () => {
@@ -139,7 +153,7 @@ test('channelJoinV1: authorised user already a member of channel', () => {
     
     let result = channelJoinV1(validuser1.uId, validchannel.channelId)
     
-    expect(result).toBe({error: 'error'});
+    expect(result).toStrictEqual({error: 'error'});
   });
 
   test('channelJoinV1: nonpermitted attempts to join private', () => {
@@ -147,6 +161,6 @@ test('channelJoinV1: authorised user already a member of channel', () => {
     
     let result = channelJoinV1(validuser1.uId, privatechannel.channelId)
     
-    expect(result).toBe({error: 'error'});
+    expect(result).toStrictEqual({error: 'error'});
   });
 
