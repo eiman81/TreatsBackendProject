@@ -273,4 +273,3 @@ test('ChannelDetailsV1 working', ()=> {
     }
     expect(channelDetailsV1(authid, channelid)).toStrictEqual(channeldetails)
 })
-

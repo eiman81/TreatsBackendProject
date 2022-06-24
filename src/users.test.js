@@ -78,4 +78,3 @@ test('Test 5: invalid userProfileV1', () => {
   const b = null;
   expect(userProfileV1(a, b)).toStrictEqual({error: 'error'});
 });
-
