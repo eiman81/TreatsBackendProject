@@ -5,7 +5,7 @@ function authRegisterV1(email, password, nameFirst, nameLast) {
 < Given users's email, password, first name and last name, creat a new account for them and return their authUserId.
   Also the function will give user their handle, a handle is the concatenation of their casted-to-lowercase alphanumeric 
   first name and last name >
-
+ dfuhbv
 Arguments:
     <email> (<string>)    - <input email>
     <password> (<string>)    - <input password>
