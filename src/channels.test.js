@@ -29,6 +29,7 @@ test('ChannelsListallV1 working', ()=> {
             channelName: 'first',
             latestMsg: null,
             numberOfMessages: null,
+            messages: [],
             isPublic: true,
             ownerMembers: [authid],
             allMembers: [authid],
@@ -83,6 +84,7 @@ test('channelsCreateV1: correct output for fifth created channel', () => {
   expect(f).toStrictEqual(1020);
 });
 
+// ---------------------------------------------------------------------
 
 test('ChannelsListV1: error for userId not found', ()=> {
     clearV1();
@@ -105,6 +107,7 @@ test('channelsListV1: correct output for user being in a single channel', () => 
       channelName: 'new',
       latestMsg: null,
       numberOfMessages: null,
+      messages: [],
       isPublic: true,
       ownerMembers: [a],
       allMembers: [a],
@@ -138,6 +141,7 @@ test('channelsListV1: correct output for one user being in multiple channels', (
       channelName: 'new',
       latestMsg: null,
       numberOfMessages: null,
+      messages: [],
       isPublic: true,
       ownerMembers: [a],
       allMembers: [a],
@@ -147,6 +151,7 @@ test('channelsListV1: correct output for one user being in multiple channels', (
       channelName: 'new0',
       latestMsg: null,
       numberOfMessages: null,
+      messages: [],
       isPublic: false,
       ownerMembers: [a],
       allMembers: [a],
@@ -156,6 +161,7 @@ test('channelsListV1: correct output for one user being in multiple channels', (
       channelName: 'new1',
       latestMsg: null,
       numberOfMessages: null,
+      messages: [],
       isPublic: true,
       ownerMembers: [a],
       allMembers: [a],
@@ -165,6 +171,7 @@ test('channelsListV1: correct output for one user being in multiple channels', (
       channelName: 'new2',
       latestMsg: null,
       numberOfMessages: null,
+      messages: [],
       isPublic: true,
       ownerMembers: [a],
       allMembers: [a],

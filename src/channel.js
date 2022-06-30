@@ -150,7 +150,7 @@ Return Value:
   }
 
   if (valid === 1) {
-    if (start > channelRequested.messages.length) {
+    if (start > channelRequested.messages.length || channelRequested.messages.length === undefined) {
       return {error: 'error'};
     
     } else if (start + 50 >= channelRequested.messages.length) {

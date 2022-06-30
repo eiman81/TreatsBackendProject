@@ -59,6 +59,7 @@ Return Value:
     'channelName': name,
     'latestMsg': null,
     'numberOfMessages': null,
+    'messages': [],
     'isPublic': isPublic,
     'ownerMembers' : [authUserId],
     'allMembers': [authUserId],
