@@ -116,8 +116,8 @@ let users = store.users
 let channels = store.channels
 */
 
-const validuser1 = authRegisterV1('another_cristiano@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
-const validuser2 = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr');
+const validuser1 = authRegisterV1('another_cristiano@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo').authUserId;
+const validuser2 = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr').authUserId;
 const validchannel = channelsCreateV1(validuser1, 'Discussion', true)
 const privatechannel = channelsCreateV1(validuser2, 'Discussion', false)
 /*
@@ -195,7 +195,7 @@ setData(data);
 test('channelJoinV1: authorised user already a member of channel', () => {
     clearV1();
     
-    let result = channelJoinV1(validuser1.uId, validchannel.channelId)
+    let result = channelJoinV1(validuser1, validchannel.channelId)
     
     expect(result).toStrictEqual({error: 'error'});
   });
@@ -203,7 +203,7 @@ test('channelJoinV1: authorised user already a member of channel', () => {
   test('channelJoinV1: nonpermitted attempts to join private', () => {
     clearV1();
     
-    let result = channelJoinV1(validuser1.uId, privatechannel.channelId)
+    let result = channelJoinV1(validuser1, privatechannel.channelId)
     
     expect(result).toStrictEqual({error: 'error'});
   });
@@ -226,7 +226,7 @@ test('channelInviteV1: invalid authuserId, valid uId, valid channel', () => {
   test('channelInviteV1: valid authuserId (in channel), valid uId, valid channel', () => {
     clearV1();
     
-    let result = channelInviteV1(validuser1.uId, validuser2, validchannel.channelId)
+    let result = channelInviteV1(validuser1, validuser2, validchannel.channelId)
     
     expect(result).toStrictEqual({error: 'error'});
   });
@@ -234,7 +234,7 @@ test('channelInviteV1: invalid authuserId, valid uId, valid channel', () => {
   test('channelInviteV1: valid authuserId (not in channel), valid uId, valid channel', () => {
     clearV1();
     
-    let result = channelInviteV1(validuser2.uId, validuser1, validchannel.channelId)
+    let result = channelInviteV1(validuser2, validuser1, validchannel.channelId)
     
     expect(result).toStrictEqual({error: 'error'});
   });
@@ -252,9 +252,9 @@ test('ChannelDetail error both invalid codes', ()=> {
 test('ChannelDetail error, userid not part of desired channel requested', ()=> {
     clearV1();
 
-    let authid = authRegisterV1('sean@gmail.com', '2737svww', 'Sean', 'OConnor');
+    let authid = authRegisterV1('sean@gmail.com', '2737svww', 'Sean', 'OConnor').authUserId;
     let channelid = channelsCreateV1(authid, 'first', false);
-    let authid2 = authRegisterV1('bob@gmail.com', '287swvw3', 'bob', 'green');
+    let authid2 = authRegisterV1('bob@gmail.com', '287swvw3', 'bob', 'green').authUserId;
 
     expect(channelDetailsV1(authid2, channelid)).toStrictEqual({error: 'error'});
 })
@@ -262,7 +262,7 @@ test('ChannelDetail error, userid not part of desired channel requested', ()=> {
 test('ChannelDetailsV1 working', ()=> {
     clearV1();
     
-    let authid = authRegisterV1('sean@gmail.com', '27hgfu37', 'Sean', 'OConnor');
+    let authid = authRegisterV1('sean@gmail.com', '27hgfu37', 'Sean', 'OConnor').authUserId;
     let channelid = channelsCreateV1(authid, 'first', false);
     
     let channeldetails = {
@@ -279,7 +279,7 @@ test('ChannelDetailsV1 working', ()=> {
 test('Channel Messages error when it recieves an invalid channel id', ()=> {
   clearV1();
 
-  let authid = authRegisterV1('sean@gmail.com', '27hgfu37', 'Sean', 'OConnor');
+  let authid = authRegisterV1('sean@gmail.com', '27hgfu37', 'Sean', 'OConnor').authUserId;
   let channelid = channelsCreateV1(authid, 'first', false);
   
   expect(channelMessagesV1(authid, 994, 0)).toStrictEqual({error: 'error'})
@@ -289,9 +289,9 @@ test('Channel Messages error when it recieves an invalid channel id', ()=> {
 test('Channel Messages error when channel id valid but user is not part of channel', ()=> {
   clearV1();
 
-  let authid = authRegisterV1('sean@gmail.com', '27hgfu37', 'Sean', 'OConnor');
+  let authid = authRegisterV1('sean@gmail.com', '27hgfu37', 'Sean', 'OConnor').authUserId;
   let channelid = channelsCreateV1(authid, 'first', false);
-  let authid2 = authRegisterV1('bob@gmail.com', '27hgf6qs37', 'Bob', 'Jane');
+  let authid2 = authRegisterV1('bob@gmail.com', '27hgf6qs37', 'Bob', 'Jane').authUserId;
   
   expect(channelMessagesV1(authid2, channelid, 0)).toStrictEqual({error: 'error'})
 
@@ -300,7 +300,7 @@ test('Channel Messages error when channel id valid but user is not part of chann
 test('Channel Messages error when start greater then length of messages', ()=> {
   clearV1();
 
-  let authid = authRegisterV1('sean@gmail.com', '27hgfu37', 'Sean', 'OConnor');
+  let authid = authRegisterV1('sean@gmail.com', '27hgfu37', 'Sean', 'OConnor').authUserId;
   let channelid = channelsCreateV1(authid, 'first', false);
   
   expect(channelMessagesV1(authid, channelid, 5)).toStrictEqual({error: 'error'})
@@ -309,7 +309,7 @@ test('Channel Messages error when start greater then length of messages', ()=> {
 
 test('Channel Messages when end greater then length of messages should return -1 for end', ()=> {
   clearV1();
-  let authid = authRegisterV1('sean@gmail.com', '27hgfu37', 'Sean', 'OConnor');
+  let authid = authRegisterV1('sean@gmail.com', '27hgfu37', 'Sean', 'OConnor').authUserId;
   let channelid = channelsCreateV1(authid, 'first', false);
 
   let mes = {

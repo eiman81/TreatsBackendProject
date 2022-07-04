@@ -5,16 +5,21 @@ import { clearV1 } from './other.js';
 test('authRegisterV1: correct output for 1st user', () => {
   clearV1();
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
-  expect(a).toStrictEqual(-1000);
+  const aId = a.authUserId;
+  expect(aId).toStrictEqual(-1000);
 });
 
 test('authRegisterV1: correct output for 4th user', () => {
   clearV1();
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
+  const aId = a.authUserId;
   const b = authRegisterV1('another_cristiano@unsw.edu.au', 'cristiano7', 'Cristiano', 'Ronaldo');
+  const bId = b.authUserId;
   const c = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr');
+  const cId = c.authUserId;
   const d = authRegisterV1('zero0@unsw.edu.au', '12345678', 'ZERO', '0');
-  expect(d).toStrictEqual(-1015);
+  const dId = d.authUserId;
+  expect(dId).toStrictEqual(-1015);
 });
 
 test('authRegisterV1: error for email address not valid', () => {
@@ -63,44 +68,57 @@ test('authRegisterV1: error for length of last name (>50)', () => {
 test('authRegisterV1: correct handle for "Mohammed MayweatherJr"', () => {
   clearV1();  
   const a = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr');
+  const aId = a.authUserId;
   const b = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
-  expect(userProfileV1(a, b).username).toStrictEqual('cristianoronaldo');
+  const bId = b.authUserId;
+  expect(userProfileV1(aId, bId).username).toStrictEqual('cristianoronaldo');
 });
 
 test('authRegisterV1: correct handle for same name', () => {
   clearV1();  
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '1234567', 'Cristiano', 'Ronaldo');
+  const aId = a.authUserId;
   const b = authRegisterV1('cristiano.ronaldo0@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
+  const bId = b.authUserId;
   const c = authRegisterV1('cristiano.ronaldo1@unsw.edu.au', '1234567', 'Cristiano', 'Ronaldo');
-  expect(userProfileV1(a, c).username).toStrictEqual('cristianoronaldo1');
+  const cId = c.authUserId;
+  expect(userProfileV1(aId, cId).username).toStrictEqual('cristianoronaldo1');
 });
 
 test('authRegisterV1: correct handle for "Guy Thathasareallylongname"', () => { 
   clearV1();  
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
+  const aId = a.authUserId;
   const b = authRegisterV1('guy@unsw.edu.au', 'guywithlong', 'Guy', 'Thathasareallylongname');
-  expect(userProfileV1(a, b).username).toStrictEqual('guythathasareallylon');
+  const bId = b.authUserId;
+  expect(userProfileV1(aId, bId).username).toStrictEqual('guythathasareallylon');
 });
 
 test('authRegisterV1: correct handle for "ZERO 0"', () => {
   clearV1();  
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
+  const aId = a.authUserId;
   const b = authRegisterV1('zero0@unsw.edu.au', '12345678', 'ZERO', '0');
-  expect(userProfileV1(a, b).username).toStrictEqual('zero0');
+  const bId = b.authUserId;
+  expect(userProfileV1(aId, bId).username).toStrictEqual('zero0');
 });
 
 test('authRegisterV1: correct handle for "$mOney 0"', () => {
   clearV1(); 
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
+  const aId = a.authUserId;
   const b = authRegisterV1('money0@unsw.edu.au', 'money123', '$mOney', '$0');
-  expect(userProfileV1(a, b).username).toStrictEqual('money0');
+  const bId = b.authUserId;
+  expect(userProfileV1(aId, bId).username).toStrictEqual('money0');
 });
 
 test('authLoginV1: correct input', () => {
   clearV1();
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
+  const aId = a.authUserId;
   const b = authLoginV1('cristiano.ronaldo@unsw.edu.au', '123456');
-  expect(b).toStrictEqual(a);
+  const bId = b.authUserId;
+  expect(bId).toStrictEqual(aId);
 });
 
 test('authLoginV1: error for wrong email', () => {

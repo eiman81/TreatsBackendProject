@@ -69,7 +69,9 @@ Return Value:
     isOnline: null,
   });
   setData(data);
-  return userId;
+  return {
+    authUserId: userId,
+  }
 }
 
 function authLoginV1(email, password) {
@@ -103,7 +105,9 @@ Return Value:
     if (password != data.users[found].password) {
       return { error: 'error' };
     } else {
-      return data.users[found].uId;
+      return {
+        authUserId: data.users[found].uId,
+      }
     }
   }
 }
