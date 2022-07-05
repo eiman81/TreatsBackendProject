@@ -65,14 +65,16 @@ Return Value:
     'allMembers': [authUserId],
   });
   setData(data);
-  return highest + 5;
+  return {
+    channelId: channelId,
+  } 
 }
 
 function channelsListV1(authUserId) {
   
   const data = getData();
   
-  let channelsList = [];
+  let channels = [];
   
   let idMatched = false;
   for (let i = 0; i < data.users.length; i++) {
@@ -88,13 +90,20 @@ function channelsListV1(authUserId) {
   for (let c = 0; c < data.channels.length; c++) {
     for (let i = 0; i < data.channels[c].allMembers.length; i++) {
       if (data.channels[c].allMembers[i] === authUserId) {
-        channelsList.push(data.channels[c]);
+        channels.push(data.channels[c]);
+      /*
+        channels.push({
+        'channelId': data.channels[c].channelId,
+        'channelName': data.channels[c].channelName,
+        });*/
         break;
       }
     }
   }
   
-  return channelsList;
+  return {
+    channels: channels,
+  }
 }
 
 function channelsListallV1(authUserId) {
