@@ -39,7 +39,7 @@ Return Value:
   
   let count = 0;
   for (let i = 0; i < data.channels.length; i++) {
-    if (name === data.channels[i].channelName.slice(0, name.length)) {
+    if (name === data.channels[i].name.slice(0, name.length)) {
       count++;
     }
   }
@@ -56,7 +56,7 @@ Return Value:
   let channelId = highest + 5;
   data.channels.push({
     'channelId': channelId,
-    'channelName': name,
+    'name': name,
     'latestMsg': null,
     'numberOfMessages': null,
     'messages': [],
@@ -94,7 +94,7 @@ function channelsListV1(authUserId) {
       /*
         channels.push({
         'channelId': data.channels[c].channelId,
-        'channelName': data.channels[c].channelName,
+        'name': data.channels[c].name,
         });*/
         break;
       }
@@ -118,20 +118,24 @@ Error   -Occurs when
 
 Return Value:
     Returns <channels> on <all test pass>
-*/     
+*/    
+  const data = getData();
+  let channels = [];
   let valid = 0;
-  for (const user of (getData()).users) {
+  for (const user of data.users) {
     if (user.uId === authUserId) {
       valid = 1;
-      let channels = getData().channels
-      return channels;
+      let channels = data.channels
+      return {channels: channels, }
     }
   }
 
   if (valid === 0) {
     let emptyArray = [];
-    return emptyArray;
+    return {channels: emptyArray, };
   }
+  
+  
 }
 
 export { channelsCreateV1, channelsListV1, channelsListallV1 };

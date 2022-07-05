@@ -33,10 +33,10 @@ Return Value:
         let members = channel.allMembers;
         if (members.includes(authUserId)) {
           let channeldetails = {
-            name: channel.channelName,
+            name: channel.name,
             isPublic: channel.isPublic,
             ownerMembers: channel.ownerMembers,
-            allMembers: channel.allMembers
+            allMembers: channel.allMembers,
           }
           return channeldetails;
           

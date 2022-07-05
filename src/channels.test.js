@@ -8,7 +8,7 @@ test('ChannelsListallV1 userId not found', ()=> {
     const authid = authRegisterV1('sean@gmail.com', '2737', 'Sean', 'OConnor').authUserId;
     const authid1 = -1005;
     channelsCreateV1(authid, 'first', true);
-    expect(channelsListallV1(authid1)).toStrictEqual([]);
+    expect(channelsListallV1(authid1)['channels']).toStrictEqual([]);
 })
 
 test('ChannelsListallV1 userId invalid', ()=> {
@@ -16,7 +16,7 @@ test('ChannelsListallV1 userId invalid', ()=> {
     const authid = authRegisterV1('sean@gmail.com', '2737', 'Sean', 'OConnor').authUserId;
     const authid1 = -1005;
     channelsCreateV1(authid, 'first', true);
-    expect(channelsListallV1(authid1)).toStrictEqual([]);
+    expect(channelsListallV1(authid1)['channels']).toStrictEqual([]);
 })
 
 test('ChannelsListallV1 working', ()=> {
@@ -26,7 +26,7 @@ test('ChannelsListallV1 working', ()=> {
     let list = [ 
         {
             channelId: channel,
-            channelName: 'first',
+            name: 'first',
             latestMsg: null,
             numberOfMessages: null,
             messages: [],
@@ -35,7 +35,7 @@ test('ChannelsListallV1 working', ()=> {
             allMembers: [authid],
         }
     ];
-    expect(channelsListallV1(authid)).toStrictEqual(list);
+    expect(channelsListallV1(authid)['channels']).toStrictEqual(list);
 });
 
 test('channelsCreateV1: error for name less than 1 character', () => {
@@ -104,7 +104,7 @@ test('channelsListV1: correct output for user being in a single channel', () => 
   let expectedList = [
     {
       channelId: channel,
-      channelName: 'new',
+      name: 'new',
       latestMsg: null,
       numberOfMessages: null,
       messages: [],
@@ -138,7 +138,7 @@ test('channelsListV1: correct output for one user being in multiple channels', (
   let expectedList = [
     {
       channelId: channel1,
-      channelName: 'new',
+      name: 'new',
       latestMsg: null,
       numberOfMessages: null,
       messages: [],
@@ -148,7 +148,7 @@ test('channelsListV1: correct output for one user being in multiple channels', (
     },
     {
       channelId: channel2,
-      channelName: 'new0',
+      name: 'new0',
       latestMsg: null,
       numberOfMessages: null,
       messages: [],
@@ -158,7 +158,7 @@ test('channelsListV1: correct output for one user being in multiple channels', (
     },
     {
       channelId: channel3,
-      channelName: 'new1',
+      name: 'new1',
       latestMsg: null,
       numberOfMessages: null,
       messages: [],
@@ -168,7 +168,7 @@ test('channelsListV1: correct output for one user being in multiple channels', (
     },
     {
       channelId: channel4,
-      channelName: 'new2',
+      name: 'new2',
       latestMsg: null,
       numberOfMessages: null,
       messages: [],
