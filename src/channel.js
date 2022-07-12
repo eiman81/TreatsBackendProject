@@ -33,10 +33,10 @@ Return Value:
         let members = channel.allMembers;
         if (members.includes(authUserId)) {
           let channeldetails = {
-            name: channel.channelName,
+            name: channel.name,
             isPublic: channel.isPublic,
             ownerMembers: channel.ownerMembers,
-            allMembers: channel.allMembers
+            allMembers: channel.allMembers,
           }
           return channeldetails;
           
@@ -137,11 +137,66 @@ Error   -Occurs when
 Return Value:
     Returns <messages, start, end> on <all test pass>
 */
-  return {
-    messages: [],
-    start: 0,
-    end: -1,
-  };
+  let valid = 0;
+  let channelRequested = {};
+  for (const channel of (getData()).channels) {
+    if (channel.channelId === channelId) {
+      let members = channel.allMembers;
+      if (members.includes(authUserId)) {
+        valid = 1;
+        channelRequested = channel;
+      }
+    }
+  }
+
+  if (valid === 1) {
+    if (start > channelRequested.messages.length || channelRequested.messages.length === undefined) {
+      return {error: 'error'};
+    
+    } else if (start + 50 >= channelRequested.messages.length) {
+      let messages = [];
+      let counter = 0;
+      for (const message of channelRequested.messages) {
+        if (start > counter) {
+          counter++;
+        } else {
+          messages.push(message);
+          counter++;
+        }
+      }
+
+      let mes = {
+        messages: messages,
+        start: start,
+        end: -1
+      }
+
+      return mes;
+      
+    } else {
+
+      let end = start + 50;
+      let messages = [];
+      for (const message of channelRequested.messages) {
+        if (start > counter) {
+          counter++;
+        } else if (start <= counter && counter <= end) {
+          messages.push(message);
+          counter++;
+        }
+      }
+
+      let mes = {
+        messages: messages,
+        start: start,
+        end: end
+      }
+
+      return mes;
+    }
+  } else {
+    return {error: 'error'};
+  }
 }
 
 export { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1 };
