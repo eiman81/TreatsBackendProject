@@ -8,7 +8,7 @@ test('Clear test', ()=> {
         nameFirst: 'Cristiano',
         nameLast: 'Ronaldo',
         email: 'crisronaldosui@gmail.com',
-        passwor: 'suiiiiiiiiii',
+        password: 'suiiiiiiiiii',
         handleStr: 'cristianoronaldo', 
         userRole: 'Admin',
         isOnline: true,
@@ -18,6 +18,8 @@ test('Clear test', ()=> {
         channelId: 1,
         channelName: 'Discussion',
         latestMsgStr: 'Hi!',
+        numberOfMessages: null,
+        messages: [],
         isPublic: 'false',
         start: 5,
         ownerMembers: [4],
@@ -36,3 +38,4 @@ test('Clear test', ()=> {
     clearV1();
     expect(getData()).toStrictEqual(nodata); 
 });
+
