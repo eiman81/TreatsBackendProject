@@ -5,7 +5,7 @@ function authRegisterV1(email, password, nameFirst, nameLast) {
 < Given users's email, password, first name and last name, creat a new account for them and return their authUserId.
   Also the function will give user their handle, a handle is the concatenation of their casted-to-lowercase alphanumeric 
   first name and last name >
-
+ dfuhbv
 Arguments:
     <email> (<string>)    - <input email>
     <password> (<string>)    - <input password>
@@ -69,7 +69,9 @@ Return Value:
     isOnline: null,
   });
   setData(data);
-  return userId;
+  return {
+    authUserId: userId,
+  }
 }
 
 function authLoginV1(email, password) {
@@ -103,7 +105,9 @@ Return Value:
     if (password != data.users[found].password) {
       return { error: 'error' };
     } else {
-      return data.users[found].uId;
+      return {
+        authUserId: data.users[found].uId,
+      }
     }
   }
 }
