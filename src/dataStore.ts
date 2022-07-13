@@ -1,5 +1,33 @@
+import { updateLanguageServiceSourceFile } from "typescript";
+
+export interface user {
+  uId: number,
+  nameFirst: string,
+  nameLast: string,
+  email: string,
+  password: string,
+  username: string,
+  isOnline: boolean
+}
+
+export interface channel {
+  channelId: number,
+  name: string,
+  latestMsg: string,
+  numberOfMessages: number, 
+  messages: string[],
+  isPublic: boolean,
+  ownerMembers: number[],
+  allMembers: number[]
+}
+
+export interface data {
+  users: Array<user>,
+  channels: Array<channel>,
+}
+
 // YOU SHOULD MODIFY THIS OBJECT BELOW
-let data = {
+let data : data = {
   users: [],
   channels: [],
 };
