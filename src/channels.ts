@@ -1,17 +1,17 @@
-import { getData, setData } from "./dataStore.js";
+import { getData, setData } from "./dataStore";
 
-export interface channel {
+interface channel {
   channelId: number,
   name: string,
   latestMsg: string,
   numberOfMessages: number, 
-  messages: number[],
+  messages: string[],
   isPublic: boolean,
   ownerMembers: number[],
   allMembers: number[]
 }
 
-function channelsCreateV1(authUserId, name, isPublic) {
+function channelsCreateV1(authUserId: number, name: string, isPublic: boolean): {error: 'error'} | {channelId: number} {
 /*
 < Given a authUserId, the channel name and choose whether it is public, creates a new channel with the given name. 
   The user who created it automatically joins the channel >
@@ -75,6 +75,7 @@ Return Value:
     'ownerMembers' : [authUserId],
     'allMembers': [authUserId]
   });
+
   setData(data);
   return {
     channelId: channelId,
@@ -131,7 +132,6 @@ Return Value:
     Returns <channels> on <all test pass>
 */    
   const data = getData();
-  let channels = [];
   let valid = 0;
   for (const user of data.users) {
     if (user.uId === authUserId) {
@@ -145,8 +145,6 @@ Return Value:
     let emptyArray = [];
     return {channels: emptyArray };
   }
-  
-  
 }
 
 export { channelsCreateV1, channelsListV1, channelsListallV1 };
