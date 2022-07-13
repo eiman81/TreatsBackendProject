@@ -1,3 +1,7 @@
+import { authRegisterV1, authLoginV1 } from './auth.js';
+import { userProfileV1 } from './users.js'
+import { clearV1 } from './other.js';
+
 test('authLoginV1: correct input', () => {
   clearV1();
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
