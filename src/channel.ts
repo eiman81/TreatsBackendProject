@@ -86,14 +86,21 @@ Return Value:
       if (authUserId in channelDetails.allMembers) {
         return {error: 'error'}
 
-      } else if (channelDetails.isPublic === false && userProfileV1(null, authUserId).permissions === false) {
+      } else if (channelDetails.isPublic === false) {
         return {error: 'error'}
 
-      } else{
+      } else {
         //add user to channel
-        let users = store.channels.allMembers
-        users.push(userProfileV1(null,authUserId))
-        return {}
+        let counter = 0;
+        for (const channel of getData().channels) {
+          if (channel.channelId = channelId) {
+            channel.allMembers.push(authUserId);
+            store.channels[counter] = channel;
+            setData(store);
+            break;
+          }
+          counter++;
+        }
       }
     } else {
       return {error: 'error'}
@@ -120,9 +127,29 @@ Error   -Occurs when
 
 Return Value:
     Returns <{}> on <all test pass>
-*/ 
-  if (authUserId in getData().users && authUserId in channelDetailsV1(authUserId, channelId).allMembers){
-    channelJoinV1(uId,channelId);
+*/
+  let store = getData();
+  if (authUserId in store.users && channelId in store.channels) {
+    //check if user is already in channel
+    let channelDetails = channelDetailsV1(authUserId, channelId);
+    if ('allMembers' in channelDetails) {
+      if (authUserId in channelDetails.allMembers) {
+        return {error: 'error'}
+
+      } else {
+        //add user to channel
+        let counter = 0;
+        for (const channel of getData().channels) {
+          if (channel.channelId = channelId) {
+            channel.allMembers.push(authUserId);
+            store.channels[counter] = channel;
+            setData(store);
+            break;
+          }
+          counter++;
+        }
+      }
+    }
   } else {
     return {error:'error'};
   }
