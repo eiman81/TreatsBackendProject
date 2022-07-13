@@ -1,11 +1,13 @@
 import { getData, setData } from './dataStore';
 
-function authRegisterV1(email, password, nameFirst, nameLast) {
+export interface authUserId { authUserId: number };
+
+function authRegisterV1(email: string, password: string, nameFirst: string, nameLast: string): authUserId | {error: 'error'} {
 /*
 < Given users's email, password, first name and last name, creat a new account for them and return their authUserId.
   Also the function will give user their handle, a handle is the concatenation of their casted-to-lowercase alphanumeric
   first name and last name >
- dfuhbv
+
 Arguments:
     <email> (<string>)    - <input email>
     <password> (<string>)    - <input password>
@@ -73,7 +75,7 @@ Return Value:
   };
 }
 
-function authLoginV1(email, password) {
+function authLoginV1(email: string, password: string): authUserId | {error: 'error'} {
 /*
 < Given a registered email and password, returns their `authUserId` value >
 
