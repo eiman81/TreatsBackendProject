@@ -1,5 +1,16 @@
 import { getData, setData } from "./dataStore.js";
 
+export interface channel {
+  channelId: number,
+  name: string,
+  latestMsg: string,
+  numberOfMessages: number, 
+  messages: number[],
+  isPublic: boolean,
+  ownerMembers: number[],
+  allMembers: number[]
+}
+
 function channelsCreateV1(authUserId, name, isPublic) {
 /*
 < Given a authUserId, the channel name and choose whether it is public, creates a new channel with the given name. 

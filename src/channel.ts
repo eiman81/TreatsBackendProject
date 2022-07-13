@@ -1,7 +1,14 @@
-import { getData, setData } from "./dataStore.js";
-import { userProfileV1 } from "./users.js";
+import { getData, setData } from "./dataStore";
+import { userProfileV1 } from "./users";
 
-function channelDetailsV1(authUserId, channelId) {
+export interface channeldetails {
+  name: string,
+  isPublic: boolean,
+  ownerMembers: number [],
+  allMembers: number []
+}
+
+function channelDetailsV1(authUserId: number, channelId: number) : channeldetails | {error: 'error'} {
 /*
 < Given a channelId and authUserId, if this user is the member of this channel, return 
   basic details about the channel >
@@ -71,24 +78,28 @@ Return Value:
 */   
   //check if user id is valid
   //check if channel id is valid
-  let store = getData()
-  if (authUserId in store.users && channelId in store.channels){
+  let store = getData();
+  if (authUserId in store.users && channelId in store.channels) {
     //check if user is already in channel
-    if (authUserId in channelDetailsV1(authUserId, channelId).allMembers){
-      return {error: 'error'}
-    } else if (channelDetailsV1(authUserId, channelId).isPublic === false && userProfileV1(null,authUserId).permissions === false){
-      return {error: 'error'}
-    } else{
-      //add user to channel
-      users = store.channels.allMembers
-      users.push(userProfileV1(null,authUserId))
-      return {}
-    }
-  } else {
-    return {error: 'error'}
-  } 
-}
+    let channelDetails = channelDetailsV1(authUserId, channelId);
+    if ('allMembers' in channelDetails) {
+      if (authUserId in channelDetails.allMembers) {
+        return {error: 'error'}
 
+      } else if (channelDetails.isPublic === false && userProfileV1(null, authUserId).permissions === false) {
+        return {error: 'error'}
+
+      } else{
+        //add user to channel
+        let users = store.channels.allMembers
+        users.push(userProfileV1(null,authUserId))
+        return {}
+      }
+    } else {
+      return {error: 'error'}
+    } 
+  }
+}
 
 function channelInviteV1(authUserId, channelId, uId) {
 /*
@@ -117,7 +128,13 @@ Return Value:
   }
 }
 
-function channelMessagesV1(authUserId, channelId, start) {
+interface returnMessages {
+  start: number,
+  end: number,
+  messages: number[]
+}
+
+function channelMessagesV1(authUserId: number, channelId: number, start: number) : {error:'error'} | returnMessages {
 /*
 < Given the vaild authUserId , vaild channelId and the start(whitch message you want start), it return the 
   messages between the start and start + 50, if start + 50 more than the recent message, it return the messages
@@ -177,6 +194,7 @@ Return Value:
 
       let end = start + 50;
       let messages = [];
+      let counter = 0;
       for (const message of channelRequested.messages) {
         if (start > counter) {
           counter++;
