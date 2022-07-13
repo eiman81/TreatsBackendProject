@@ -1,4 +1,4 @@
-import { setData} from "./dataStore.js";
+import { setData} from "./dataStore";
 
 function clearV1() {
 /*
