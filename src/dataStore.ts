@@ -49,12 +49,12 @@ Example usage
 */
 
 // Use get() to access the data
-function getData() {
+function getData(): data {
   return data;
 }
 
 // Use set(newData) to pass in the entire data object, with modifications made
-function setData(newData) {
+function setData(newData: data) {
   data = newData;
 }
 
