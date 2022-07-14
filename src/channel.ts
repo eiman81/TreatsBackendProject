@@ -13,7 +13,7 @@ export interface channeldetails {
 export interface returnMessages {
   start: number,
   end: number,
-  messages: number[]
+  messages: string[]
 }
 
 function channelDetailsV1(authUserId: number, channelId: number) : channeldetails | {error: 'error'} {

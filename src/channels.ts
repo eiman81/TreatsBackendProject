@@ -15,6 +15,11 @@ export interface channels {
   channelId: number,
   name: string
 }
+
+export interface channelId {
+  'channelId': number;
+}
+
 function channelsCreateV1(authUserId: number, name: string, isPublic: boolean): {error: 'error'} | {channelId: number} {
 /*
 < Given a authUserId, the channel name and choose whether it is public, creates a new channel with the given name. 
@@ -131,7 +136,7 @@ Return Value:
 */    
   const data = getData();
   let valid = 0;
-  let channels = [];
+  let channels: channels[] = [];
   for (const user of data.users) {
     if (user.uId === authUserId) {
       valid = 1;

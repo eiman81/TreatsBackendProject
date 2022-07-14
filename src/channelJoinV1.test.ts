@@ -23,10 +23,10 @@ user with PermissionStatus, private channel
 
 */
 
-import { getData, setData } from "./dataStore";
+import { channel, getData, setData, user } from "./dataStore";
 import { channelInviteV1, channelJoinV1, channelDetailsV1, channelMessagesV1} from './channel';
-import { channelsCreateV1 } from './channels'
-import { authRegisterV1 } from './auth';
+import { channelsCreateV1, channelId } from './channels'
+import { authRegisterV1, authUserId } from './auth';
 import { clearV1 } from './other';
 
 /*
@@ -116,10 +116,10 @@ let users = store.users
 let channels = store.channels
 */
 
-const validuser1 = authRegisterV1('another_cristiano@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo').authUserId;
-const validuser2 = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr').authUserId;
-const validchannel = channelsCreateV1(validuser1, 'Discussion', true).channelId;
-const privatechannel = channelsCreateV1(validuser2, 'Discussion', false).channelId;
+const validuser1 = authRegisterV1('another_cristiano@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
+const validuser2 = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
+const validchannel = channelsCreateV1(validuser1.authUserId, 'Discussion', true) as channelId;
+const privatechannel = channelsCreateV1(validuser2.authUserId, 'Discussion', false) as channelId;
 /*
 const validchannel = {
     channelId: 3,
@@ -133,23 +133,23 @@ const validchannel = {
 */
 
 //create invalid users
-const invaliduser = {
+const invaliduser: user = {
     uId: 6789,
     nameFirst: 'Post',
     nameLast: 'Malone',
     email: 'post.malone@unsw.edu.au',
     password: 'stoney',
     username: 'leondechino',
-    userRole: null,
     isOnline: null,
   }
 
-  const invalidchannel = {
+  const invalidchannel: channel = {
     channelId: 7890,
-    channelName: 'Argument',
+    name: 'Argument',
     latestMsg: 'Shut Up!!',
-    isPublic: 'true',
-    password: null,//'comp1531' //empty if 'isPublic' is true
+    messages: [],
+    numberOfMessages: 3,
+    isPublic: true,
     ownerMembers: [],
     allMembers: [],
 }
@@ -165,15 +165,9 @@ const privatechannel = {
 }
 */
 
-let data = {
-    users: [validuser1, validuser2],
-    channels: [validchannel, privatechannel],
-}
-setData(data);
-
-const cases = [[validuser2, validchannel, {error: 'error'}], 
-               [invaliduser.uId, validchannel, {error: 'error'}], 
-               [validuser2, invalidchannel.channelId, {error: 'error'}], 
+const cases = [[validuser2.authUserId, validchannel.channelId, {error: 'error'}], 
+               [invaliduser.uId, validchannel.channelId, {error: 'error'}], 
+               [validuser2.authUserId, invalidchannel.channelId, {error: 'error'}], 
                [invaliduser.uId, invalidchannel.channelId,{error: 'error'}]];
 
 describe("'channelJoinV1' utility", () => {
@@ -186,16 +180,11 @@ describe("'channelJoinV1' utility", () => {
   );
 });
 
-data = {
-    users: [validuser1, validuser2],
-    channels: [validchannel, privatechannel],
-}
-setData(data);
 
 test('channelJoinV1: authorised user already a member of channel', () => {
     clearV1();
     
-    let result = channelJoinV1(validuser1, validchannel.channelId)
+    let result = channelJoinV1(validuser1.authUserId, validchannel.channelId)
     
     expect(result).toStrictEqual({error: 'error'});
   });
@@ -203,7 +192,7 @@ test('channelJoinV1: authorised user already a member of channel', () => {
   test('channelJoinV1: nonpermitted attempts to join private', () => {
     clearV1();
     
-    let result = channelJoinV1(validuser1, privatechannel.channelId)
+    let result = channelJoinV1(validuser1.authUserId, privatechannel.channelId)
     
     expect(result).toStrictEqual({error: 'error'});
   });
