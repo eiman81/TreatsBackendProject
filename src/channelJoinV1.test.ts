@@ -165,6 +165,7 @@ const privatechannel = {
 }
 */
 
+/*
 const cases = [[validuser2.authUserId, validchannel.channelId, {error: 'error'}], 
                [invaliduser.uId, validchannel.channelId, {error: 'error'}], 
                [validuser2.authUserId, invalidchannel.channelId, {error: 'error'}], 
@@ -179,7 +180,7 @@ describe("'channelJoinV1' utility", () => {
     }
   );
 });
-
+*/
 
 test('channelJoinV1: authorised user already a member of channel', () => {
     clearV1();
