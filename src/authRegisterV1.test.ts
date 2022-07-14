@@ -1,10 +1,11 @@
-import { authRegisterV1, authLoginV1 } from './auth.js';
-import { userProfileV1 } from './users.js'
-import { clearV1 } from './other.js';
+import { authRegisterV1, authLoginV1, authUserId } from './auth';
+import { userProfileV1 } from './users';
+import { clearV1 } from './other';
+import { user } from './dataStore';
 
 test('authRegisterV1: correct output for 1st user', () => {
   clearV1();
-  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
+  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
   const aId = a.authUserId;
   expect(aId).toStrictEqual(-1000);
 });
@@ -12,12 +13,9 @@ test('authRegisterV1: correct output for 1st user', () => {
 test('authRegisterV1: correct output for 4th user', () => {
   clearV1();
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
-  const aId = a.authUserId;
   const b = authRegisterV1('another_cristiano@unsw.edu.au', 'cristiano7', 'Cristiano', 'Ronaldo');
-  const bId = b.authUserId;
   const c = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr');
-  const cId = c.authUserId;
-  const d = authRegisterV1('zero0@unsw.edu.au', '12345678', 'ZERO', '0');
+  const d = authRegisterV1('zero0@unsw.edu.au', '12345678', 'ZERO', '0') as authUserId;
   const dId = d.authUserId;
   expect(dId).toStrictEqual(-1015);
 });
@@ -67,70 +65,71 @@ test('authRegisterV1: error for length of last name (>50)', () => {
 
 test('authRegisterV1: correct handle for "Mohammed MayweatherJr"', () => {
   clearV1();  
-  const a = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr');
+  const a = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
   const aId = a.authUserId;
-  const b = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
+  const b = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
   const bId = b.authUserId;
-  expect(userProfileV1(aId, bId).username).toStrictEqual('cristianoronaldo');
+  let profile = userProfileV1(aId, bId);
+  if ('username' in profile) {
+    expect(profile.username).toStrictEqual('cristianoronaldo');
+  } else {
+    expect(profile).toStrictEqual({error: 'error'});
+  }
 });
 
 test('authRegisterV1: correct handle for same name', () => {
   clearV1();  
-  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '1234567', 'Cristiano', 'Ronaldo');
+  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '1234567', 'Cristiano', 'Ronaldo') as authUserId;
   const aId = a.authUserId;
   const b = authRegisterV1('cristiano.ronaldo0@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
-  const bId = b.authUserId;
-  const c = authRegisterV1('cristiano.ronaldo1@unsw.edu.au', '1234567', 'Cristiano', 'Ronaldo');
+  const c = authRegisterV1('cristiano.ronaldo1@unsw.edu.au', '1234567', 'Cristiano', 'Ronaldo') as authUserId;
   const cId = c.authUserId;
-  expect(userProfileV1(aId, cId).username).toStrictEqual('cristianoronaldo1');
+  let profile = userProfileV1(aId, cId);
+  if ('username' in profile) {
+    expect(profile.username).toStrictEqual('cristianoronaldo1');
+  } else {
+    expect(profile).toStrictEqual({error: 'error'});
+  }
 });
 
 test('authRegisterV1: correct handle for "Guy Thathasareallylongname"', () => { 
   clearV1();  
-  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
+  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
   const aId = a.authUserId;
-  const b = authRegisterV1('guy@unsw.edu.au', 'guywithlong', 'Guy', 'Thathasareallylongname');
+  const b = authRegisterV1('guy@unsw.edu.au', 'guywithlong', 'Guy', 'Thathasareallylongname') as authUserId;
   const bId = b.authUserId;
-  expect(userProfileV1(aId, bId).username).toStrictEqual('guythathasareallylon');
+  let profile = userProfileV1(aId, bId);
+  if ('username' in profile) {
+    expect(profile.username).toStrictEqual('guythathasareallylon');
+  } else {
+    expect(profile).toStrictEqual({error: 'error'});
+  }
 });
 
 test('authRegisterV1: correct handle for "ZERO 0"', () => {
   clearV1();  
-  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
+  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
   const aId = a.authUserId;
-  const b = authRegisterV1('zero0@unsw.edu.au', '12345678', 'ZERO', '0');
+  const b = authRegisterV1('zero0@unsw.edu.au', '12345678', 'ZERO', '0') as authUserId;
   const bId = b.authUserId;
-  expect(userProfileV1(aId, bId).username).toStrictEqual('zero0');
+  let profile = userProfileV1(aId, bId);
+  if ('username' in profile) {
+    expect(profile.username).toStrictEqual('zero0');
+  } else {
+    expect(profile).toStrictEqual({error: 'error'});
+  }
 });
 
 test('authRegisterV1: correct handle for "$mOney 0"', () => {
   clearV1(); 
-  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
+  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
   const aId = a.authUserId;
-  const b = authRegisterV1('money0@unsw.edu.au', 'money123', '$mOney', '$0');
+  const b = authRegisterV1('money0@unsw.edu.au', 'money123', '$mOney', '$0') as authUserId;
   const bId = b.authUserId;
-  expect(userProfileV1(aId, bId).username).toStrictEqual('money0');
-});
-
-test('authLoginV1: correct input', () => {
-  clearV1();
-  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
-  const aId = a.authUserId;
-  const b = authLoginV1('cristiano.ronaldo@unsw.edu.au', '123456');
-  const bId = b.authUserId;
-  expect(bId).toStrictEqual(aId);
-});
-
-test('authLoginV1: error for wrong email', () => {
-  clearV1();
-  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
-  const b = authLoginV1('cristianoronaldo0@unsw.edu.au', '123456');
-  expect(b).toStrictEqual({ error: 'error' });
-});
-
-test('authLoginV1: error for wrong password', () => {
-  clearV1();
-  const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
-  const b = authLoginV1('cristiano.ronaldo@unsw.edu.au', '123456789');
-  expect(b).toStrictEqual({ error: 'error' });
+  let profile = userProfileV1(aId, bId);
+  if ('username' in profile) {
+    expect(profile.username).toStrictEqual('money0');
+  } else {
+    expect(profile).toStrictEqual({error: 'error'});
+  }
 });

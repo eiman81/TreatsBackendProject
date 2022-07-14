@@ -1,11 +1,13 @@
-import { getData, setData } from './dataStore.js';
+import { getData, setData } from './dataStore';
 
-function authRegisterV1(email, password, nameFirst, nameLast) {
+export interface authUserId { authUserId: number };
+
+function authRegisterV1(email: string, password: string, nameFirst: string, nameLast: string): authUserId | {error: 'error'} {
 /*
 < Given users's email, password, first name and last name, creat a new account for them and return their authUserId.
-  Also the function will give user their handle, a handle is the concatenation of their casted-to-lowercase alphanumeric 
+  Also the function will give user their handle, a handle is the concatenation of their casted-to-lowercase alphanumeric
   first name and last name >
- dfuhbv
+
 Arguments:
     <email> (<string>)    - <input email>
     <password> (<string>)    - <input password>
@@ -22,7 +24,7 @@ Error   -Occurs when
 
 Return Value:
     Returns <authUserId> on <all test pass>
-*/   
+*/
   const data = getData();
   if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) === false) {
     return { error: 'error' };
@@ -40,8 +42,8 @@ Return Value:
   let handle = '';
   handle = nameFirst + nameLast;
   handle = handle.toLowerCase();
-  handle = handle.replace(/[^a-zA-Z0-9 ]/g, '');  
-  handle = handle.slice(0,20);
+  handle = handle.replace(/[^a-zA-Z0-9 ]/g, '');
+  handle = handle.slice(0, 20);
   let count = 0;
   for (let i = 0; i < data.users.length; i++) {
     if (handle === data.users[i].username.slice(0, handle.length)) {
@@ -65,16 +67,15 @@ Return Value:
     email: email,
     password: password,
     username: handle,
-    userRole: null,
-    isOnline: null,
+    isOnline: null
   });
   setData(data);
   return {
     authUserId: userId,
-  }
+  };
 }
 
-function authLoginV1(email, password) {
+function authLoginV1(email: string, password: string): authUserId | {error: 'error'} {
 /*
 < Given a registered email and password, returns their `authUserId` value >
 
@@ -89,7 +90,7 @@ Error   -Occurs when
 
 Return Value:
     Returns <authUserId> on <all test pass>
-*/ 
+*/
   const data = getData();
   let validEmail = false;
   let found = 0;
@@ -107,7 +108,7 @@ Return Value:
     } else {
       return {
         authUserId: data.users[found].uId,
-      }
+      };
     }
   }
 }
