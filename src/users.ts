@@ -16,11 +16,18 @@ Return Value:
     Returns <user> on <all test pass>
 */  
   const data = getData();
-  for (let i = 0; i < data.users.length; i++) {
-    if (data.users[i].uId === uId) {
-      return data.users[i];
+  for (const user of data.users) {
+    if (authUserId === user.uId) {
+      for (const user of data.users) {
+        if (uId === user.uId) {
+          return user;
+        }
+        break;
+      }
+      break;
     }
   }
+
   return {error: 'error'}; 
 }
 
