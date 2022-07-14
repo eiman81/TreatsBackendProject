@@ -1,6 +1,8 @@
+import { NODATA } from "dns";
 import { getData, setData} from "./dataStore";
+interface nodata {};
 
-function clearV1(): data {
+function clearV1(): nodata {
 /*
 < Resets the internal data of the application to its initial state >
 
@@ -11,15 +13,17 @@ Exceptions:
 Return Value:
     Returns <{}> on <all test pass>
 */     
-
-  let nodata: data = {
+  let data = {
     users: [],
     channels: [],
   };
-  setData(nodata);
-
-  return nodata;
+  let nodata = {};
+  setData(data);
+  if (getData().users.length === 0 && getData().channels.length === 0) {
+    return nodata;
+  }
 }
+
 
 function channelExists(channelId: number): boolean {
   let found = 0;

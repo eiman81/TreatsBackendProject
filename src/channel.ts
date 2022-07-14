@@ -87,33 +87,39 @@ Return Value:
   //check if user id is valid
   //check if channel id is valid
   let store = getData();
+  let profile = userProfileV1(authUserId, authUserId);
 
-  if (store.users.includes(userProfileV1(authUserId, authUserId)) && channelExists(channelId)) {
-    //check if user is already in channel
-    let channelDetails = channelDetailsV1(authUserId, channelId);
-    if ('allMembers' in channelDetails) {
-      if (authUserId in channelDetails.allMembers) {
-        return {error: 'error'}
+  // checks no error is returned
+  if ('error' in profile) {
+    return {error: 'error'}
+  } else {
+    if (store.users.includes(profile) && channelExists(channelId)) {
+      //check if user is already in channel
+      let channelDetails = channelDetailsV1(authUserId, channelId);
+      if ('allMembers' in channelDetails) {
+        if (authUserId in channelDetails.allMembers) {
+          return {error: 'error'}
 
-      } else if (channelDetails.isPublic === false) {
-        return {error: 'error'}
+        } else if (channelDetails.isPublic === false) {
+          return {error: 'error'}
 
-      } else {
-        //add user to channel
-        let counter = 0;
-        for (const channel of getData().channels) {
-          if (channel.channelId = channelId) {
-            channel.allMembers.push(authUserId);
-            store.channels[counter] = channel;
-            setData(store);
-            break;
+        } else {
+          //add user to channel
+          let counter = 0;
+          for (const channel of getData().channels) {
+            if (channel.channelId = channelId) {
+              channel.allMembers.push(authUserId);
+              store.channels[counter] = channel;
+              setData(store);
+              break;
+            }
+            counter++;
           }
-          counter++;
         }
-      }
-    } else {
-      return {error: 'error'}
-    } 
+      } else {
+        return {error: 'error'}
+      } 
+    }
   }
 }
 
@@ -138,29 +144,36 @@ Return Value:
     Returns <{}> on <all test pass>
 */
   let store = getData();
-  if (store.users.includes(userProfileV1(authUserId, authUserId)) && channelExists(channelId)) {
-    //check if user is already in channel
-    let channelDetails = channelDetailsV1(authUserId, channelId);
-    if ('allMembers' in channelDetails) {
-      if (uId in channelDetails.allMembers) {
-        return {error: 'error'}
+  let profile = userProfileV1(authUserId, authUserId);
 
-      } else {
-        //add user to channel
-        let counter = 0;
-        for (const channel of getData().channels) {
-          if (channel.channelId = channelId) {
-            channel.allMembers.push(uId);
-            store.channels[counter] = channel;
-            setData(store);
-            break;
+  // checks no error is returned
+  if ('error' in profile) {
+    return {error: 'error'}
+  } else {
+    if (store.users.includes(profile) && channelExists(channelId)) {
+      //check if user is already in channel
+      let channelDetails = channelDetailsV1(authUserId, channelId);
+      if ('allMembers' in channelDetails) {
+        if (uId in channelDetails.allMembers) {
+          return {error: 'error'}
+
+        } else {
+          //add user to channel
+          let counter = 0;
+          for (const channel of getData().channels) {
+            if (channel.channelId = channelId) {
+              channel.allMembers.push(uId);
+              store.channels[counter] = channel;
+              setData(store);
+              break;
+            }
+            counter++;
           }
-          counter++;
         }
       }
+    } else {
+      return {error:'error'};
     }
-  } else {
-    return {error:'error'};
   }
 }
 
