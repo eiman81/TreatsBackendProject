@@ -8,6 +8,7 @@ export interface user {
   password: string,
   username: string,
   isOnline: boolean
+  token: string
 }
 
 export interface channel {
@@ -32,22 +33,6 @@ let data : data = {
   channels: [],
 };
 
-// YOU SHOULDNT NEED TO MODIFY THE FUNCTIONS BELOW IN ITERATION 1
-
-/*
-Example usage
-    let store = getData()
-    console.log(store) # Prints { 'names': ['Hayden', 'Tam', 'Rani', 'Giuliana', 'Rando'] }
-
-    names = store.names
-
-    names.pop()
-    names.push('Jake')
-
-    console.log(store) # Prints { 'names': ['Hayden', 'Tam', 'Rani', 'Giuliana', 'Jake'] }
-    setData(store)
-*/
-
 // Use get() to access the data
 function getData(): data {
   return data;
@@ -58,4 +43,22 @@ function setData(newData: data) {
   data = newData;
 }
 
-export { getData, setData };
+let currentTokens = [];
+// Create token for user session
+
+function getTokens(): string[] {
+  return currentTokens;
+}
+
+function setTokens(tokens: string[]) {
+  currentTokens = tokens
+}
+
+function tokenGenerate(): string {
+  let tokenNum = Math.random();
+  let newToken = tokenNum.toString();
+  currentTokens.push(newToken);
+  return newToken;
+}
+
+export { getData, setData, tokenGenerate, setTokens, getTokens };

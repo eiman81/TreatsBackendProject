@@ -38,5 +38,18 @@ function channelExists(channelId: number): boolean {
   }
 }
 
+function userExists(authUserId: number): boolean {
+  let found = 0;
+  for (const user of getData().users) {
+    if (user.uId === authUserId) {
+      found = 1;
+      return true;
+    }
+  }
+  if (found === 0) {
+    return false;
+  }
+}
 
-export { clearV1, channelExists }; 
+
+export { clearV1, channelExists, userExists }; 
