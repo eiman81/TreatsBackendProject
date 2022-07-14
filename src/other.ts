@@ -1,6 +1,6 @@
 import { getData, setData} from "./dataStore";
 
-function clearV1() {
+function clearV1(): data {
 /*
 < Resets the internal data of the application to its initial state >
 
@@ -12,11 +12,13 @@ Return Value:
     Returns <{}> on <all test pass>
 */     
 
-  let nodata = {
+  let nodata: data = {
     users: [],
     channels: [],
   };
   setData(nodata);
+
+  return nodata;
 }
 
 function channelExists(channelId: number): boolean {

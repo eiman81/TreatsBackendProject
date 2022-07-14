@@ -1,7 +1,6 @@
-import { getData } from "./dataStore.js";
-import { user } from "./auth";
+import { getData, user } from "./dataStore";
 
-function userProfileV1(authUserId: number, uId: number): {error: 'error'} | user {
+function userProfileV1(authUserId: number, uId: number) : user | {error: 'error'} {
 /*
 < Given authUserId and uId, if user is valid, returns information about their userId, email, first name, last name, and handle >
 

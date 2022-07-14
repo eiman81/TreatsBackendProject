@@ -1,41 +1,16 @@
-import { getData, setData } from "./dataStore.js";
-import { clearV1 } from './other.js';
+import { authRegisterV1, authUserId } from './auth';
+import { channelsCreateV1 } from './channels';
+import { clearV1 } from './other';
+import { channel, user, data } from './dataStore';
 
 test('Clear test', ()=> {
-    
-    let user = {
-        uId: 7,
-        nameFirst: 'Cristiano',
-        nameLast: 'Ronaldo',
-        email: 'crisronaldosui@gmail.com',
-        password: 'suiiiiiiiiii',
-        handleStr: 'cristianoronaldo', 
-        userRole: 'Admin',
-        isOnline: true,
-    };
-
-    let channel = {
-        channelId: 1,
-        channelName: 'Discussion',
-        latestMsgStr: 'Hi!',
-        numberOfMessages: null,
-        messages: [],
-        isPublic: 'false',
-        start: 5,
-        ownerMembers: [4],
-        allMembers: [4]
-    }
-
-    let data = {
-        users: user,
-        channels: channel
-    }
-    setData(data);
-    let nodata = {
+    const user = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
+    const userId = user.authUserId;
+    const channel = channelsCreateV1(userId,'',true);
+    let nodata: data = {
         users: [],
         channels: []
     };
-    clearV1();
-    expect(getData()).toStrictEqual(nodata); 
+    expect(clearV1()).toStrictEqual(nodata); 
 });
 
