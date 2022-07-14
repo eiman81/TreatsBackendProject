@@ -1,9 +1,9 @@
 
-import { getData, setData } from "./dataStore.js";
-import { channelInviteV1, channelJoinV1, channelDetailsV1, channelMessagesV1} from './channel.js';
-import { channelsCreateV1, channelId } from './channels.js'
-import { authRegisterV1, authUserId } from './auth.js';
-import { clearV1 } from './other.js';
+import { getData, setData } from "./dataStore";
+import { channelInviteV1, channelJoinV1, channelDetailsV1, channelMessagesV1} from './channel';
+import { channelsCreateV1, channelId } from './channels'
+import { authRegisterV1, authUserId } from './auth';
+import { clearV1 } from './other';
 
 
 test('ChannelDetail error both invalid codes', ()=> {
@@ -32,8 +32,8 @@ test('ChannelDetailsV1 working', ()=> {
     let channeldetails = {
         name: 'first',
         isPublic: false,
-        ownerMembers: [authid],
-        allMembers: [authid]
+        ownerMembers: [authid.authUserId],
+        allMembers: [authid.authUserId]
     }
     expect(channelDetailsV1(authid.authUserId, channelid.channelId)).toStrictEqual(channeldetails)
 })

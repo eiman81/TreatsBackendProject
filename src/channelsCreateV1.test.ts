@@ -27,7 +27,7 @@ test('channelsCreateV1: correct output for first created channel', () => {
   clearV1();
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
   const b = channelsCreateV1(a.authUserId,'newChannel',true) as channelId;
-  expect(b).toStrictEqual(1000);
+  expect(b.channelId).toStrictEqual(1000);
 });
 
 test('channelsCreateV1: correct output for fifth created channel', () => {
