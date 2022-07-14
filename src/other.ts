@@ -1,5 +1,5 @@
 import { NODATA } from "dns";
-import { getData, setData} from "./dataStore";
+import { getData, setData, data } from "./dataStore";
 interface nodata {};
 
 function clearV1(): nodata {
@@ -13,7 +13,7 @@ Exceptions:
 Return Value:
     Returns <{}> on <all test pass>
 */     
-  let data = {
+  let data: data = {
     users: [],
     channels: [],
   };
