@@ -1,4 +1,4 @@
-import { setData} from "./dataStore";
+import { getData, setData} from "./dataStore";
 
 function clearV1() {
 /*
@@ -19,4 +19,18 @@ Return Value:
   setData(nodata);
 }
 
-export { clearV1 }; 
+function channelExists(channelId: number): boolean {
+  let found = 0;
+  for (const channel of getData().channels) {
+    if (channel.channelId === channelId) {
+      found = 1;
+      return true;
+    }
+  }
+  if (found === 0) {
+    return false;
+  }
+}
+
+
+export { clearV1, channelExists }; 

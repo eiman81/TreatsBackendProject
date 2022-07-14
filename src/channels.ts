@@ -1,6 +1,6 @@
 import { getData, setData } from "./dataStore";
 
-interface channel {
+export interface channel {
   channelId: number,
   name: string,
   latestMsg: string,

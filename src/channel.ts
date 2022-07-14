@@ -1,11 +1,19 @@
 import { getData, setData } from "./dataStore";
 import { userProfileV1 } from "./users";
+import { channelExists} from "./other"
+import { channel } from "./channels"
 
 export interface channeldetails {
   name: string,
   isPublic: boolean,
   ownerMembers: number [],
   allMembers: number []
+}
+
+export interface returnMessages {
+  start: number,
+  end: number,
+  messages: number[]
 }
 
 function channelDetailsV1(authUserId: number, channelId: number) : channeldetails | {error: 'error'} {
@@ -57,7 +65,7 @@ Return Value:
 
 
 
-function channelJoinV1(authUserId, channelId) {
+function channelJoinV1(authUserId: number, channelId: number): {error: 'error'} {
 /*
 < Given a channelId and authUserId, if this user can join, adds them to that channel >
 
@@ -79,7 +87,8 @@ Return Value:
   //check if user id is valid
   //check if channel id is valid
   let store = getData();
-  if (authUserId in store.users && channelId in store.channels) {
+
+  if (store.users.includes(userProfileV1(authUserId, authUserId)) && channelExists(channelId)) {
     //check if user is already in channel
     let channelDetails = channelDetailsV1(authUserId, channelId);
     if ('allMembers' in channelDetails) {
@@ -108,7 +117,7 @@ Return Value:
   }
 }
 
-function channelInviteV1(authUserId, channelId, uId) {
+function channelInviteV1(authUserId: number, channelId: number, uId: number) {
 /*
 < Given the vaild authUserId , vaild channelId and Uid, Once invited, the user is added to the channel immediately. 
   In both public and private channels, all members are able to invite users >
@@ -129,11 +138,11 @@ Return Value:
     Returns <{}> on <all test pass>
 */
   let store = getData();
-  if (authUserId in store.users && channelId in store.channels) {
+  if (store.users.includes(userProfileV1(authUserId, authUserId)) && channelExists(channelId)) {
     //check if user is already in channel
     let channelDetails = channelDetailsV1(authUserId, channelId);
     if ('allMembers' in channelDetails) {
-      if (authUserId in channelDetails.allMembers) {
+      if (uId in channelDetails.allMembers) {
         return {error: 'error'}
 
       } else {
@@ -141,7 +150,7 @@ Return Value:
         let counter = 0;
         for (const channel of getData().channels) {
           if (channel.channelId = channelId) {
-            channel.allMembers.push(authUserId);
+            channel.allMembers.push(uId);
             store.channels[counter] = channel;
             setData(store);
             break;
@@ -153,12 +162,6 @@ Return Value:
   } else {
     return {error:'error'};
   }
-}
-
-interface returnMessages {
-  start: number,
-  end: number,
-  messages: number[]
 }
 
 function channelMessagesV1(authUserId: number, channelId: number, start: number) : {error:'error'} | returnMessages {
@@ -181,66 +184,63 @@ Error   -Occurs when
 Return Value:
     Returns <messages, start, end> on <all test pass>
 */
-  let valid = 0;
-  let channelRequested = {};
+
   for (const channel of (getData()).channels) {
     if (channel.channelId === channelId) {
       let members = channel.allMembers;
       if (members.includes(authUserId)) {
-        valid = 1;
-        channelRequested = channel;
-      }
-    }
-  }
+        let channelRequested = channel;
+        
+        if (start > channelRequested.messages.length || channelRequested.messages.length === undefined) {
+          return {error: 'error'};
+        
+        } else if (start + 50 >= channelRequested.messages.length) {
+          let messages = [];
+          let counter = 0;
+          for (const message of channelRequested.messages) {
+            if (start > counter) {
+              counter++;
+            } else {
+              messages.push(message);
+              counter++;
+            }
+          }
 
-  if (valid === 1) {
-    if (start > channelRequested.messages.length || channelRequested.messages.length === undefined) {
-      return {error: 'error'};
-    
-    } else if (start + 50 >= channelRequested.messages.length) {
-      let messages = [];
-      let counter = 0;
-      for (const message of channelRequested.messages) {
-        if (start > counter) {
-          counter++;
+          let mes = {
+            messages: messages,
+            start: start,
+            end: -1
+          }
+  
+          return mes;
         } else {
-          messages.push(message);
-          counter++;
+    
+          let end = start + 50;
+          let messages = [];
+          let counter = 0;
+          for (const message of channelRequested.messages) {
+            if (start > counter) {
+              counter++;
+            } else if (start <= counter && counter <= end) {
+              messages.push(message);
+              counter++;
+            }
+          }
+    
+          let mes = {
+            messages: messages,
+            start: start,
+            end: end
+          }
+    
+          return mes;
         }
+      } else {
+        return {error: 'error'}
       }
-
-      let mes = {
-        messages: messages,
-        start: start,
-        end: -1
-      }
-
-      return mes;
-      
     } else {
-
-      let end = start + 50;
-      let messages = [];
-      let counter = 0;
-      for (const message of channelRequested.messages) {
-        if (start > counter) {
-          counter++;
-        } else if (start <= counter && counter <= end) {
-          messages.push(message);
-          counter++;
-        }
-      }
-
-      let mes = {
-        messages: messages,
-        start: start,
-        end: end
-      }
-
-      return mes;
+      return {error: 'error'};
     }
-  } else {
-    return {error: 'error'};
   }
 }
 

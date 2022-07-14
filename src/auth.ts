@@ -1,5 +1,15 @@
 import { getData, setData } from './dataStore';
 
+export interface user {
+  uId: number,
+  nameFirst: string,
+  nameLast: string,
+  email: string,
+  password: string,
+  username: string,
+  isOnline: boolean
+}
+
 function authRegisterV1(email, password, nameFirst, nameLast) {
 /*
 < Given users's email, password, first name and last name, creat a new account for them and return their authUserId.
