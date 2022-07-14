@@ -43,7 +43,7 @@ function setData(newData: data) {
   data = newData;
 }
 
-let currentTokens = [];
+let currentTokens: string[] = [];
 // Create token for user session
 
 function getTokens(): string[] {
