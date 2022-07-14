@@ -5,9 +5,12 @@ const OK = 200;
 const port = config.port;
 const url = config.url;
 
+test('dummy test', () => {
+  expect(1 + 1).toBe(2);
+});
+
 /*
 Iteration 2
-*/
 describe('HTTP tests using Jest', () => {
   test('Test successful echo', () => {
     const res = request(
@@ -38,3 +41,4 @@ describe('HTTP tests using Jest', () => {
     expect(bodyObj).toEqual({ error: 'error' });
   });
 });
+*/
