@@ -22,9 +22,7 @@ Return Value:
         if (uId === user.uId) {
           return user;
         }
-        break;
       }
-      break;
     }
   }
 

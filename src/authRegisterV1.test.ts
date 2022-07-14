@@ -1,6 +1,7 @@
-import { authRegisterV1, authLoginV1, authUserId } from './auth.js';
-import { userProfileV1 } from './users.js'
-import { clearV1 } from './other.js';
+import { authRegisterV1, authLoginV1, authUserId } from './auth';
+import { userProfileV1 } from './users';
+import { clearV1 } from './other';
+import { user } from './dataStore';
 
 test('authRegisterV1: correct output for 1st user', () => {
   clearV1();
@@ -68,7 +69,12 @@ test('authRegisterV1: correct handle for "Mohammed MayweatherJr"', () => {
   const aId = a.authUserId;
   const b = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
   const bId = b.authUserId;
-  expect(userProfileV1(aId, bId).username).toStrictEqual('cristianoronaldo');
+  let profile = userProfileV1(aId, bId);
+  if ('username' in profile) {
+    expect(profile.username).toStrictEqual('cristianoronaldo');
+  } else {
+    expect(profile).toStrictEqual({error: 'error'});
+  }
 });
 
 test('authRegisterV1: correct handle for same name', () => {
@@ -78,7 +84,12 @@ test('authRegisterV1: correct handle for same name', () => {
   const b = authRegisterV1('cristiano.ronaldo0@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
   const c = authRegisterV1('cristiano.ronaldo1@unsw.edu.au', '1234567', 'Cristiano', 'Ronaldo') as authUserId;
   const cId = c.authUserId;
-  expect(userProfileV1(aId, cId).username).toStrictEqual('cristianoronaldo1');
+  let profile = userProfileV1(aId, cId);
+  if ('username' in profile) {
+    expect(profile.username).toStrictEqual('cristianoronaldo1');
+  } else {
+    expect(profile).toStrictEqual({error: 'error'});
+  }
 });
 
 test('authRegisterV1: correct handle for "Guy Thathasareallylongname"', () => { 
@@ -87,7 +98,12 @@ test('authRegisterV1: correct handle for "Guy Thathasareallylongname"', () => {
   const aId = a.authUserId;
   const b = authRegisterV1('guy@unsw.edu.au', 'guywithlong', 'Guy', 'Thathasareallylongname') as authUserId;
   const bId = b.authUserId;
-  expect(userProfileV1(aId, bId).username).toStrictEqual('guythathasareallylon');
+  let profile = userProfileV1(aId, bId);
+  if ('username' in profile) {
+    expect(profile.username).toStrictEqual('guythathasareallylon');
+  } else {
+    expect(profile).toStrictEqual({error: 'error'});
+  }
 });
 
 test('authRegisterV1: correct handle for "ZERO 0"', () => {
@@ -96,7 +112,12 @@ test('authRegisterV1: correct handle for "ZERO 0"', () => {
   const aId = a.authUserId;
   const b = authRegisterV1('zero0@unsw.edu.au', '12345678', 'ZERO', '0') as authUserId;
   const bId = b.authUserId;
-  expect(userProfileV1(aId, bId).username).toStrictEqual('zero0');
+  let profile = userProfileV1(aId, bId);
+  if ('username' in profile) {
+    expect(profile.username).toStrictEqual('zero0');
+  } else {
+    expect(profile).toStrictEqual({error: 'error'});
+  }
 });
 
 test('authRegisterV1: correct handle for "$mOney 0"', () => {
@@ -105,5 +126,10 @@ test('authRegisterV1: correct handle for "$mOney 0"', () => {
   const aId = a.authUserId;
   const b = authRegisterV1('money0@unsw.edu.au', 'money123', '$mOney', '$0') as authUserId;
   const bId = b.authUserId;
-  expect(userProfileV1(aId, bId).username).toStrictEqual('money0');
+  let profile = userProfileV1(aId, bId);
+  if ('username' in profile) {
+    expect(profile.username).toStrictEqual('money0');
+  } else {
+    expect(profile).toStrictEqual({error: 'error'});
+  }
 });

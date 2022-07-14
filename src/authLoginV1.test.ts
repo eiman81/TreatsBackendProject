@@ -1,6 +1,6 @@
-import { authRegisterV1, authLoginV1, authUserId } from './auth.js';
-import { userProfileV1 } from './users.js'
-import { clearV1 } from './other.js';
+import { authRegisterV1, authLoginV1, authUserId } from './auth';
+import { userProfileV1 } from './users'
+import { clearV1 } from './other';
 
 test('authLoginV1: correct input', () => {
   clearV1();

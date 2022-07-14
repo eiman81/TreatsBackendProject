@@ -1,6 +1,6 @@
-import {channelsCreateV1, channelsListV1, channelsListallV1} from './channels.js';
-import {authRegisterV1} from './auth.js';
-import {clearV1} from './other.js';
+import {channelsCreateV1, channelsListV1, channelsListallV1} from './channels';
+import {authRegisterV1} from './auth';
+import {clearV1} from './other';
 
 test('ChannelsListallV1 userId not found', ()=> {
     clearV1();

@@ -16,10 +16,9 @@ test('ChannelDetail error both invalid codes', ()=> {
 
 test('ChannelDetail error, userid not part of desired channel requested', ()=> {
     clearV1();
-
     let authid = authRegisterV1('sean@gmail.com', '2737svww', 'Sean', 'OConnor').authUserId;
-    let channelid = channelsCreateV1(authid, 'first', false).channelId;
     let authid2 = authRegisterV1('bob@gmail.com', '287swvw3', 'bob', 'green').authUserId;
+    let channelid = channelsCreateV1(authid, 'first', false).channelId;
 
     expect(channelDetailsV1(authid2, channelid)).toStrictEqual({error: 'error'});
 })

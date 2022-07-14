@@ -23,7 +23,7 @@ test('Test 2: successful userProfileV1', () => {
   clearV1();
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
   const b = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr')as authUserId;
-  const userB: user= {
+  const userB: user = {
     uId: -1005,
     nameFirst: 'Mohammed',
     nameLast: 'MayweatherJr',

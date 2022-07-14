@@ -23,11 +23,11 @@ user with PermissionStatus, private channel
 
 */
 
-import { getData, setData } from "./dataStore.js";
-import { channelInviteV1, channelJoinV1, channelDetailsV1, channelMessagesV1} from './channel.js';
-import { channelsCreateV1 } from './channels.js'
-import { authRegisterV1 } from './auth.js';
-import { clearV1 } from './other.js';
+import { getData, setData } from "./dataStore";
+import { channelInviteV1, channelJoinV1, channelDetailsV1, channelMessagesV1} from './channel';
+import { channelsCreateV1 } from './channels'
+import { authRegisterV1 } from './auth';
+import { clearV1 } from './other';
 
 /*
 // Setup
