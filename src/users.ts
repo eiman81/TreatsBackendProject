@@ -8,7 +8,7 @@ interface userProfile {
   username: string,  
 }
 
-function userProfileV1(authUserId: number, uId: number) : userProfile | {error: 'error'} {
+function userProfileV1(token: string, uId: number) : userProfile | {error: 'error'} {
 /*
 < Given authUserId and uId, if user is valid, returns information about their userId, email, first name, last name, and handle >
 
@@ -25,7 +25,7 @@ Return Value:
 */  
   const data = getData();
   for (const user of data.users) {
-    if (authUserId === user.uId) {
+    if (token === user.token) {
       for (const user of data.users) {
         if (uId === user.uId) {
           let userProfile = {

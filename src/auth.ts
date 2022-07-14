@@ -1,6 +1,10 @@
+import { token } from 'morgan';
 import { getData, setData, tokenGenerate, setTokens, getTokens } from './dataStore';
 
-export interface authUserId { authUserId: number };
+export interface authUserId {
+  authUserId: number,
+  token: string
+}
 
 function authRegisterV1(email: string, password: string, nameFirst: string, nameLast: string): authUserId | {error: 'error'} {
 /*
@@ -60,6 +64,7 @@ Return Value:
     }
   }
   const userId = lowest - 5;
+  const token = tokenGenerate();
   data.users.push({
     uId: userId,
     nameFirst: nameFirst,
@@ -68,11 +73,12 @@ Return Value:
     password: password,
     username: handle,
     isOnline: null,
-    token: tokenGenerate()
+    token: token
   });
   setData(data);
   return {
     authUserId: userId,
+    token: token,
   };
 }
 
@@ -107,8 +113,10 @@ Return Value:
     if (password != data.users[found].password) {
       return { error: 'error' };
     } else {
+      const token = tokenGenerate();
       return {
         authUserId: data.users[found].uId,
+        token: token
       };
     }
   }

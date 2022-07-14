@@ -9,8 +9,8 @@ import { clearV1 } from './other';
 
 const validuser1 = authRegisterV1('another_cristiano@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
 const validuser2 = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
-const validchannel = channelsCreateV1(validuser1.authUserId, 'Discussion', true) as channelId;
-const privatechannel = channelsCreateV1(validuser2.authUserId, 'Discussion', false) as channelId;
+const validchannel = channelsCreateV1(validuser1.token, 'Discussion', true) as channelId;
+const privatechannel = channelsCreateV1(validuser2.token, 'Discussion', false) as channelId;
 
 
 //create invalid users
@@ -36,7 +36,7 @@ const invaliduser: user = {
 test('channelInviteV1: invalid authuserId, valid uId, valid channel', () => {
     clearV1();
     
-    let result = channelInviteV1(invaliduser.uId, validuser2.authUserId, validchannel.channelId)
+    let result = channelInviteV1(invaliduser.token, validuser2.authUserId, validchannel.channelId)
     
     expect(result).toStrictEqual({error: 'error'});
   });
@@ -44,7 +44,7 @@ test('channelInviteV1: invalid authuserId, valid uId, valid channel', () => {
   test('channelInviteV1: valid authuserId (in channel), valid uId, valid channel', () => {
     clearV1();
     
-    let result = channelInviteV1(validuser1.authUserId, validuser2.authUserId, validchannel.channelId)
+    let result = channelInviteV1(validuser1.token, validuser2.authUserId, validchannel.channelId)
     
     expect(result).toStrictEqual({error: 'error'});
   });
@@ -52,7 +52,7 @@ test('channelInviteV1: invalid authuserId, valid uId, valid channel', () => {
   test('channelInviteV1: valid authuserId (not in channel), valid uId, valid channel', () => {
     clearV1();
     
-    let result = channelInviteV1(validuser2.authUserId, validuser1.authUserId, validchannel.channelId)
+    let result = channelInviteV1(validuser2.token, validuser1.authUserId, validchannel.channelId)
     
     expect(result).toStrictEqual({error: 'error'});
   });

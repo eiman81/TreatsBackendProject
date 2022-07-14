@@ -7,7 +7,7 @@ export interface user {
   email: string,
   password: string,
   username: string,
-  isOnline: boolean
+  isOnline: boolean,
   token: string
 }
 
@@ -43,7 +43,7 @@ function setData(newData: data) {
   data = newData;
 }
 
-let currentTokens = [];
+let currentTokens: string[] = [];
 // Create token for user session
 
 function getTokens(): string[] {
