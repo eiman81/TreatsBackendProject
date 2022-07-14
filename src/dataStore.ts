@@ -54,10 +54,11 @@ function setTokens(tokens: string[]) {
   currentTokens = tokens
 }
 
-function tokenGenerate() {
+function tokenGenerate(): string {
   let tokenNum = Math.random();
   let newToken = tokenNum.toString();
   currentTokens.push(newToken);
+  return newToken;
 }
 
 export { getData, setData, tokenGenerate, setTokens, getTokens };

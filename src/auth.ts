@@ -1,4 +1,4 @@
-import { getData, setData } from './dataStore';
+import { getData, setData, tokenGenerate, setTokens, getTokens } from './dataStore';
 
 export interface authUserId { authUserId: number };
 
@@ -67,7 +67,8 @@ Return Value:
     email: email,
     password: password,
     username: handle,
-    isOnline: null
+    isOnline: null,
+    token: tokenGenerate()
   });
   setData(data);
   return {

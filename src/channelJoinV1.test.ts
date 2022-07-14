@@ -119,7 +119,7 @@ let channels = store.channels
 const validuser1 = authRegisterV1('another_cristiano@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
 const validuser2 = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
 const validchannel = channelsCreateV1(validuser1.authUserId, 'Discussion', true) as channelId;
-const privatechannel = channelsCreateV1(validuser2.authUserId, 'Discussion', false) as channelId;
+const privatechannel = channelsCreateV1(validuser2.authUserId, 'Discussion', true) as channelId;
 /*
 const validchannel = {
     channelId: 3,
@@ -141,6 +141,7 @@ const invaliduser: user = {
     password: 'stoney',
     username: 'leondechino',
     isOnline: null,
+    token: '23'
   }
 
   const invalidchannel: channel = {
@@ -183,17 +184,14 @@ describe("'channelJoinV1' utility", () => {
 */
 
 test('channelJoinV1: authorised user already a member of channel', () => {
-    clearV1();
     
     let result = channelJoinV1(validuser1.authUserId, validchannel.channelId)
-    
     expect(result).toStrictEqual({error: 'error'});
+
   });
 
   test('channelJoinV1: nonpermitted attempts to join private', () => {
-    clearV1();
     
-    let result = channelJoinV1(validuser1.authUserId, privatechannel.channelId)
-    
+    let result = channelJoinV1(3, privatechannel.channelId);
     expect(result).toStrictEqual({error: 'error'});
   });

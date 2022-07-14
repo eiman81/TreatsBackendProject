@@ -1,6 +1,14 @@
 import { getData, user } from "./dataStore";
 
-function userProfileV1(authUserId: number, uId: number) : user | {error: 'error'} {
+interface userProfile {
+  uId: number,
+  nameFirst: string,
+  nameLast: string,
+  email: string,
+  username: string,  
+}
+
+function userProfileV1(authUserId: number, uId: number) : userProfile | {error: 'error'} {
 /*
 < Given authUserId and uId, if user is valid, returns information about their userId, email, first name, last name, and handle >
 
@@ -20,7 +28,15 @@ Return Value:
     if (authUserId === user.uId) {
       for (const user of data.users) {
         if (uId === user.uId) {
-          return user;
+          let userProfile = {
+            uId: user.uId,
+            nameFirst: user.nameFirst,
+            nameLast: user.nameLast,
+            email: user.email,
+            username: user.username,
+          }
+
+          return userProfile;
         }
       }
     }

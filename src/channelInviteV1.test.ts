@@ -22,6 +22,7 @@ const invaliduser: user = {
     password: 'stoney',
     username: 'leondechino',
     isOnline: null,
+    token: '23'
   }
 
 

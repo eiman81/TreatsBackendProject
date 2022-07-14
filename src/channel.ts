@@ -1,7 +1,8 @@
 import { getData, setData } from "./dataStore";
 import { userProfileV1 } from "./users";
-import { channelExists} from "./other"
+import { channelExists, userExists} from "./other"
 import { channel } from "./channels"
+import { prototype } from "events";
 
 export interface channeldetails {
   name: string,
@@ -93,11 +94,11 @@ Return Value:
   if ('error' in profile) {
     return {error: 'error'}
   } else {
-    if (store.users.includes(profile) && channelExists(channelId)) {
+    if (userExists(authUserId) && channelExists(channelId)) {
       //check if user is already in channel
       let channelDetails = channelDetailsV1(authUserId, channelId);
       if ('allMembers' in channelDetails) {
-        if (authUserId in channelDetails.allMembers) {
+        if (channelDetails.allMembers.includes(authUserId)) {
           return {error: 'error'}
 
         } else if (channelDetails.isPublic === false) {
@@ -116,8 +117,6 @@ Return Value:
             counter++;
           }
         }
-      } else {
-        return {error: 'error'}
       } 
     }
   }
@@ -150,11 +149,11 @@ Return Value:
   if ('error' in profile) {
     return {error: 'error'}
   } else {
-    if (store.users.includes(profile) && channelExists(channelId)) {
-      //check if user is already in channel
+    if (userExists(authUserId) && channelExists(channelId)) {
+      //check if user is already in channel and if uId is real
       let channelDetails = channelDetailsV1(authUserId, channelId);
       if ('allMembers' in channelDetails) {
-        if (uId in channelDetails.allMembers) {
+        if (userExists(uId) === false || channelDetails.allMembers.includes(uId)) {
           return {error: 'error'}
 
         } else {
