@@ -311,4 +311,43 @@ function channelAddOwnerV1(token: string, channelId: number, uId: number): {erro
   }
 }
 
-export { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1, channelAddOwnerV1 };
+function channelRemoveOwnerV1(token: string, channelId: number, uId: number): {error: 'error'} | {} {
+  const store = getData()
+  let authUserId: number;
+  for (const user of store.users) {
+    if (user.token === token) {
+      authUserId = user.uId;
+      break;
+    }
+  }
+  const profile = userProfileV1(token, authUserId);
+
+  if ('error' in profile) {
+    return { error: 'error' };
+  } else {
+    if (userExists(uId) && channelExists(channelId)) {
+      const channelDetails = channelDetailsV1(token, channelId);
+      if ('ownerMembers' in channelDetails) {
+        if (channelDetails.ownerMembers.includes(uId) && channelDetails.ownerMembers.includes(authUserId)) {
+            let counter = 0;
+            for (const channel of getData().channels) {
+            if (channel.channelId === channelId) {
+              channel.ownerMembers.splice(uId);
+              store.channels[counter] = channel;
+              setData(store);
+              return {};
+            }
+            counter++;
+          }
+        } else {
+            return { error: 'error' };
+        }
+      }
+    } else {
+        return { error: 'error' };
+    }
+  }
+}
+
+
+export { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1, channelAddOwnerV1, channelRemoveOwnerV1 };
