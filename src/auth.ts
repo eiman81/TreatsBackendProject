@@ -3,7 +3,6 @@ import { getData, setData, tokenGenerate, setTokens, getTokens } from './dataSto
 
 export interface authUserId {
   authUserId: number,
-  token: string
 }
 
 function authRegisterV1(email: string, password: string, nameFirst: string, nameLast: string): authUserId | {error: 'error'} {
@@ -78,7 +77,6 @@ Return Value:
   setData(data);
   return {
     authUserId: userId,
-    token: token,
   };
 }
 
@@ -116,7 +114,6 @@ Return Value:
       data.users[found].token = tokenGenerate();
       return {
         authUserId: data.users[found].uId,
-        token: token
       };
     }
   }
