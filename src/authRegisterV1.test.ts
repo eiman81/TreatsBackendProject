@@ -65,7 +65,7 @@ test('authRegisterV1: error for length of last name (>50)', () => {
 test('authRegisterV1: correct handle for "Mohammed MayweatherJr"', () => {
   clearV1();  
   const a = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
-  const aId = a.authUserId;
+  const aId = a.token;
   const b = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
   const bId = b.authUserId;
   let profile = userProfileV1(aId, bId);
@@ -79,7 +79,7 @@ test('authRegisterV1: correct handle for "Mohammed MayweatherJr"', () => {
 test('authRegisterV1: correct handle for same name', () => {
   clearV1();  
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '1234567', 'Cristiano', 'Ronaldo') as authUserId;
-  const aId = a.authUserId;
+  const aId = a.token;
   const b = authRegisterV1('cristiano.ronaldo0@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo');
   const c = authRegisterV1('cristiano.ronaldo1@unsw.edu.au', '1234567', 'Cristiano', 'Ronaldo') as authUserId;
   const cId = c.authUserId;
@@ -94,7 +94,7 @@ test('authRegisterV1: correct handle for same name', () => {
 test('authRegisterV1: correct handle for "Guy Thathasareallylongname"', () => { 
   clearV1();  
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
-  const aId = a.authUserId;
+  const aId = a.token;
   const b = authRegisterV1('guy@unsw.edu.au', 'guywithlong', 'Guy', 'Thathasareallylongname') as authUserId;
   const bId = b.authUserId;
   let profile = userProfileV1(aId, bId);
@@ -108,7 +108,7 @@ test('authRegisterV1: correct handle for "Guy Thathasareallylongname"', () => {
 test('authRegisterV1: correct handle for "ZERO 0"', () => {
   clearV1();  
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
-  const aId = a.authUserId;
+  const aId = a.token;
   const b = authRegisterV1('zero0@unsw.edu.au', '12345678', 'ZERO', '0') as authUserId;
   const bId = b.authUserId;
   let profile = userProfileV1(aId, bId);
@@ -122,7 +122,7 @@ test('authRegisterV1: correct handle for "ZERO 0"', () => {
 test('authRegisterV1: correct handle for "$mOney 0"', () => {
   clearV1(); 
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
-  const aId = a.authUserId;
+  const aId = a.token;
   const b = authRegisterV1('money0@unsw.edu.au', 'money123', '$mOney', '$0') as authUserId;
   const bId = b.authUserId;
   let profile = userProfileV1(aId, bId);

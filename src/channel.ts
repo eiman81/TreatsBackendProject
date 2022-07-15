@@ -17,7 +17,7 @@ export interface returnMessages {
   messages: string[]
 }
 
-function channelDetailsV1(authUserId: number, channelId: number) : channeldetails | {error: 'error'} {
+function channelDetailsV1(token: string, channelId: number) : channeldetails | {error: 'error'} {
 /*
 < Given a channelId and authUserId, if this user is the member of this channel, return 
   basic details about the channel >
@@ -35,9 +35,11 @@ Return Value:
     Returns <name, isPublic, ownerMembers, allMembers> on <all test pass>
 */   
   let valid = 0;
+  let authUserNum: number;
   for (const user of (getData()).users) {
-    if (user.uId === authUserId) {
+    if (user.token === token) {
       valid = 1;
+      authUserNum = user.uId;
     }
   }
 
@@ -47,7 +49,7 @@ Return Value:
     for (const channel of (getData().channels)) {
       if (channel.channelId === channelId) {  
         let members = channel.allMembers;
-        if (members.includes(authUserId)) {
+        if (members.includes(authUserNum)) {
           let channeldetails = {
             name: channel.name,
             isPublic: channel.isPublic,
@@ -66,7 +68,7 @@ Return Value:
 
 
 
-function channelJoinV1(authUserId: number, channelId: number): {error: 'error'} {
+function channelJoinV1(token: string, channelId: number): {error: 'error'} {
 /*
 < Given a channelId and authUserId, if this user can join, adds them to that channel >
 
@@ -88,7 +90,14 @@ Return Value:
   //check if user id is valid
   //check if channel id is valid
   let store = getData();
-  let profile = userProfileV1(authUserId, authUserId);
+  let authUserId: number;
+  for (const user of store.users) {
+    if (user.token === token) {
+      authUserId = user.uId;
+      break;
+    }
+  }
+  let profile = userProfileV1(token, authUserId);
 
   // checks no error is returned
   if ('error' in profile) {
@@ -96,7 +105,7 @@ Return Value:
   } else {
     if (userExists(authUserId) && channelExists(channelId)) {
       //check if user is already in channel
-      let channelDetails = channelDetailsV1(authUserId, channelId);
+      let channelDetails = channelDetailsV1(token, channelId);
       if ('allMembers' in channelDetails) {
         if (channelDetails.allMembers.includes(authUserId)) {
           return {error: 'error'}
@@ -122,7 +131,7 @@ Return Value:
   }
 }
 
-function channelInviteV1(authUserId: number, channelId: number, uId: number) {
+function channelInviteV1(token: string, channelId: number, uId: number) {
 /*
 < Given the vaild authUserId , vaild channelId and Uid, Once invited, the user is added to the channel immediately. 
   In both public and private channels, all members are able to invite users >
@@ -143,7 +152,14 @@ Return Value:
     Returns <{}> on <all test pass>
 */
   let store = getData();
-  let profile = userProfileV1(authUserId, authUserId);
+  let authUserId: number;
+  for (const user of store.users) {
+    if (user.token === token) {
+      authUserId = user.uId;
+      break;
+    }
+  }
+  let profile = userProfileV1(token, authUserId);
 
   // checks no error is returned
   if ('error' in profile) {
@@ -151,7 +167,7 @@ Return Value:
   } else {
     if (userExists(authUserId) && channelExists(channelId)) {
       //check if user is already in channel and if uId is real
-      let channelDetails = channelDetailsV1(authUserId, channelId);
+      let channelDetails = channelDetailsV1(token, channelId);
       if ('allMembers' in channelDetails) {
         if (userExists(uId) === false || channelDetails.allMembers.includes(uId)) {
           return {error: 'error'}
@@ -176,7 +192,7 @@ Return Value:
   }
 }
 
-function channelMessagesV1(authUserId: number, channelId: number, start: number) : {error:'error'} | returnMessages {
+function channelMessagesV1(token: string, channelId: number, start: number) : {error:'error'} | returnMessages {
 /*
 < Given the vaild authUserId , vaild channelId and the start(whitch message you want start), it return the 
   messages between the start and start + 50, if start + 50 more than the recent message, it return the messages
@@ -196,7 +212,13 @@ Error   -Occurs when
 Return Value:
     Returns <messages, start, end> on <all test pass>
 */
-
+  let authUserId: number;
+  for (const user of getData().users) {
+    if (user.token === token) {
+      authUserId = user.uId;
+      break;
+    }
+  }
   for (const channel of (getData()).channels) {
     if (channel.channelId === channelId) {
       let members = channel.allMembers;
