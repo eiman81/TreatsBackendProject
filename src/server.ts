@@ -5,7 +5,7 @@ import config from './config.json';
 import cors from 'cors';
 import { authRegisterV1, authLoginV1, authUserId } from './auth';
 import { channelsCreateV1, channelsListV1, channelsListallV1 } from './channels';
-import { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1 } from './channel';
+import { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1, channelAddOwner } from './channel';
 import { userProfileV1 } from './users';
 import { clearV1, findUser } from './other';
 import { user } from './dataStore';
