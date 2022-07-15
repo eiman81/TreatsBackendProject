@@ -107,6 +107,7 @@ Return Value:
     if (password != data.users[found].password) {
       return { error: 'error' };
     } else {
+      data.users[found].token = tokenGenerate();
       return {
         authUserId: data.users[found].uId,
       };

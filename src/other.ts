@@ -1,5 +1,5 @@
 import { NODATA } from "dns";
-import { getData, setData, data } from "./dataStore";
+import { getData, setData, data, user} from "./dataStore";
 interface nodata {};
 
 function clearV1(): nodata {
@@ -51,5 +51,31 @@ function userExists(authUserId: number): boolean {
   }
 }
 
+function findUser(UserId: number | string): user | boolean {
+  let found = 0;
+  if (typeof(UserId) === 'number') {
+    for (const user of getData().users) {
+      if (user.uId === UserId) {
+        found = 1;
+        return user
+      }
+    }
+  } else {
+    //Case for checking user is valid from a token entry
+    for (const user of getData().users) {
+      if (user.token === UserId) {
+        found = 1;
+        return user
+      }
+    } 
+  }
+  
+  if (found === 0) {
+    return false
+  }
+}
 
-export { clearV1, channelExists, userExists }; 
+
+
+
+export { clearV1, channelExists, userExists, findUser }; 
