@@ -1,5 +1,6 @@
 import { token } from 'morgan';
-import { getData, setData, tokenGenerate, setTokens, getTokens } from './dataStore';
+import { getData, setData, tokenGenerate, setTokens, getTokens, user } from './dataStore';
+import {findUser} from './other'
 
 export interface authUserId {
   token: string,
@@ -121,4 +122,49 @@ Return Value:
     }
   }
 }
-export { authLoginV1, authRegisterV1 };
+
+
+function authLogoutV1(token: string): {} | {error: 'error'} {
+/*
+< Given a current token, logs out the corresponding user and destroys token >
+
+Arguments:
+    <token> <string>
+
+Exceptions:
+Error   -Occurs when
+1. token is not valid
+
+Return Value:
+    {} on success
+*/
+    let user = findUser(token);
+    if (user === {error: 'error'}) {
+      return {error: 'error'}
+    } else {
+      user = findUser(token) as user;
+      let counter = 0;
+      for (const person of getData().users) {
+        if (user.uId === person.uId) {
+          person.token = '';
+          let newData = getData();
+          newData.users[counter] = person;
+          setData(newData);
+          break;
+        }
+        counter++;
+      }
+      let index = 0;
+      for (const tok of getTokens()) {
+        if (tok === token) {
+          let newTokens = getTokens();
+          newTokens.splice(index, 1);
+          setTokens(newTokens);
+          return {};
+        }
+        index++;
+      }
+    }
+}
+
+export { authLoginV1, authRegisterV1, authLogoutV1 };

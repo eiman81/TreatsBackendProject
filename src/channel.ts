@@ -1,8 +1,7 @@
-import { getData, setData, user } from './dataStore';
+import { getData, setData, user, channel } from './dataStore';
 import { userProfileV1 } from './users';
-import { channelExists, userExists, findUser } from './other';
-import { channel } from './channels';
-import { prototype } from 'events';
+import { channelExists, userExists, findUser, findChannel, generateMessageId } from './other';
+import { messages} from './dataStore'
 
 export interface channeldetails {
   name: string,
@@ -12,9 +11,13 @@ export interface channeldetails {
 }
 
 export interface returnMessages {
+  messages: messages[]
   start: number,
-  end: number,
-  messages: string[]
+  end: number
+}
+
+interface messageId {
+  messageId: number
 }
 
 function channelDetailsV1(token: string, channelId: number) : channeldetails | {error: 'error'} {
@@ -185,7 +188,7 @@ Return Value:
   }
 }
 
-function channelMessagesV1(token: string, channelId: number, start: number) : {error:'error'} | returnMessages {
+function channelMessagesV1(token: string, channelId: number, start: number): {error:'error'} | returnMessages {
 /*
 < Given the vaild authUserId , vaild channelId and the start(whitch message you want start), it return the
   messages between the start and start + 50, if start + 50 more than the recent message, it return the messages
@@ -234,13 +237,13 @@ Return Value:
             }
           }
 
-          const mes = {
+          const returnMessages = {
             messages: messages,
             start: start,
             end: -1
           };
 
-          return mes;
+          return returnMessages;
         } else {
           const end = start + 50;
           const messages = [];
@@ -254,13 +257,13 @@ Return Value:
             }
           }
 
-          const mes = {
+          const returnMessages = {
             messages: messages,
             start: start,
             end: end
           };
 
-          return mes;
+          return returnMessages;
         }
       } else {
         return { error: 'error' };
@@ -273,4 +276,150 @@ Return Value:
   }
 }
 
-export { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1 };
+function messageSendV1(token: string, channelId: number, message: string): messageId | {error: 'error'} {
+  if (userExists(token) && channelExists(channelId)) {
+    let channel = findChannel(channelId) as channel;
+    let newData = getData();
+    let index = 0;
+    let user = findUser(token) as user
+    for (const chan of getData().channels) {
+      if (chan.channelId === channel.channelId) {
+        let newMessage = {
+          messageid: generateMessageId(),
+          uId: user.uId,
+          message: message,
+          timeSent: Date.now()
+        }
+        channel.messages.push(newMessage);
+        channel.numberOfMessages = channel.numberOfMessages + 1;
+        newData.channels[index] = channel;
+        setData(newData);
+        let messageId = {
+          messageId: newMessage.messageid
+        }
+        return messageId;
+      }
+      index++;
+    }
+  } else {
+    return {error: 'error'};
+  }
+}
+
+function channelLeaveV1(token: string, channelId: number): {error: 'error'} | {} {
+
+  const store = getData();
+  let authUserId: number;
+  for (const user of store.users) {
+    if (user.token === token) {
+      authUserId = user.uId;
+      break;
+    }
+  }
+  const profile = userProfileV1(token, authUserId);
+
+
+  if ('error' in profile) {
+    return { error: 'error' };
+  } else {
+    if (userExists(authUserId) && channelExists(channelId)) {
+      const channelDetails = channelDetailsV1(token, channelId);
+      if ('allMembers' in channelDetails) {
+        if (channelDetails.allMembers.includes(authUserId)) {
+          let counter = 0;
+          for (const channel of getData().channels) {
+            if (channel.channelId === channelId) {
+              channel.allMembers.splice(authUserId);
+              store.channels[counter] = channel;
+              setData(store);
+              return {};
+            }
+            counter++;
+          }
+        } else {
+          return { error: 'error' };
+        }
+      }
+    }
+  }
+}
+
+function channelAddOwnerV1(token: string, channelId: number, uId: number): {error: 'error'} | {} {
+  const store = getData()
+  let authUserId: number;
+  for (const user of store.users) {
+    if (user.token === token) {
+      authUserId = user.uId;
+      break;
+    }
+  }
+  const profile = userProfileV1(token, authUserId);
+
+  if ('error' in profile) {
+    return { error: 'error' };
+  } else {
+    if (userExists(uId) && channelExists(channelId)) {
+      const channelDetails = channelDetailsV1(token, channelId);
+      if ('ownerMembers' in channelDetails) {
+        if (channelDetails.ownerMembers.includes(uId) || !(channelDetails.allMembers.includes(uId))) {
+          return { error: 'error' };
+        } else if (channelDetails.isPublic === false) {
+          return { error: 'error' };
+        } else {
+          let counter = 0;
+          for (const channel of getData().channels) {
+            if (channel.channelId === channelId) {
+              channel.ownerMembers.push(uId);
+              store.channels[counter] = channel;
+              setData(store);
+              return {};
+            }
+            counter++;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+function channelRemoveOwnerV1(token: string, channelId: number, uId: number): {error: 'error'} | {} {
+  const store = getData()
+  let authUserId: number;
+  for (const user of store.users) {
+    if (user.token === token) {
+      authUserId = user.uId;
+      break;
+    }
+  }
+  const profile = userProfileV1(token, authUserId);
+
+  if ('error' in profile) {
+    return { error: 'error' };
+  } else {
+    if (userExists(uId) && channelExists(channelId)) {
+      const channelDetails = channelDetailsV1(token, channelId);
+      if ('ownerMembers' in channelDetails) {
+        if (channelDetails.ownerMembers.includes(uId) && channelDetails.ownerMembers.includes(authUserId)) {
+            let counter = 0;
+            for (const channel of getData().channels) {
+            if (channel.channelId === channelId) {
+              channel.ownerMembers.splice(uId);
+              store.channels[counter] = channel;
+              setData(store);
+              return {};
+            }
+            counter++;
+          }
+        } else {
+            return { error: 'error' };
+        }
+      }
+    } else {
+        return { error: 'error' };
+    }
+  }
+}
+
+
+export { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1, channelLeaveV1, channelAddOwnerV1, channelRemoveOwnerV1, messageSendV1 };

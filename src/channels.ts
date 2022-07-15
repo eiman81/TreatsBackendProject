@@ -1,16 +1,5 @@
 import { getData, setData } from './dataStore';
 
-export interface channel {
-  channelId: number,
-  name: string,
-  latestMsg: string,
-  numberOfMessages: number,
-  messages: string[],
-  isPublic: boolean,
-  ownerMembers: number[],
-  allMembers: number[]
-}
-
 export interface channels {
   channelId: number,
   name: string
@@ -81,7 +70,7 @@ Return Value:
     channelId: channelId,
     name: name,
     latestMsg: null,
-    numberOfMessages: null,
+    numberOfMessages: 0,
     messages: [],
     isPublic: isPublic,
     ownerMembers: [authUserNum],
