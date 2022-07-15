@@ -292,6 +292,68 @@ Return Value:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function channelLeaveV1(token: string, channelId: number): {error: 'error'} | {} {
 
   const store = getData();
