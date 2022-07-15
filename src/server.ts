@@ -3,12 +3,12 @@ import { echo } from './echo';
 import morgan from 'morgan';
 import config from './config.json';
 import cors from 'cors';
-import { authRegisterV1, authLoginV1, authUserId } from './auth';
+import { authRegisterV1, authLoginV1, authUserId, authLogoutV1 } from './auth';
 import { channelsCreateV1, channelsListV1, channelsListallV1 } from './channels';
-import { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1 } from './channel';
+import { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1, messageSendV1 } from './channel';
 import { userProfileV1 } from './users';
-import { clearV1, findUser } from './other';
-import { user } from './dataStore';
+import { clearV1, findUser, userExists } from './other';
+import { getData, getTokens, setData, setTokens, user } from './dataStore';
 
 // Set up web app, use JSON
 const app = express();
@@ -98,10 +98,20 @@ app.get('/user/profile/v2', (req: Request, res: Response) => {
   res.json(profile);
 });
 
-app.delete('/clear/v2', (req: Request, res: Response) => {
+app.delete('/clear/v1', (req: Request, res: Response) => {
   clearV1();
   res.json({});
 });
+
+app.post('/auth/logout/v1', (req: Request, res: Response) => {
+  const {token} = req.body;
+  res.json(authLogoutV1(token));
+})
+
+app.post('./message/send/v1', (req: Request, res: Response) => {
+  const { token, channelId, message} = req.body;
+  res.json(messageSendV1(token, channelId, message));
+})
 
 // start server
 app.listen(PORT, HOST, () => {

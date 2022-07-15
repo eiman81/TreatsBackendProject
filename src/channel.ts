@@ -1,7 +1,6 @@
-import { getData, setData, user } from './dataStore';
+import { getData, setData, user, channel } from './dataStore';
 import { userProfileV1 } from './users';
-import { channelExists, userExists, findUser } from './other';
-import { channel } from './channels';
+import { channelExists, userExists, findUser, findChannel, generateMessageId } from './other';
 import { prototype } from 'events';
 
 export interface channeldetails {
@@ -15,6 +14,10 @@ export interface returnMessages {
   start: number,
   end: number,
   messages: string[]
+}
+
+interface messageId {
+  messageId: number
 }
 
 function channelDetailsV1(token: string, channelId: number) : channeldetails | {error: 'error'} {
@@ -273,4 +276,35 @@ Return Value:
   }
 }
 
-export { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1 };
+function messageSendV1(token: string, channelId: number, message: string): messageId | {error: 'error'} {
+  if (userExists(token) && channelExists(channelId)) {
+    let channel = findChannel(channelId) as channel;
+    let newData = getData();
+    let index = 0;
+    let user = findUser(token) as user
+    for (const chan of getData().channels) {
+      if (chan.channelId === channel.channelId) {
+        let newMessage = {
+          messageid: generateMessageId(),
+          uId: user.uId,
+          message: message,
+          timeSent: Date.now()
+        }
+        channel.messages.push(newMessage);
+        channel.numberOfMessages = channel.numberOfMessages + 1;
+        newData.channels[index] = channel;
+        setData(newData);
+        let messageId = {
+          messageId: newMessage.messageid
+        }
+        return messageId;
+      }
+      index++;
+    }
+  } else {
+    return {error: 'error'};
+  }
+}
+
+
+export { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1, messageSendV1 };
