@@ -1,7 +1,7 @@
 import { getData, setData, user, channel } from './dataStore';
 import { userProfileV1 } from './users';
 import { channelExists, userExists, findUser, findChannel, generateMessageId } from './other';
-import { prototype } from 'events';
+import { messages} from './dataStore'
 
 export interface channeldetails {
   name: string,
@@ -13,7 +13,7 @@ export interface channeldetails {
 export interface returnMessages {
   start: number,
   end: number,
-  messages: string[]
+  messages: messages[]
 }
 
 interface messageId {
@@ -188,7 +188,7 @@ Return Value:
   }
 }
 
-function channelMessagesV1(token: string, channelId: number, start: number) : {error:'error'} | returnMessages {
+function channelMessagesV1(token: string, channelId: number, start: number): {error:'error'} | returnMessages {
 /*
 < Given the vaild authUserId , vaild channelId and the start(whitch message you want start), it return the
   messages between the start and start + 50, if start + 50 more than the recent message, it return the messages
@@ -237,13 +237,13 @@ Return Value:
             }
           }
 
-          const mes = {
+          const returnMessages = {
             messages: messages,
             start: start,
             end: -1
           };
 
-          return mes;
+          return returnMessages;
         } else {
           const end = start + 50;
           const messages = [];
@@ -257,13 +257,13 @@ Return Value:
             }
           }
 
-          const mes = {
+          const returnMessages = {
             messages: messages,
             start: start,
             end: end
           };
 
-          return mes;
+          return returnMessages;
         }
       } else {
         return { error: 'error' };
