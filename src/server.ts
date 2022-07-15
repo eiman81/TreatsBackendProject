@@ -15,6 +15,8 @@ const app = express();
 app.use(express.json());
 // Use middleware that allows for access from other domains
 app.use(cors());
+// for logging errors
+app.use(morgan('dev'));
 
 const PORT: number = parseInt(process.env.PORT || config.port);
 const HOST: string = process.env.IP || 'localhost';
@@ -100,9 +102,6 @@ app.delete('/clear/v2', (req: Request, res: Response) => {
   clearV1();
   res.json({});
 });
-
-// for logging errors
-app.use(morgan('dev'));
 
 // start server
 app.listen(PORT, HOST, () => {
