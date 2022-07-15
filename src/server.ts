@@ -5,7 +5,7 @@ import config from './config.json';
 import cors from 'cors';
 import { authRegisterV1, authLoginV1, authUserId } from './auth';
 import { channelsCreateV1, channelsListV1, channelsListallV1 } from './channels';
-import { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1, channelAddOwnerV1, channelRemoveOwnerV1 } from './channel';
+import { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1, channelLeaveV1, channelAddOwnerV1, channelRemoveOwnerV1 } from './channel';
 import { userProfileV1 } from './users';
 import { clearV1, findUser } from './other';
 import { user } from './dataStore';
@@ -101,6 +101,12 @@ app.get('/user/profile/v2', (req: Request, res: Response) => {
 app.delete('/clear/v2', (req: Request, res: Response) => {
   clearV1();
   res.json({});
+});
+
+app.post('channel/leave/v1', (req: Request, res: Response) => {
+  const { token, channelId } = req.body;
+  const channelLeave = channelLeaveV1(token, channelId);
+  res.json(channelLeave);
 });
 
 app.post('/channel/addowner/v2', (req: Request, res: Response) => {
