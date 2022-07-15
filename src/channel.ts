@@ -1,8 +1,8 @@
-import { getData, setData, user } from "./dataStore";
-import { userProfileV1 } from "./users";
-import { channelExists, userExists, findUser} from "./other"
-import { channel } from "./channels"
-import { prototype } from "events";
+import { getData, setData, user } from './dataStore';
+import { userProfileV1 } from './users';
+import { channelExists, userExists, findUser } from './other';
+import { channel } from './channels';
+import { prototype } from 'events';
 
 export interface channeldetails {
   name: string,
@@ -17,13 +17,9 @@ export interface returnMessages {
   messages: string[]
 }
 
-export interface emptyObject {
-
-}
-
 function channelDetailsV1(token: string, channelId: number) : channeldetails | {error: 'error'} {
 /*
-< Given a channelId and authUserId, if this user is the member of this channel, return 
+< Given a channelId and authUserId, if this user is the member of this channel, return
   basic details about the channel >
 
 Arguments:
@@ -37,7 +33,7 @@ Error   -Occurs when
 
 Return Value:
     Returns <name, isPublic, ownerMembers, allMembers> on <all test pass>
-*/   
+*/
   let valid = 0;
   let authUserNum: number;
   for (const user of (getData()).users) {
@@ -48,31 +44,28 @@ Return Value:
   }
 
   if (valid === 0) {
-    return {error: 'error'};
+    return { error: 'error' };
   } else {
     for (const channel of (getData().channels)) {
-      if (channel.channelId === channelId) {  
-        let members = channel.allMembers;
+      if (channel.channelId === channelId) {
+        const members = channel.allMembers;
         if (members.includes(authUserNum)) {
-          let channeldetails = {
+          const channeldetails = {
             name: channel.name,
             isPublic: channel.isPublic,
             ownerMembers: channel.ownerMembers,
             allMembers: channel.allMembers,
-          }
+          };
           return channeldetails;
-          
         } else {
-          return {error: 'error'};
+          return { error: 'error' };
         }
       }
-    } 
+    }
   }
 }
 
-
-
-function channelJoinV1(token: string, channelId: number): {error: 'error'} | emptyObject {
+function channelJoinV1(token: string, channelId: number): {error: 'error'} | {} {
 /*
 < Given a channelId and authUserId, if this user can join, adds them to that channel >
 
@@ -87,13 +80,12 @@ Error   -Occurs when
 3. channelId refers to a channel that is private and the authorised user
    is not already a channel member and is not a global owner.
 
-
 Return Value:
     Returns <{}> on <all test pass>
-*/   
-  //check if user id is valid
-  //check if channel id is valid
-  let store = getData();
+*/
+  // check if user id is valid
+  // check if channel id is valid
+  const store = getData();
   let authUserId: number;
   for (const user of store.users) {
     if (user.token === token) {
@@ -101,27 +93,25 @@ Return Value:
       break;
     }
   }
-  let profile = userProfileV1(token, authUserId);
+  const profile = userProfileV1(token, authUserId);
 
   // checks no error is returned
   if ('error' in profile) {
-    return {error: 'error'}
+    return { error: 'error' };
   } else {
     if (userExists(authUserId) && channelExists(channelId)) {
-      //check if user is already in channel
-      let channelDetails = channelDetailsV1(token, channelId);
+      // check if user is already in channel
+      const channelDetails = channelDetailsV1(token, channelId);
       if ('allMembers' in channelDetails) {
         if (channelDetails.allMembers.includes(authUserId)) {
-          return {error: 'error'}
-
+          return { error: 'error' };
         } else if (channelDetails.isPublic === false) {
-          return {error: 'error'}
-
+          return { error: 'error' };
         } else {
-          //add user to channel
+          // add user to channel
           let counter = 0;
           for (const channel of getData().channels) {
-            if (channel.channelId = channelId) {
+            if (channel.channelId === channelId) {
               channel.allMembers.push(authUserId);
               store.channels[counter] = channel;
               setData(store);
@@ -130,14 +120,14 @@ Return Value:
             counter++;
           }
         }
-      } 
+      }
     }
   }
 }
 
-function channelInviteV1(token: string, channelId: number, uId: number): {error: 'error'} | emptyObject {
+function channelInviteV1(token: string, channelId: number, uId: number): {error: 'error'} | {} {
 /*
-< Given the vaild authUserId , vaild channelId and Uid, Once invited, the user is added to the channel immediately. 
+< Given the vaild authUserId , vaild channelId and Uid, Once invited, the user is added to the channel immediately.
   In both public and private channels, all members are able to invite users >
 
 Arguments:
@@ -155,7 +145,7 @@ Error   -Occurs when
 Return Value:
     Returns <{}> on <all test pass>
 */
-  let store = getData();
+  const store = getData();
   let authUserId: number;
   for (const user of store.users) {
     if (user.token === token) {
@@ -163,24 +153,23 @@ Return Value:
       break;
     }
   }
-  let profile = userProfileV1(token, authUserId);
+  const profile = userProfileV1(token, authUserId);
 
   // checks no error is returned
   if ('error' in profile) {
-    return {error: 'error'}
+    return { error: 'error' };
   } else {
     if (userExists(token) && channelExists(channelId)) {
-      //check if user is already in channel and if uId is real
-      let channelDetails = channelDetailsV1(token, channelId);
+      // check if user is already in channel and if uId is real
+      const channelDetails = channelDetailsV1(token, channelId);
       if ('allMembers' in channelDetails) {
         if (userExists(uId) === false || channelDetails.allMembers.includes(uId)) {
-          return {error: 'error'}
-
+          return { error: 'error' };
         } else {
-          //add user to channel
+          // add user to channel
           let counter = 0;
           for (const channel of getData().channels) {
-            if (channel.channelId = channelId) {
+            if (channel.channelId === channelId) {
               channel.allMembers.push(uId);
               store.channels[counter] = channel;
               setData(store);
@@ -191,14 +180,14 @@ Return Value:
         }
       }
     } else {
-      return {error:'error'};
+      return { error: 'error' };
     }
   }
 }
 
 function channelMessagesV1(token: string, channelId: number, start: number) : {error:'error'} | returnMessages {
 /*
-< Given the vaild authUserId , vaild channelId and the start(whitch message you want start), it return the 
+< Given the vaild authUserId , vaild channelId and the start(whitch message you want start), it return the
   messages between the start and start + 50, if start + 50 more than the recent message, it return the messages
   betwen satrt and the recent message >
 
@@ -223,17 +212,18 @@ Return Value:
       break;
     }
   }
+  let found = 0;
   for (const channel of (getData()).channels) {
     if (channel.channelId === channelId) {
-      let members = channel.allMembers;
+      found = 1;
+      const members = channel.allMembers;
       if (members.includes(authUserId)) {
-        let channelRequested = channel;
-        
+        const channelRequested = channel;
+
         if (start > channelRequested.messages.length || channelRequested.messages.length === undefined) {
-          return {error: 'error'};
-        
+          return { error: 'error' };
         } else if (start + 50 >= channelRequested.messages.length) {
-          let messages = [];
+          const messages = [];
           let counter = 0;
           for (const message of channelRequested.messages) {
             if (start > counter) {
@@ -244,17 +234,16 @@ Return Value:
             }
           }
 
-          let mes = {
+          const mes = {
             messages: messages,
             start: start,
             end: -1
-          }
-  
+          };
+
           return mes;
         } else {
-    
-          let end = start + 50;
-          let messages = [];
+          const end = start + 50;
+          const messages = [];
           let counter = 0;
           for (const message of channelRequested.messages) {
             if (start > counter) {
@@ -264,21 +253,23 @@ Return Value:
               counter++;
             }
           }
-    
-          let mes = {
+
+          const mes = {
             messages: messages,
             start: start,
             end: end
-          }
-    
+          };
+
           return mes;
         }
       } else {
-        return {error: 'error'}
+        return { error: 'error' };
       }
-    } else {
-      return {error: 'error'};
     }
+  }
+
+  if (found === 0) {
+    return { error: 'error' };
   }
 }
 

@@ -1,4 +1,4 @@
-//tests for channelJoin
+// tests for channelJoin
 /*
 invalid user invalid channel X
 
@@ -8,12 +8,9 @@ invalid user valid channel X
 
 valid user valid channel X
 
-
-
 user already in channel X
 
 user not in channel X
-
 
 user without PermissionStatus, private channel
 
@@ -23,9 +20,9 @@ user with PermissionStatus, private channel
 
 */
 
-import { channel, getData, setData, user } from "./dataStore";
-import { channelInviteV1, channelJoinV1, channelDetailsV1, channelMessagesV1} from './channel';
-import { channelsCreateV1, channelId } from './channels'
+import { channel, getData, setData, user } from './dataStore';
+import { channelInviteV1, channelJoinV1, channelDetailsV1, channelMessagesV1 } from './channel';
+import { channelsCreateV1, channelId } from './channels';
 import { authRegisterV1, authUserId } from './auth';
 import { clearV1 } from './other';
 
@@ -44,7 +41,7 @@ function initialize(){
         userRole: null,
         isOnline: null,
       }
-    
+
       count += 1;
     //create second valid user
     const validuser2   = {
@@ -58,7 +55,7 @@ function initialize(){
         isOnline: null,
       }
     count += 1;
-    
+
     //create second valid user
     const validchannel = {
         channelId: count,
@@ -70,7 +67,7 @@ function initialize(){
         allMembers: [validuser1],
     }
     count += 1;
-    
+
     //create invalid users
     const invaliduser = {
         uId: 6789,
@@ -82,7 +79,7 @@ function initialize(){
         userRole: null,
         isOnline: null,
       }
-    
+
       const invalidchannel = {
         channelId: 7890,
         channelName: 'Argument',
@@ -92,7 +89,7 @@ function initialize(){
         ownerMembers: [],
         allMembers: [],
     }
-    
+
     const privatechannel = {
         channelId: count,
         channelName: 'floyds priv channel',
@@ -102,7 +99,7 @@ function initialize(){
         ownerMembers: [validuser2],
         allMembers: [validuser2],
     }
-    
+
     let data = {
         users: [validuser1, validuser2],
         channels: [validchannel, privatechannel],
@@ -132,28 +129,28 @@ const validchannel = {
 }
 */
 
-//create invalid users
+// create invalid users
 const invaliduser: user = {
-    uId: 6789,
-    nameFirst: 'Post',
-    nameLast: 'Malone',
-    email: 'post.malone@unsw.edu.au',
-    password: 'stoney',
-    username: 'leondechino',
-    isOnline: null,
-    token: '23'
-  }
+  uId: 6789,
+  nameFirst: 'Post',
+  nameLast: 'Malone',
+  email: 'post.malone@unsw.edu.au',
+  password: 'stoney',
+  username: 'leondechino',
+  isOnline: null,
+  token: '23'
+};
 
-  const invalidchannel: channel = {
-    channelId: 7890,
-    name: 'Argument',
-    latestMsg: 'Shut Up!!',
-    messages: [],
-    numberOfMessages: 3,
-    isPublic: true,
-    ownerMembers: [],
-    allMembers: [],
-}
+const invalidchannel: channel = {
+  channelId: 7890,
+  name: 'Argument',
+  latestMsg: 'Shut Up!!',
+  messages: [],
+  numberOfMessages: 3,
+  isPublic: true,
+  ownerMembers: [],
+  allMembers: [],
+};
 /*
 const privatechannel = {
     channelId: 4,
@@ -167,9 +164,9 @@ const privatechannel = {
 */
 
 /*
-const cases = [[validuser2.authUserId, validchannel.channelId, {error: 'error'}], 
-               [invaliduser.uId, validchannel.channelId, {error: 'error'}], 
-               [validuser2.authUserId, invalidchannel.channelId, {error: 'error'}], 
+const cases = [[validuser2.authUserId, validchannel.channelId, {error: 'error'}],
+               [invaliduser.uId, validchannel.channelId, {error: 'error'}],
+               [validuser2.authUserId, invalidchannel.channelId, {error: 'error'}],
                [invaliduser.uId, invalidchannel.channelId,{error: 'error'}]];
 
 describe("'channelJoinV1' utility", () => {
@@ -184,14 +181,11 @@ describe("'channelJoinV1' utility", () => {
 */
 
 test('channelJoinV1: authorised user already a member of channel', () => {
-    
-    let result = channelJoinV1(validuser1.token, validchannel.channelId)
-    expect(result).toStrictEqual({error: 'error'});
+  const result = channelJoinV1(validuser1.token, validchannel.channelId);
+  expect(result).toStrictEqual({ error: 'error' });
+});
 
-  });
-
-  test('channelJoinV1: nonpermitted attempts to join private', () => {
-    
-    let result = channelJoinV1('3', privatechannel.channelId);
-    expect(result).toStrictEqual({error: 'error'});
-  });
+test('channelJoinV1: nonpermitted attempts to join private', () => {
+  const result = channelJoinV1('3', privatechannel.channelId);
+  expect(result).toStrictEqual({ error: 'error' });
+});

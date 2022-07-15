@@ -27,12 +27,7 @@
     "window": "readonly"
   },
   "rules": {
-    "no-unused-vars": ["error", {
-      "args": "none",
-      "caughtErrors": "none",
-      "ignoreRestSiblings": true,
-      "vars": "all"
-    }],
+    
 
     // Everything below here is standard 1531
 
@@ -105,7 +100,6 @@
     "no-case-declarations": "error",
     "no-class-assign": "error",
     "no-compare-neg-zero": "error",
-    "no-cond-assign": "error",
     "no-const-assign": "error",
     "no-constant-condition": ["error", { "checkLoops": false }],
     "no-control-regex": "error",

@@ -1,5 +1,5 @@
 import { authRegisterV1, authLoginV1, authUserId } from './auth';
-import { userProfileV1 } from './users'
+import { userProfileV1 } from './users';
 import { clearV1 } from './other';
 
 test('authLoginV1: correct input', () => {
@@ -24,4 +24,3 @@ test('authLoginV1: error for wrong password', () => {
   const b = authLoginV1('cristiano.ronaldo@unsw.edu.au', '123456789');
   expect(b).toStrictEqual({ error: 'error' });
 });
-
