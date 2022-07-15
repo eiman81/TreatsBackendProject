@@ -29,50 +29,50 @@ app.get('/echo', (req, res, next) => {
   }
 });
 
-app.post('auth/register/v2', (req, res) => {
+app.post('/auth/register/v2', (req, res) => {
   const { email, password, nameFirst, nameLast } = req.body;
   const User = authRegisterV1(email, password, nameFirst, nameLast) as authUserId;
   res.json(User);
 });
 
-app.post('auth/login/v2', (req, res) => {
+app.post('/auth/login/v2', (req, res) => {
   const { email, password } = req.body;
   const User = authLoginV1(email, password) as authUserId;
   res.json(User);
 });
 
-app.post('channels/create/v2', (req, res) => {
+app.post('/channels/create/v2', (req, res) => {
   const { token, name, isPublic } = req.body;
   const channelId = channelsCreateV1(token, name, isPublic);
   res.json(channelId);
 });
 
-app.get('channels/list/v2', (req, res) => {
+app.get('/channels/list/v2', (req, res) => {
   const token = req.query.token.toString();
   const channels = channelsListV1(token)
   res.json({channels});
 });
 
-app.get('channels/listall/v2', (req, res) => {
+app.get('/channels/listall/v2', (req, res) => {
   const token = req.query.token.toString();
   const channels = channelsListallV1(token)
   res.json({channels});
 });
 
-app.get('channel/details/v2', (req, res) => {
+app.get('/channel/details/v2', (req, res) => {
   const channelId = Number(req.query.channelId.toString());
   const token = req.query.token.toString();
   const details = channelDetailsV1(token, channelId);
   res.json({details});
 });
 
-app.post('channel/join/v2', (req, res) => {
+app.post('/channel/join/v2', (req, res) => {
   const { token, channelId } = req.body;
   const channelJoin = channelJoinV1(token, channelId);
   res.json(channelJoin);
 });
 
-app.post('channel/invite/v2', (req, res) => {
+app.post('/channel/invite/v2', (req, res) => {
   let { token, channelId, uId } = req.body;
   channelId = Number(channelId);
   uId = Number(uId)
@@ -80,7 +80,7 @@ app.post('channel/invite/v2', (req, res) => {
   res.json(invitation);
 });
 
-app.get('channel/messages/v2', (req, res) => {
+app.get('/channel/messages/v2', (req, res) => {
   const token = req.query.token.toString();
   const channelId = Number(req.query.channelId);
   const start = Number(req.query.start)
@@ -88,7 +88,7 @@ app.get('channel/messages/v2', (req, res) => {
   res.json(messages);
 });
 
-app.get('user/profile/v2', (req, res) => {
+app.get('/user/profile/v2', (req, res) => {
   const token = req.query.token.toString();
   const uId = Number(req.query.uId);
   const user = findUser(token) as user;
@@ -96,7 +96,7 @@ app.get('user/profile/v2', (req, res) => {
   res.json(profile);
 });
 
-app.delete('clear/v1', (req, res) => {
+app.delete('/clear/v2', (req, res) => {
   clearV1();
   res.json({});
 });
