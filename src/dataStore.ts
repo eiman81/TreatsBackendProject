@@ -7,7 +7,7 @@ export interface user {
   email: string,
   password: string,
   username: string,
-  isOnline: boolean
+  isOnline: boolean,
   token: string
 }
 

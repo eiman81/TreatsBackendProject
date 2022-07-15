@@ -20,7 +20,7 @@ export interface channelId {
   'channelId': number;
 }
 
-function channelsCreateV1(authUserId: number, name: string, isPublic: boolean): {error: 'error'} | {channelId: number} {
+function channelsCreateV1(token: string, name: string, isPublic: boolean): {error: 'error'} | {channelId: number} {
 /*
 < Given a authUserId, the channel name and choose whether it is public, creates a new channel with the given name. 
   The user who created it automatically joins the channel >
@@ -42,20 +42,22 @@ Return Value:
     return { error: 'error' };
   }
   
+  let userIndex: number;
+
   if (name.length < 1 || name.length > 20) {
     return { error: 'error' };
   }
-  let idMatched = false;
+  let tokenMatched = false;
   for (let i = 0; i < data.users.length; i++) {
-    if (authUserId === data.users[i].uId) {
-      idMatched = true;
+    if (token === data.users[i].token) {
+      tokenMatched = true;
+      userIndex = i;
       break;
     }
   }
-  if (idMatched === false) {
+  if (tokenMatched === false) {
     return { error: 'error' };
   }
-  
   
   let count = 0;
   for (let i = 0; i < data.channels.length; i++) {
@@ -73,6 +75,7 @@ Return Value:
       highest = data.channels[i].channelId;
     }
   }
+  const authUserNum = data.users[userIndex].uId;
   let channelId = highest + 5;
   data.channels.push({
     'channelId': channelId,
@@ -81,8 +84,8 @@ Return Value:
     'numberOfMessages': null,
     'messages': [],
     'isPublic': isPublic,
-    'ownerMembers' : [authUserId],
-    'allMembers': [authUserId]
+    'ownerMembers' : [authUserNum],
+    'allMembers': [authUserNum]
   });
 
   setData(data);
@@ -91,18 +94,20 @@ Return Value:
   } 
 }
 
-function channelsListV1(authUserId: number): {error: 'error'} | channels[] {
+function channelsListV1(token: string): {error: 'error'} | channels[] {
   
   const data = getData();
   let channels = [];
-  let idMatched = false;
+  let tokenMatched = false;
+  let authUserId: number;
   for (let i = 0; i < data.users.length; i++) {
-    if (authUserId === data.users[i].uId) {
-      idMatched = true;
+    if (token === data.users[i].token) {
+      tokenMatched = true;
+      authUserId = data.users[i].uId;
       break;
     }
   }
-  if (idMatched === false) {
+  if (tokenMatched === false) {
     return { error: 'error' };
   }
 
@@ -121,7 +126,7 @@ function channelsListV1(authUserId: number): {error: 'error'} | channels[] {
   return channels;
 }
 
-function channelsListallV1(authUserId: number): {error: 'error'} | channels[] {
+function channelsListallV1(token: string): {error: 'error'} | channels[] {
 /*
 < Given a authUserId, Provide an array of all channels, including private channels, (and their associated details) >
 
@@ -138,7 +143,7 @@ Return Value:
   let valid = 0;
   let channels: channels[] = [];
   for (const user of data.users) {
-    if (user.uId === authUserId) {
+    if (user.token === token) {
       valid = 1;
       for (const channel of data.channels) {
         let channeldetails = {

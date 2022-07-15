@@ -6,10 +6,10 @@ import { clearV1 } from './other';
 test('Channel Messages error when it recieves an invalid channel id', ()=> {
   clearV1();
 
-  let authid = authRegisterV1('sean@gmail.com', '27hgfu37', 'Sean', 'OConnor') as authUserId;
-  let channelid = channelsCreateV1(authid.authUserId, 'first', false) as channelId;
+  let user = authRegisterV1('sean@gmail.com', '27hgfu37', 'Sean', 'OConnor') as authUserId;
+  let channelid = channelsCreateV1(user.token, 'first', false) as channelId;
   
-  expect(channelMessagesV1(authid.authUserId, 994, 0)).toStrictEqual({error: 'error'})
+  expect(channelMessagesV1(user.token, 994, 0)).toStrictEqual({error: 'error'})
 
 })
 
@@ -17,10 +17,10 @@ test('Channel Messages error when channel id valid but user is not part of chann
   clearV1();
 
   let authid = authRegisterV1('sean@gmail.com', '27hgfu37', 'Sean', 'OConnor') as authUserId;
-  let channelid = channelsCreateV1(authid.authUserId, 'first', false) as channelId;
+  let channelid = channelsCreateV1(authid.token, 'first', false) as channelId;
   let authid2 = authRegisterV1('bob@gmail.com', '27hgf6qs37', 'Bob', 'Jane') as authUserId;
   
-  expect(channelMessagesV1(authid2.authUserId, channelid.channelId, 0)).toStrictEqual({error: 'error'})
+  expect(channelMessagesV1(authid2.token, channelid.channelId, 0)).toStrictEqual({error: 'error'})
 
 })
 
@@ -28,16 +28,16 @@ test('Channel Messages error when start greater then length of messages', ()=> {
   clearV1();
 
   let authid = authRegisterV1('sean@gmail.com', '27hgfu37', 'Sean', 'OConnor') as authUserId;
-  let channelid = channelsCreateV1(authid.authUserId, 'first', false) as channelId;
+  let channelid = channelsCreateV1(authid.token, 'first', false) as channelId;
   
-  expect(channelMessagesV1(authid.authUserId, channelid.channelId, 5)).toStrictEqual({error: 'error'})
+  expect(channelMessagesV1(authid.token, channelid.channelId, 5)).toStrictEqual({error: 'error'})
 
 })
 
 test('Channel Messages when end greater then length of messages should return -1 for end', ()=> {
   clearV1();
   let authid = authRegisterV1('sean@gmail.com', '27hgfu37', 'Sean', 'OConnor') as authUserId;
-  let channelid = channelsCreateV1(authid.authUserId, 'first', false) as channelId;
+  let channelid = channelsCreateV1(authid.token, 'first', false) as channelId;
 
   let mes: returnMessages = {
     messages: [],
@@ -45,5 +45,5 @@ test('Channel Messages when end greater then length of messages should return -1
     end: -1
   }
 
-  expect(channelMessagesV1(authid.authUserId, channelid.channelId, 0)).toStrictEqual(mes)
+  expect(channelMessagesV1(authid.token, channelid.channelId, 0)).toStrictEqual(mes)
 })

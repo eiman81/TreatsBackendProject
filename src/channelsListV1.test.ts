@@ -4,19 +4,19 @@ import {clearV1} from './other';
 
 test('ChannelsListV1: error for userId not found', ()=> {
     clearV1();
-    const authid = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
-    const wrongId = 1005;
-    const channel = channelsCreateV1(wrongId, 'new', false) as channelId;
+    const token = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
+    const wrongToken = 'wrong';
+    const channel = channelsCreateV1(wrongToken, 'new', false) as channelId;
     let expected = { error: 'error' };
-    expect(channelsListV1(wrongId)).toStrictEqual(expected);
+    expect(channelsListV1(wrongToken)).toStrictEqual(expected);
 })
 
 
 test('channelsListV1: correct output for user being in a single channel', () => {
   clearV1();
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
-  const channel1 = channelsCreateV1(a.authUserId,'new',true) as channelId;
-  let channelList = channelsListV1(a.authUserId) as channels[];
+  const channel1 = channelsCreateV1(a.token,'new',true) as channelId;
+  let channelList = channelsListV1(a.token) as channels[];
   let expectedList: channels [] = [
     {
       channelId: channel1.channelId,
@@ -30,8 +30,9 @@ test('channelsListV1: correct output for user being in a single channel', () => 
 test('channelsListV1: correct output for user with no channels', () => {
   clearV1();
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
-  const channel = channelsCreateV1(123,'new',true) as channelId;
-  let channelList = channelsListV1(a.authUserId) as channels[];
+  const b = authRegisterV1('Lebron.James@unsw.edu.au', '236', 'Lebron', 'James') as authUserId;
+  const channel = channelsCreateV1(b.token,'new',true) as channelId;
+  let channelList = channelsListV1(a.token) as channels[];
   let expectedList: channels[] = [];
   expect(channelList).toStrictEqual(expectedList);
 });
@@ -40,11 +41,11 @@ test('channelsListV1: correct output for user with no channels', () => {
 test('channelsListV1: correct output for one user being in multiple channels', () => {
   clearV1();
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
-  const channel1 = channelsCreateV1(a.authUserId,'new',true) as channelId;
-  const channel2 = channelsCreateV1(a.authUserId,'new',false) as channelId;
-  const channel3 = channelsCreateV1(a.authUserId,'new',true) as channelId;
-  const channel4 = channelsCreateV1(a.authUserId,'new',true) as channelId;
-  let channelList = channelsListV1(a.authUserId) as channels[];
+  const channel1 = channelsCreateV1(a.token,'new',true) as channelId;
+  const channel2 = channelsCreateV1(a.token,'new',false) as channelId;
+  const channel3 = channelsCreateV1(a.token,'new',true) as channelId;
+  const channel4 = channelsCreateV1(a.token,'new',true) as channelId;
+  let channelList = channelsListV1(a.token) as channels[];
   let expectedList: channels[] = [
     {
       channelId: channel1.channelId,

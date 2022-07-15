@@ -14,7 +14,7 @@ test('Test 1: successful userProfileV1', () => {
     email: 'mohammed.mayweatherjr@unsw.edu.au',
     username: 'mohammedmayweatherjr',
   }
-  expect(userProfileV1(a.authUserId, a.authUserId)).toStrictEqual(userA);
+  expect(userProfileV1(a.token, a.authUserId)).toStrictEqual(userA);
 });
 
 test('Test 2: successful userProfileV1', () => {
@@ -28,7 +28,7 @@ test('Test 2: successful userProfileV1', () => {
     email: 'mohammed.mayweatherjr@unsw.edu.au',
     username: 'mohammedmayweatherjr',
   }
-  expect(userProfileV1(a.authUserId, b.authUserId)).toStrictEqual(userB);
+  expect(userProfileV1(a.token, b.authUserId)).toStrictEqual(userB);
 });
 
 test('Test 3: successful userProfileV1', () => {
@@ -43,7 +43,7 @@ test('Test 3: successful userProfileV1', () => {
     email: 'mohammed.mayweatherjr@unsw.edu.au',
     username: 'mohammedmayweatherjr',
   }
-  expect(userProfileV1(b.authUserId, c.authUserId)).toStrictEqual(userC);
+  expect(userProfileV1(b.token, c.authUserId)).toStrictEqual(userC);
 });
 
 test('Test 4: successful userProfileV1', () => {
@@ -59,12 +59,12 @@ test('Test 4: successful userProfileV1', () => {
     email: 'zero0@unsw.edu.au',
     username: 'zero0',
     }
-    expect(userProfileV1(a.authUserId, d.authUserId)).toStrictEqual(userD);
+    expect(userProfileV1(a.token, d.authUserId)).toStrictEqual(userD);
 });
 
 test('Test 5: invalid userProfileV1', () => {
   clearV1();
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
   const b: number = null;
-  expect(userProfileV1(a.authUserId, b)).toStrictEqual({error: 'error'});
+  expect(userProfileV1(a.token, b)).toStrictEqual({error: 'error'});
 });
