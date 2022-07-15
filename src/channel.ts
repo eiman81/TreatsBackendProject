@@ -273,7 +273,7 @@ Return Value:
   }
 }
 
-function channelAddOwner(token: string, channelId: number, uId: number): {error: 'error'} | {} {
+function channelAddOwnerV1(token: string, channelId: number, uId: number): {error: 'error'} | {} {
   const store = getData()
   let authUserId: number;
   for (const user of store.users) {
@@ -311,4 +311,4 @@ function channelAddOwner(token: string, channelId: number, uId: number): {error:
   }
 }
 
-export { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1, channelAddOwner };
+export { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1, channelAddOwnerV1 };
