@@ -1,5 +1,5 @@
-import { NODATA } from 'dns';
-import { getData, setData, data, user } from './dataStore';
+import { NewLineKind } from 'typescript';
+import { getData, setData, data, user, channel } from './dataStore'
 interface nodata {}
 
 function clearV1(): nodata {
@@ -61,7 +61,7 @@ function userExists(UserId: number | string): boolean {
   }
 }
 
-function findUser(UserId: number | string): user | boolean {
+function findUser(UserId: number | string): user | {error: 'error'} {
   let found = 0;
   if (typeof (UserId) === 'number') {
     for (const user of getData().users) {
@@ -81,8 +81,38 @@ function findUser(UserId: number | string): user | boolean {
   }
 
   if (found === 0) {
-    return false;
+    return {error: 'error'};
   }
 }
 
-export { clearV1, channelExists, userExists, findUser };
+function findChannel(channelId: number): channel | {error: 'error'} {
+  if (channelExists(channelId)) {
+    for (const channel of getData().channels) {
+      if (channel.channelId === channelId) {
+        return channel
+      }
+    }
+  } else {
+    return {error: 'error'};
+  }
+}
+
+let messageIds: number[] = [];
+
+function generateMessageId(): number {
+  let i = 1;
+  let newId = 0
+  while (i === 1) {
+    i = 0;
+    newId = Math.random();
+    for (const id of messageIds) {
+      if (newId === id) {
+        i = 1;
+      }
+    }
+  } 
+  messageIds.push(newId);
+  return newId;
+}
+
+export {clearV1, channelExists, userExists, findUser, findChannel, generateMessageId};
