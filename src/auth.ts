@@ -110,7 +110,7 @@ Return Value:
   if (validEmail === false) {
     return { error: 'error' };
   } else {
-    if (password != data.users[found].password) {
+    if (password !== data.users[found].password) {
       return { error: 'error' };
     } else {
       data.users[found].token = tokenGenerate();

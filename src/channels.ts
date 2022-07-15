@@ -1,10 +1,10 @@
-import { getData, setData } from "./dataStore";
+import { getData, setData } from './dataStore';
 
 export interface channel {
   channelId: number,
   name: string,
   latestMsg: string,
-  numberOfMessages: number, 
+  numberOfMessages: number,
   messages: string[],
   isPublic: boolean,
   ownerMembers: number[],
@@ -22,7 +22,7 @@ export interface channelId {
 
 function channelsCreateV1(token: string, name: string, isPublic: boolean): {error: 'error'} | channelId {
 /*
-< Given a authUserId, the channel name and choose whether it is public, creates a new channel with the given name. 
+< Given a authUserId, the channel name and choose whether it is public, creates a new channel with the given name.
   The user who created it automatically joins the channel >
 
 Arguments:
@@ -36,12 +36,12 @@ Error   -Occurs when
 
 Return Value:
     Returns <channelId> on <all test pass>
-*/     
+*/
   const data = getData();
   if (isPublic !== false && isPublic !== true) {
     return { error: 'error' };
   }
-  
+
   let userIndex: number;
 
   if (name.length < 1 || name.length > 20) {
@@ -58,14 +58,14 @@ Return Value:
   if (tokenMatched === false) {
     return { error: 'error' };
   }
-  
+
   let count = 0;
   for (let i = 0; i < data.channels.length; i++) {
     if (name === data.channels[i].name.slice(0, name.length)) {
       count++;
     }
   }
-  if (count > 0 ) {
+  if (count > 0) {
     name = name + (count - 1).toString();
   }
 
@@ -76,28 +76,27 @@ Return Value:
     }
   }
   const authUserNum = data.users[userIndex].uId;
-  let channelId = highest + 5;
+  const channelId = highest + 5;
   data.channels.push({
-    'channelId': channelId,
-    'name': name,
-    'latestMsg': null,
-    'numberOfMessages': null,
-    'messages': [],
-    'isPublic': isPublic,
-    'ownerMembers' : [authUserNum],
-    'allMembers': [authUserNum]
+    channelId: channelId,
+    name: name,
+    latestMsg: null,
+    numberOfMessages: null,
+    messages: [],
+    isPublic: isPublic,
+    ownerMembers: [authUserNum],
+    allMembers: [authUserNum]
   });
 
   setData(data);
   return {
     channelId: channelId,
-  } 
+  };
 }
 
 function channelsListV1(token: string): {error: 'error'} | channels[] {
-  
   const data = getData();
-  let channels = [];
+  const channels = [];
   let tokenMatched = false;
   let authUserId: number;
   for (let i = 0; i < data.users.length; i++) {
@@ -114,11 +113,10 @@ function channelsListV1(token: string): {error: 'error'} | channels[] {
   for (let c = 0; c < data.channels.length; c++) {
     for (let i = 0; i < data.channels[c].allMembers.length; i++) {
       if (data.channels[c].allMembers[i] === authUserId) {
-        
-        let channel = {
+        const channel = {
           channelId: data.channels[c].channelId,
           name: data.channels[c].name
-        }
+        };
         channels.push(channel);
       }
     }
@@ -138,18 +136,18 @@ Error   -Occurs when
 
 Return Value:
     Returns <channels> on <all test pass>
-*/    
+*/
   const data = getData();
   let valid = 0;
-  let channels: channels[] = [];
+  const channels: channels[] = [];
   for (const user of data.users) {
     if (user.token === token) {
       valid = 1;
       for (const channel of data.channels) {
-        let channeldetails = {
+        const channeldetails = {
           channelId: channel.channelId,
           name: channel.name
-        }
+        };
         channels.push(channeldetails);
       }
       return channels;

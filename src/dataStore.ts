@@ -1,4 +1,4 @@
-import { updateLanguageServiceSourceFile } from "typescript";
+import { updateLanguageServiceSourceFile } from 'typescript';
 
 export interface user {
   uId: number,
@@ -15,7 +15,7 @@ export interface channel {
   channelId: number,
   name: string,
   latestMsg: string,
-  numberOfMessages: number, 
+  numberOfMessages: number,
   messages: string[],
   isPublic: boolean,
   ownerMembers: number[],
@@ -51,12 +51,12 @@ function getTokens(): string[] {
 }
 
 function setTokens(tokens: string[]) {
-  currentTokens = tokens
+  currentTokens = tokens;
 }
 
 function tokenGenerate(): string {
-  let tokenNum = Math.random();
-  let newToken = tokenNum.toString();
+  const tokenNum = Math.random();
+  const newToken = tokenNum.toString();
   currentTokens.push(newToken);
   return newToken;
 }
