@@ -17,7 +17,11 @@ export interface returnMessages {
   messages: string[]
 }
 
-function channelDetailsV1(token: string, channelId: number) : channeldetails | {error: 'error'} {
+export interface emptyObject {
+
+}
+
+function channelDetailsV1(authUserId: number, channelId: number) : channeldetails | {error: 'error'} {
 /*
 < Given a channelId and authUserId, if this user is the member of this channel, return 
   basic details about the channel >
@@ -68,7 +72,7 @@ Return Value:
 
 
 
-function channelJoinV1(token: string, channelId: number): {error: 'error'} {
+function channelJoinV1(authUserId: number, channelId: number): {error: 'error'} | emptyObject {
 /*
 < Given a channelId and authUserId, if this user can join, adds them to that channel >
 
@@ -121,7 +125,7 @@ Return Value:
               channel.allMembers.push(authUserId);
               store.channels[counter] = channel;
               setData(store);
-              break;
+              return {};
             }
             counter++;
           }
@@ -131,7 +135,7 @@ Return Value:
   }
 }
 
-function channelInviteV1(token: string, channelId: number, uId: number) {
+function channelInviteV1(authUserId: number, channelId: number, uId: number): {error: 'error'} | emptyObject {
 /*
 < Given the vaild authUserId , vaild channelId and Uid, Once invited, the user is added to the channel immediately. 
   In both public and private channels, all members are able to invite users >
@@ -180,7 +184,7 @@ Return Value:
               channel.allMembers.push(uId);
               store.channels[counter] = channel;
               setData(store);
-              break;
+              return {};
             }
             counter++;
           }
