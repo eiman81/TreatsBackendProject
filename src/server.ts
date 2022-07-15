@@ -103,6 +103,12 @@ app.delete('/clear/v2', (req: Request, res: Response) => {
   res.json({});
 });
 
+app.post('/channel/addowner/v2', (req: Request, res: Response) => {
+  const { token, channelId, uId } = req.body;
+  const channelAddOwner = channelAddOwner(token, channelId, uId);
+  res.json(channelAddOwner);
+});
+
 // start server
 app.listen(PORT, HOST, () => {
   console.log(`⚡️ Server listening on port ${PORT} at ${HOST}`);
