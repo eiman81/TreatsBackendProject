@@ -1,6 +1,6 @@
-import { getData, setData } from "./dataStore";
+import { getData, setData, user } from "./dataStore";
 import { userProfileV1 } from "./users";
-import { channelExists, userExists} from "./other"
+import { channelExists, userExists, findUser} from "./other"
 import { channel } from "./channels"
 import { prototype } from "events";
 
@@ -21,7 +21,7 @@ export interface emptyObject {
 
 }
 
-function channelDetailsV1(authUserId: number, channelId: number) : channeldetails | {error: 'error'} {
+function channelDetailsV1(token: string, channelId: number) : channeldetails | {error: 'error'} {
 /*
 < Given a channelId and authUserId, if this user is the member of this channel, return 
   basic details about the channel >
@@ -72,7 +72,7 @@ Return Value:
 
 
 
-function channelJoinV1(authUserId: number, channelId: number): {error: 'error'} | emptyObject {
+function channelJoinV1(token: string, channelId: number): {error: 'error'} | emptyObject {
 /*
 < Given a channelId and authUserId, if this user can join, adds them to that channel >
 
@@ -135,7 +135,7 @@ Return Value:
   }
 }
 
-function channelInviteV1(authUserId: number, channelId: number, uId: number): {error: 'error'} | emptyObject {
+function channelInviteV1(token: string, channelId: number, uId: number): {error: 'error'} | emptyObject {
 /*
 < Given the vaild authUserId , vaild channelId and Uid, Once invited, the user is added to the channel immediately. 
   In both public and private channels, all members are able to invite users >
@@ -169,7 +169,7 @@ Return Value:
   if ('error' in profile) {
     return {error: 'error'}
   } else {
-    if (userExists(authUserId) && channelExists(channelId)) {
+    if (userExists(token) && channelExists(channelId)) {
       //check if user is already in channel and if uId is real
       let channelDetails = channelDetailsV1(token, channelId);
       if ('allMembers' in channelDetails) {

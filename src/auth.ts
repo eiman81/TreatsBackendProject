@@ -2,7 +2,8 @@ import { token } from 'morgan';
 import { getData, setData, tokenGenerate, setTokens, getTokens } from './dataStore';
 
 export interface authUserId {
-  authUserId: number,
+  token: string,
+  authUserId: number
 }
 
 function authRegisterV1(email: string, password: string, nameFirst: string, nameLast: string): authUserId | {error: 'error'} {
@@ -76,6 +77,7 @@ Return Value:
   });
   setData(data);
   return {
+    token: token,
     authUserId: userId,
   };
 }
@@ -113,7 +115,8 @@ Return Value:
     } else {
       data.users[found].token = tokenGenerate();
       return {
-        authUserId: data.users[found].uId,
+        token: data.users[found].token,
+        authUserId: data.users[found].uId
       };
     }
   }

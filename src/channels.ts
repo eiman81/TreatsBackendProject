@@ -17,10 +17,10 @@ export interface channels {
 }
 
 export interface channelId {
-  'channelId': number;
+  channelId: number;
 }
 
-function channelsCreateV1(token: string, name: string, isPublic: boolean): {error: 'error'} | {channelId: number} {
+function channelsCreateV1(token: string, name: string, isPublic: boolean): {error: 'error'} | channelId {
 /*
 < Given a authUserId, the channel name and choose whether it is public, creates a new channel with the given name. 
   The user who created it automatically joins the channel >
