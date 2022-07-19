@@ -16,7 +16,7 @@ export interface returnMessages {
   end: number
 }
 
-interface messageId {
+export interface messageId {
   messageId: number
 }
 
@@ -283,21 +283,27 @@ function messageSendV1(token: string, channelId: number, message: string): messa
     let index = 0;
     let user = findUser(token) as user
     for (const chan of getData().channels) {
-      if (chan.channelId === channel.channelId) {
-        let newMessage = {
-          messageid: generateMessageId(),
-          uId: user.uId,
-          message: message,
-          timeSent: Date.now()
+      if (chan.channelId === channel.channelId && channel.allMembers.includes(user.uId)) {
+        if (message.length < 1000 && message.length !== 0) {
+          let newMessage = {
+            messageid: generateMessageId(),
+            uId: user.uId,
+            message: message,
+            timeSent: Date.now()
+          }
+          channel.messages.push(newMessage);
+          channel.numberOfMessages = channel.numberOfMessages + 1;
+          newData.channels[index] = channel;
+          setData(newData);
+          let messageId = {
+            messageId: newMessage.messageid
+          }
+
+          return messageId;
+          
+        } else {
+          return {error: 'error'};
         }
-        channel.messages.push(newMessage);
-        channel.numberOfMessages = channel.numberOfMessages + 1;
-        newData.channels[index] = channel;
-        setData(newData);
-        let messageId = {
-          messageId: newMessage.messageid
-        }
-        return messageId;
       }
       index++;
     }

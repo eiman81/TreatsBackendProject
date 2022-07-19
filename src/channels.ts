@@ -39,7 +39,7 @@ Return Value:
   let tokenMatched = false;
 
   for (let i = 0; i < data.users.length; i++) {
-    if (token == data.users[i].token) {
+    if (token === data.users[i].token) {
       tokenMatched = true;
       userIndex = i;
       break;
