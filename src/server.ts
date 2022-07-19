@@ -111,7 +111,8 @@ app.post('/auth/logout/v1', (req: Request, res: Response) => {
 
 app.post('/message/send/v1', (req: Request, res: Response) => {
   const { token, channelId, message} = req.body;
-  res.json(messageSendV1(token, channelId, message));
+  const messageId = messageSendV1(token, channelId, message);
+  res.json({messageId});
 })
 
 app.post('/channel/leave/v1', (req: Request, res: Response) => {
