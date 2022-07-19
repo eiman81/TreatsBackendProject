@@ -156,7 +156,7 @@ Return Value:
       }
       let index = 0;
       for (const tok of getTokens()) {
-        if (tok === token) {
+        if (tok == token) {
           let newTokens = getTokens();
           newTokens.splice(index, 1);
           setTokens(newTokens);
