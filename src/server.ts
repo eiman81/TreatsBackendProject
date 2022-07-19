@@ -53,20 +53,20 @@ app.post('/channels/create/v2', (req: Request, res: Response) => {
 app.get('/channels/list/v2', (req: Request, res: Response) => {
   const token = req.query.token.toString();
   const channels = channelsListV1(token);
-  res.json({ channels });
+  res.json({channels});
 });
 
 app.get('/channels/listall/v2', (req: Request, res: Response) => {
   const token = req.query.token.toString();
   const channels = channelsListallV1(token);
-  res.json({ channels });
+  res.json({channels});
 });
 
 app.get('/channel/details/v2', (req: Request, res: Response) => {
   const channelId = Number(req.query.channelId.toString());
   const token = req.query.token.toString();
   const details = channelDetailsV1(token, channelId);
-  res.json({ details });
+  res.json(details);
 });
 
 app.post('/channel/join/v2', (req: Request, res: Response) => {
@@ -109,12 +109,12 @@ app.post('/auth/logout/v1', (req: Request, res: Response) => {
   res.json(authLogoutV1(token));
 })
 
-app.post('./message/send/v1', (req: Request, res: Response) => {
+app.post('/message/send/v1', (req: Request, res: Response) => {
   const { token, channelId, message} = req.body;
   res.json(messageSendV1(token, channelId, message));
 })
 
-app.post('channel/leave/v1', (req: Request, res: Response) => {
+app.post('/channel/leave/v1', (req: Request, res: Response) => {
   const { token, channelId } = req.body;
   const channelLeave = channelLeaveV1(token, channelId);
   res.json(channelLeave);
