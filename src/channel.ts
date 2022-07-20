@@ -37,7 +37,6 @@ Error   -Occurs when
 Return Value:
     Returns <name, isPublic, ownerMembers, allMembers> on <all test pass>
 */
-  token = token.toString();
   let valid = 0;
   let authUserNum: number;
   for (const user of (getData()).users) {
@@ -89,7 +88,6 @@ Return Value:
 */
   // check if user id is valid
   // check if channel id is valid
-  token = token.toString();
   const store = getData();
   let authUserId: number;
   for (const user of store.users) {
@@ -150,7 +148,7 @@ Error   -Occurs when
 Return Value:
     Returns <{}> on <all test pass>
 */
-  token = token.toString();
+
   const store = getData();
   let authUserId: number;
   for (const user of store.users) {
@@ -211,7 +209,6 @@ Error   -Occurs when
 Return Value:
     Returns <messages, start, end> on <all test pass>
 */
-  token = token.toString();
   let authUserId: number;
   for (const user of getData().users) {
     if (user.token === token) {
@@ -281,7 +278,6 @@ Return Value:
 }
 
 function messageSendV1(token: string, channelId: number, message: string): messageId | {error: 'error'} {
-  token = token.toString();
   if (userExists(token) && channelExists(channelId)) {
     let channel = findChannel(channelId) as channel;
     let newData = getData();
@@ -318,7 +314,6 @@ function messageSendV1(token: string, channelId: number, message: string): messa
 }
 
 function channelLeaveV1(token: string, channelId: number): {error: 'error'} | {} {
-  token = token.toString();
   const store = getData();
   let authUserId: number;
   for (const user of store.users) {
@@ -356,7 +351,6 @@ function channelLeaveV1(token: string, channelId: number): {error: 'error'} | {}
 }
 
 function channelAddOwnerV1(token: string, channelId: number, uId: number): {error: 'error'} | {} {
-  token = token.toString();
   const store = getData()
   let authUserId: number;
   for (const user of store.users) {
@@ -396,7 +390,6 @@ function channelAddOwnerV1(token: string, channelId: number, uId: number): {erro
 
 
 function channelRemoveOwnerV1(token: string, channelId: number, uId: number): {error: 'error'} | {} {
-  token = token.toString();
   const store = getData()
   let authUserId: number;
   for (const user of store.users) {
