@@ -5,7 +5,7 @@ interface userProfile {
   nameFirst: string,
   nameLast: string,
   email: string,
-  username: string,
+  handleStr: string,
 }
 
 function userProfileV1(token: string, uId: number) : userProfile | {error: 'error'} {
@@ -34,7 +34,7 @@ Return Value:
             nameFirst: user.nameFirst,
             nameLast: user.nameLast,
             email: user.email,
-            username: user.username,
+            handleStr: user.handleStr,
           };
 
           return userProfile;

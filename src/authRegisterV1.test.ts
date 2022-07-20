@@ -69,8 +69,8 @@ test('authRegisterV1: correct handle for "Mohammed MayweatherJr"', () => {
   const b = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
   const bId = b.authUserId;
   const profile = userProfileV1(aId, bId);
-  if ('username' in profile) {
-    expect(profile.username).toStrictEqual('cristianoronaldo');
+  if ('handleStr' in profile) {
+    expect(profile.handleStr).toStrictEqual('cristianoronaldo');
   } else {
     expect(profile).toStrictEqual({ error: 'error' });
   }
@@ -84,8 +84,8 @@ test('authRegisterV1: correct handle for same name', () => {
   const c = authRegisterV1('cristiano.ronaldo1@unsw.edu.au', '1234567', 'Cristiano', 'Ronaldo') as authUserId;
   const cId = c.authUserId;
   const profile = userProfileV1(aId, cId);
-  if ('username' in profile) {
-    expect(profile.username).toStrictEqual('cristianoronaldo1');
+  if ('handleStr' in profile) {
+    expect(profile.handleStr).toStrictEqual('cristianoronaldo1');
   } else {
     expect(profile).toStrictEqual({ error: 'error' });
   }
@@ -98,8 +98,8 @@ test('authRegisterV1: correct handle for "Guy Thathasareallylongname"', () => {
   const b = authRegisterV1('guy@unsw.edu.au', 'guywithlong', 'Guy', 'Thathasareallylongname') as authUserId;
   const bId = b.authUserId;
   const profile = userProfileV1(aId, bId);
-  if ('username' in profile) {
-    expect(profile.username).toStrictEqual('guythathasareallylon');
+  if ('handleStr' in profile) {
+    expect(profile.handleStr).toStrictEqual('guythathasareallylon');
   } else {
     expect(profile).toStrictEqual({ error: 'error' });
   }
@@ -112,8 +112,8 @@ test('authRegisterV1: correct handle for "ZERO 0"', () => {
   const b = authRegisterV1('zero0@unsw.edu.au', '12345678', 'ZERO', '0') as authUserId;
   const bId = b.authUserId;
   const profile = userProfileV1(aId, bId);
-  if ('username' in profile) {
-    expect(profile.username).toStrictEqual('zero0');
+  if ('handleStr' in profile) {
+    expect(profile.handleStr).toStrictEqual('zero0');
   } else {
     expect(profile).toStrictEqual({ error: 'error' });
   }
@@ -126,8 +126,8 @@ test('authRegisterV1: correct handle for "$mOney 0"', () => {
   const b = authRegisterV1('money0@unsw.edu.au', 'money123', '$mOney', '$0') as authUserId;
   const bId = b.authUserId;
   const profile = userProfileV1(aId, bId);
-  if ('username' in profile) {
-    expect(profile.username).toStrictEqual('money0');
+  if ('handleStr' in profile) {
+    expect(profile.handleStr).toStrictEqual('money0');
   } else {
     expect(profile).toStrictEqual({ error: 'error' });
   }
