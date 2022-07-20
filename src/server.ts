@@ -45,7 +45,8 @@ app.post('/auth/login/v2', (req: Request, res: Response) => {
 });
 
 app.post('/channels/create/v2', (req: Request, res: Response) => {
-  const { token, name, isPublic } = req.body;
+  let { token, name, isPublic } = req.body;
+  token = token.toString();
   const channelId = channelsCreateV1(token, name, isPublic);
   res.json(channelId);
 });
@@ -70,7 +71,8 @@ app.get('/channel/details/v2', (req: Request, res: Response) => {
 });
 
 app.post('/channel/join/v2', (req: Request, res: Response) => {
-  const { token, channelId } = req.body;
+  let { token, channelId } = req.body;
+  token = token.toString();
   const channelJoin = channelJoinV1(token, channelId);
   res.json(channelJoin);
 });
@@ -79,6 +81,7 @@ app.post('/channel/invite/v2', (req: Request, res: Response) => {
   let { token, channelId, uId } = req.body;
   channelId = Number(channelId);
   uId = Number(uId);
+  token = token.toString();
   const invitation = channelInviteV1(token, channelId, uId);
   res.json(invitation);
 });
@@ -105,30 +108,35 @@ app.delete('/clear/v1', (req: Request, res: Response) => {
 });
 
 app.post('/auth/logout/v1', (req: Request, res: Response) => {
-  const {token} = req.body;
+  let {token} = req.body;
+  token = token.toString();
   res.json(authLogoutV1(token));
 })
 
 app.post('/message/send/v1', (req: Request, res: Response) => {
-  const { token, channelId, message} = req.body;
+  let { token, channelId, message} = req.body;
+  token = token.toString();
   const messageId = messageSendV1(token, channelId, message);
-  res.json({messageId});
+  res.json(messageId);
 })
 
 app.post('/channel/leave/v1', (req: Request, res: Response) => {
-  const { token, channelId } = req.body;
+  let { token, channelId } = req.body;
+  token = token.toString();
   const channelLeave = channelLeaveV1(token, channelId);
   res.json(channelLeave);
 });
 
 app.post('/channel/addowner/v2', (req: Request, res: Response) => {
-  const { token, channelId, uId } = req.body;
+  let { token, channelId, uId } = req.body;
+  token = token.toString();
   const channelAddOwner = channelAddOwnerV1(token, channelId, uId);
   res.json(channelAddOwner);
 });
 
 app.post('/channel/removeowner/v2', (req: Request, res: Response) => {
-  const { token, channelId, uId } = req.body;
+  let { token, channelId, uId } = req.body;
+  token = token.toString();
   const channelRemoveOwner = channelRemoveOwnerV1(token, channelId, uId);
   res.json(channelRemoveOwner);
 });

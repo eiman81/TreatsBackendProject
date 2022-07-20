@@ -38,8 +38,8 @@ function channelExists(channelId: number): boolean {
 }
 
 function userExists(UserId: number | string): boolean {
-  let found = 0;
 
+  let found = 0;
   for (const user of getData().users) {
     if (user.uId === UserId || user.token === UserId) {
       found = 1;
@@ -53,7 +53,7 @@ function userExists(UserId: number | string): boolean {
 
 function findUser(UserId: number | string): user | {error: 'error'} {
   let found = 0;
-  if (typeof (UserId) === 'number') {
+  if (typeof(UserId) === 'number') {
     for (const user of getData().users) {
       if (user.uId === UserId) {
         found = 1;

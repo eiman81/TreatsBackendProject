@@ -148,6 +148,7 @@ Error   -Occurs when
 Return Value:
     Returns <{}> on <all test pass>
 */
+
   const store = getData();
   let authUserId: number;
   for (const user of store.users) {
@@ -313,7 +314,6 @@ function messageSendV1(token: string, channelId: number, message: string): messa
 }
 
 function channelLeaveV1(token: string, channelId: number): {error: 'error'} | {} {
-
   const store = getData();
   let authUserId: number;
   for (const user of store.users) {

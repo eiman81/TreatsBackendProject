@@ -23,6 +23,7 @@ Error   -Occurs when
 Return Value:
     Returns <user> on <all test pass>
 */
+  token = token.toString();
   const data = getData();
   for (const user of data.users) {
     if (token === user.token) {

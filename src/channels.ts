@@ -26,6 +26,7 @@ Error   -Occurs when
 Return Value:
     Returns <channelId> on <all test pass>
 */
+
   const data = getData();
   if (isPublic !== false && isPublic !== true) {
     return { error: 'error' };
