@@ -136,7 +136,7 @@ const invaliduser: user = {
   nameLast: 'Malone',
   email: 'post.malone@unsw.edu.au',
   password: 'stoney',
-  username: 'leondechino',
+  handleStr: 'leondechino',
   isOnline: null,
   token: '23'
 };

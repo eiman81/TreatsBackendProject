@@ -13,7 +13,7 @@ export interface user {
   nameLast: string,
   email: string,
   password: string,
-  username: string,
+  handleStr: string,
   isOnline: boolean,
   token: string
 }

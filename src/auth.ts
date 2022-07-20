@@ -51,7 +51,7 @@ Return Value:
   handle = handle.slice(0, 20);
   let count = 0;
   for (let i = 0; i < data.users.length; i++) {
-    if (handle === data.users[i].username.slice(0, handle.length)) {
+    if (handle === data.users[i].handleStr.slice(0, handle.length)) {
       count++;
     }
   }
@@ -72,7 +72,7 @@ Return Value:
     nameLast: nameLast,
     email: email,
     password: password,
-    username: handle,
+    handleStr: handle,
     isOnline: null,
     token: token
   });

@@ -12,7 +12,7 @@ test('Test 1: successful userProfileV1', () => {
     nameFirst: 'Mohammed',
     nameLast: 'MayweatherJr',
     email: 'mohammed.mayweatherjr@unsw.edu.au',
-    username: 'mohammedmayweatherjr',
+    handleStr: 'mohammedmayweatherjr',
   };
   expect(userProfileV1(a.token, a.authUserId)).toStrictEqual(userA);
 });
@@ -26,7 +26,7 @@ test('Test 2: successful userProfileV1', () => {
     nameFirst: 'Mohammed',
     nameLast: 'MayweatherJr',
     email: 'mohammed.mayweatherjr@unsw.edu.au',
-    username: 'mohammedmayweatherjr',
+    handleStr: 'mohammedmayweatherjr',
   };
   expect(userProfileV1(a.token, b.authUserId)).toStrictEqual(userB);
 });
@@ -41,7 +41,7 @@ test('Test 3: successful userProfileV1', () => {
     nameFirst: 'Mohammed',
     nameLast: 'MayweatherJr',
     email: 'mohammed.mayweatherjr@unsw.edu.au',
-    username: 'mohammedmayweatherjr',
+    handleStr: 'mohammedmayweatherjr',
   };
   expect(userProfileV1(b.token, c.authUserId)).toStrictEqual(userC);
 });
@@ -57,7 +57,7 @@ test('Test 4: successful userProfileV1', () => {
     nameFirst: 'ZERO',
     nameLast: '0',
     email: 'zero0@unsw.edu.au',
-    username: 'zero0',
+    handleStr: 'zero0',
   };
   expect(userProfileV1(a.token, d.authUserId)).toStrictEqual(userD);
 });
