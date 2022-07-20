@@ -137,7 +137,8 @@ Error   -Occurs when
 
 Return Value:
     {} on success
-*/
+*/  
+  token = token.toString();
     let user = findUser(token);
     if (user === {error: 'error'}) {
       return {error: 'error'}

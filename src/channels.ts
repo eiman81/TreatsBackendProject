@@ -26,6 +26,8 @@ Error   -Occurs when
 Return Value:
     Returns <channelId> on <all test pass>
 */
+token = token.toString();
+
   const data = getData();
   if (isPublic !== false && isPublic !== true) {
     return { error: 'error' };
@@ -85,6 +87,7 @@ Return Value:
 }
 
 function channelsListV1(token: string): {error: 'error'} | channels[] {
+  token = token.toString();
   const data = getData();
   const channels = [];
   let tokenMatched = false;
@@ -127,6 +130,7 @@ Error   -Occurs when
 Return Value:
     Returns <channels> on <all test pass>
 */
+  token = token.toString();
   const data = getData();
   let valid = 0;
   const channels: channels[] = [];
