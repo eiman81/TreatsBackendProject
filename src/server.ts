@@ -141,6 +141,77 @@ app.post('/channel/removeowner/v2', (req: Request, res: Response) => {
   res.json(channelRemoveOwner);
 });
 
+app.post('/message/send/v1', (req: Request, res: Response) => {
+  let { token, channelId, message } = req.body;
+  
+});
+
+app.put('/message/edit/v1', (req: Request, res: Response) => {
+  let { token, messageId, message } = req.body;
+  
+});
+
+app.delete('/message/remove/v1', (req: Request, res: Response) => {
+  let { token, messageId } = req.body;
+  
+});
+
+app.post('/dm/create/v1', (req: Request, res: Response) => {
+  let { token, uIds } = req.body;
+  
+});
+
+app.get('/dm/list/v1', (req: Request, res: Response) => {
+  let { token } = req.query;
+  
+});
+
+app.delete('/dm/remove/v1', (req: Request, res: Response) => {
+  let { token, dmId } = req.query;
+  
+});
+
+app.get('/dm/details/v1', (req: Request, res: Response) => {
+  let { token, dmId } = req.query;
+  
+});
+
+app.post('/dm/leave/v1', (req: Request, res: Response) => {
+  let { token, dmId } = req.body;
+  
+});
+
+app.get('/dm/messages/v1', (req: Request, res: Response) => {
+  let { token, dmId, start} = req.query;
+  
+});
+
+app.post('/message/senddm/v1', (req: Request, res: Response) => {
+  let { token, dmId, message } = req.body;
+  
+});
+
+app.get('/users/all/v1', (req: Request, res: Response) => {
+  let { token } = req.query;
+  
+});
+
+app.put('/user/profile/setname/v1', (req: Request, res: Response) => {
+  let { token, nameFirst, nameLast } = req.body;
+  
+});
+
+app.put('/user/profile/setemail/v1', (req: Request, res: Response) => {
+  let { token, email } = req.body;
+  
+});
+
+app.put('/user/profile/sethandle/v1', (req: Request, res: Response) => {
+  let { token, handleStr } = req.body;
+  
+});
+
+
 // start server
 app.listen(PORT, HOST, () => {
   console.log(`⚡️ Server listening on port ${PORT} at ${HOST}`);
