@@ -144,10 +144,10 @@ const invaliduser: user = {
 const invalidchannel: channel = {
   channelId: 7890,
   name: 'Argument',
-  latestMsg: 'Shut Up!!',
   messages: [],
   numberOfMessages: 3,
   isPublic: true,
+  dm: false,
   ownerMembers: [],
   allMembers: [],
 };

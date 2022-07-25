@@ -1,10 +1,18 @@
 import { updateLanguageServiceSourceFile } from 'typescript';
 
 export interface messages {
-  messageid: number,
+  messageId: number,
   uId: number,
   message: string,
   timeSent: number
+}
+
+export interface dm {
+  dmId: number,
+  name: string,
+  messages: messages[]
+  creator: number
+  members: number[]
 }
 
 export interface user {
@@ -21,10 +29,10 @@ export interface user {
 export interface channel {
   channelId: number,
   name: string,
-  latestMsg: string,
   numberOfMessages: number,
   messages: messages[],
   isPublic: boolean,
+  dm: boolean,
   ownerMembers: number[],
   allMembers: number[]
 }
@@ -64,8 +72,8 @@ function setTokens(tokens: string[]) {
 function tokenGenerate(): string {
   const tokenNum = Math.random();
   const newToken = tokenNum.toString();
-  let newTokens = getTokens();
-  newTokens.push(newToken)
+  const newTokens = getTokens();
+  newTokens.push(newToken);
   setTokens(newTokens);
   return newToken;
 }

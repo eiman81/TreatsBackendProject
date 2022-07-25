@@ -1,7 +1,7 @@
 import { getData, setData, user, channel } from './dataStore';
 import { userProfileV1 } from './users';
 import { channelExists, userExists, findUser, findChannel, generateMessageId } from './other';
-import { messages} from './dataStore'
+import { messages } from './dataStore';
 
 export interface channeldetails {
   name: string,
@@ -68,6 +68,8 @@ Return Value:
   }
 }
 
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 function channelJoinV1(token: string, channelId: number): {error: 'error'} | {} {
 /*
 < Given a channelId and authUserId, if this user can join, adds them to that channel >
@@ -127,6 +129,8 @@ Return Value:
     }
   }
 }
+
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function channelInviteV1(token: string, channelId: number, uId: number): {error: 'error'} | {} {
 /*
@@ -188,6 +192,8 @@ Return Value:
     }
   }
 }
+
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function channelMessagesV1(token: string, channelId: number, start: number): {error:'error'} | returnMessages {
 /*
@@ -277,41 +283,44 @@ Return Value:
   }
 }
 
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 function messageSendV1(token: string, channelId: number, message: string): messageId | {error: 'error'} {
   if (userExists(token) && channelExists(channelId)) {
-    let channel = findChannel(channelId) as channel;
-    let newData = getData();
+    const channel = findChannel(channelId) as channel;
+    const newData = getData();
     let index = 0;
-    let user = findUser(token) as user
+    const user = findUser(token) as user;
     for (const chan of getData().channels) {
       if (chan.channelId === channel.channelId && channel.allMembers.includes(user.uId)) {
         if (message.length < 1000 && message.length !== 0) {
-          let newMessage = {
-            messageid: generateMessageId(),
+          const newMessage = {
+            messageId: generateMessageId(),
             uId: user.uId,
             message: message,
             timeSent: Date.now()
-          }
+          };
           channel.messages.push(newMessage);
           channel.numberOfMessages = channel.numberOfMessages + 1;
           newData.channels[index] = channel;
           setData(newData);
-          let messageId = {
-            messageId: newMessage.messageid
-          }
+          const messageId = {
+            messageId: newMessage.messageId
+          };
 
           return messageId;
-          
         } else {
-          return {error: 'error'};
+          return { error: 'error' };
         }
       }
       index++;
     }
   } else {
-    return {error: 'error'};
+    return { error: 'error' };
   }
 }
+
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function channelLeaveV1(token: string, channelId: number): {error: 'error'} | {} {
   const store = getData();
@@ -323,7 +332,6 @@ function channelLeaveV1(token: string, channelId: number): {error: 'error'} | {}
     }
   }
   const profile = userProfileV1(token, authUserId);
-
 
   if ('error' in profile) {
     return { error: 'error' };
@@ -350,8 +358,10 @@ function channelLeaveV1(token: string, channelId: number): {error: 'error'} | {}
   }
 }
 
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 function channelAddOwnerV1(token: string, channelId: number, uId: number): {error: 'error'} | {} {
-  const store = getData()
+  const store = getData();
   let authUserId: number;
   for (const user of store.users) {
     if (user.token === token) {
@@ -388,9 +398,10 @@ function channelAddOwnerV1(token: string, channelId: number, uId: number): {erro
   }
 }
 
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function channelRemoveOwnerV1(token: string, channelId: number, uId: number): {error: 'error'} | {} {
-  const store = getData()
+  const store = getData();
   let authUserId: number;
   for (const user of store.users) {
     if (user.token === token) {
@@ -407,8 +418,8 @@ function channelRemoveOwnerV1(token: string, channelId: number, uId: number): {e
       const channelDetails = channelDetailsV1(token, channelId);
       if ('ownerMembers' in channelDetails) {
         if (channelDetails.ownerMembers.includes(uId) && channelDetails.ownerMembers.includes(authUserId)) {
-            let counter = 0;
-            for (const channel of getData().channels) {
+          let counter = 0;
+          for (const channel of getData().channels) {
             if (channel.channelId === channelId) {
               channel.ownerMembers.splice(uId);
               store.channels[counter] = channel;
@@ -418,14 +429,86 @@ function channelRemoveOwnerV1(token: string, channelId: number, uId: number): {e
             counter++;
           }
         } else {
-            return { error: 'error' };
+          return { error: 'error' };
         }
       }
     } else {
-        return { error: 'error' };
+      return { error: 'error' };
     }
   }
 }
 
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1, channelLeaveV1, channelAddOwnerV1, channelRemoveOwnerV1, messageSendV1 };
+function messageEditV1(token: string, messageId: number, message: string): {} | {error: 'error'} {
+  if (userExists(token)) {
+    let index = 0;
+    let index1 = 0;
+    const found = 0;
+    const user = findUser(token) as user;
+    for (const channel of getData().channels) {
+      for (const mes of channel.messages) {
+        if (mes.messageId === messageId) {
+          if (mes.uId === user.uId || channel.ownerMembers.includes(user.uId)) {
+            const newMessage = mes;
+            if (message.length <= 1000 && message !== '') {
+              newMessage.message = message;
+              const newData = getData();
+              newData.channels[index].messages[index1] = newMessage;
+              setData(newData);
+              return {};
+            } else if (message === '') {
+              const newData = getData();
+              newData.channels[index].messages.splice(index1, 1);
+              newData.channels[index].numberOfMessages = newData.channels[index].numberOfMessages - 1;
+              setData(newData);
+              return {};
+            }
+          } else {
+            return { error: 'error' };
+          }
+        }
+        index1++;
+      }
+      index++;
+    }
+
+    if (found === 0) {
+      return { error: 'error' };
+    }
+  }
+}
+
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function messageRemoveV1(token: string, messageId: number) {
+  if (userExists(token)) {
+    let index = 0;
+    let index1 = 0;
+    const found = 0;
+    const user = findUser(token) as user;
+    for (const channel of getData().channels) {
+      for (const mes of channel.messages) {
+        if (mes.messageId === messageId) {
+          if (mes.uId === user.uId || channel.ownerMembers.includes(user.uId)) {
+            const newData = getData();
+            newData.channels[index].messages.splice(index1, 1);
+            newData.channels[index].numberOfMessages = newData.channels[index].numberOfMessages - 1;
+            setData(newData);
+            return {};
+          } else {
+            return { error: 'error' };
+          }
+        }
+        index1++;
+      }
+      index++;
+    }
+
+    if (found === 0) {
+      return { error: 'error' };
+    }
+  }
+}
+
+export { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1, channelLeaveV1, channelAddOwnerV1, channelRemoveOwnerV1, messageSendV1, messageEditV1, messageRemoveV1 };

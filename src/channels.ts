@@ -47,7 +47,7 @@ Return Value:
     }
   }
   if (tokenMatched === false) {
-    return { error: 'error' }
+    return { error: 'error' };
   }
 
   let count = 0;
@@ -71,10 +71,10 @@ Return Value:
   data.channels.push({
     channelId: channelId,
     name: name,
-    latestMsg: null,
     numberOfMessages: 0,
     messages: [],
     isPublic: isPublic,
+    dm: false,
     ownerMembers: [authUserNum],
     allMembers: [authUserNum]
   });
@@ -103,7 +103,7 @@ function channelsListV1(token: string): {error: 'error'} | channels[] {
 
   for (let c = 0; c < data.channels.length; c++) {
     for (let i = 0; i < data.channels[c].allMembers.length; i++) {
-      if (data.channels[c].allMembers[i] === authUserId) {
+      if (data.channels[c].allMembers[i] === authUserId && data.channels[c].dm === false) {
         const channel = {
           channelId: data.channels[c].channelId,
           name: data.channels[c].name
@@ -135,12 +135,15 @@ Return Value:
     if (user.token === token) {
       valid = 1;
       for (const channel of data.channels) {
-        const channeldetails = {
-          channelId: channel.channelId,
-          name: channel.name
-        };
-        channels.push(channeldetails);
+        if (channel.dm === false) {
+          const channeldetails = {
+            channelId: channel.channelId,
+            name: channel.name
+          };
+          channels.push(channeldetails);
+        }
       }
+
       return channels;
     }
   }

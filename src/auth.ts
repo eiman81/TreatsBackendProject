@@ -1,6 +1,6 @@
 import { token } from 'morgan';
 import { getData, setData, tokenGenerate, setTokens, getTokens, user } from './dataStore';
-import {findUser} from './other'
+import { findUser } from './other';
 
 export interface authUserId {
   token: string,
@@ -123,7 +123,6 @@ Return Value:
   }
 }
 
-
 function authLogoutV1(token: string): {} | {error: 'error'} {
 /*
 < Given a current token, logs out the corresponding user and destroys token >
@@ -137,34 +136,34 @@ Error   -Occurs when
 
 Return Value:
     {} on success
-*/  
-    let user = findUser(token);
-    if (user === {error: 'error'}) {
-      return {error: 'error'}
-    } else {
-      user = findUser(token) as user;
-      let counter = 0;
-      for (const person of getData().users) {
-        if (user.uId === person.uId) {
-          person.token = '';
-          let newData = getData();
-          newData.users[counter] = person;
-          setData(newData);
-          break;
-        }
-        counter++;
+*/
+  let user = findUser(token);
+  if (user === { error: 'error' }) {
+    return { error: 'error' };
+  } else {
+    user = findUser(token) as user;
+    let counter = 0;
+    for (const person of getData().users) {
+      if (user.uId === person.uId) {
+        person.token = '';
+        const newData = getData();
+        newData.users[counter] = person;
+        setData(newData);
+        break;
       }
-      let index = 0;
-      for (const tok of getTokens()) {
-        if (tok === token) {
-          let newTokens = getTokens();
-          newTokens.splice(index, 1);
-          setTokens(newTokens);
-          return {};
-        }
-        index++;
-      }
+      counter++;
     }
+    let index = 0;
+    for (const tok of getTokens()) {
+      if (tok === token) {
+        const newTokens = getTokens();
+        newTokens.splice(index, 1);
+        setTokens(newTokens);
+        return {};
+      }
+      index++;
+    }
+  }
 }
 
 export { authLoginV1, authRegisterV1, authLogoutV1 };

@@ -35,4 +35,3 @@ describe('HTTP tests using Jest', () => {
     expect(bodyObj).toEqual({ error: 'error' });
   });
 });
-
