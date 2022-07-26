@@ -7,14 +7,6 @@ export interface messages {
   timeSent: number
 }
 
-export interface dm {
-  dmId: number,
-  name: string,
-  messages: messages[]
-  creator: number
-  members: number[]
-}
-
 export interface user {
   uId: number,
   nameFirst: string,

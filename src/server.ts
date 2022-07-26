@@ -10,6 +10,7 @@ import { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1, ch
 import { userProfileV1 } from './users';
 import { clearV1, findUser, userExists } from './other';
 import { getData, getTokens, setData, setTokens, user } from './dataStore';
+import { dmCreateV1, dmListV1 } from './directMessages';
 
 // Set up web app, use JSON
 const app = express();
@@ -154,11 +155,16 @@ app.delete('/message/remove/v1', (req: Request, res: Response) => {
 });
 
 app.post('/dm/create/v1', (req: Request, res: Response) => {
-  const { token, uIds } = req.body;
+  let { token, uIds } = req.body;
+  token = token.toString();
+  res.json(dmCreateV1(token, uIds));
 });
 
 app.get('/dm/list/v1', (req: Request, res: Response) => {
-  const { token } = req.query;
+  const token = req.query.token.toString();
+  const dms = dmListV1(token);
+  res.json({ dms })
+
 });
 
 app.delete('/dm/remove/v1', (req: Request, res: Response) => {
