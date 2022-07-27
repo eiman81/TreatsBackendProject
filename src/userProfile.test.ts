@@ -1,8 +1,5 @@
-import { userProfileV1 } from './users';
-import { authRegisterV1, authUserId } from './auth';
-import { clearV1 } from './other';
-import { channel, user, data } from './dataStore';
-import { NullLiteral } from 'typescript';
+import { clearV1, authRegisterV1, authLoginV1, userProfileV1 } from "./httpWrappers";
+import { authUserId } from './auth';
 
 test('Test 1: successful userProfileV1', () => {
   clearV1();
