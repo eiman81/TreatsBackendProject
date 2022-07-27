@@ -2,7 +2,6 @@ import { getData, setData, user } from './dataStore';
 import { findUser, userExists } from './other';
 import validator from 'validator';
 
-
 interface userProfile {
   uId: number,
   email: string,
@@ -49,38 +48,37 @@ Return Value:
   return { error: 'error' };
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function usersListAllV1(token: string): {error: 'error'} | {users: userProfile[]} {
   if (userExists(token)) {
-    let users = [];
+    const users = [];
     for (const user of getData().users) {
-      let userDetails = {
+      const userDetails = {
         uId: user.uId,
         email: user.email,
         nameFirst: user.nameFirst,
         nameLast: user.nameLast,
         handleStr: user.handleStr
-      }
+      };
       users.push(userDetails);
     }
 
-    return {users};
-
+    return { users };
   } else {
-    return {error: 'error'}
+    return { error: 'error' };
   }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function userProfileSetNameV1(token: string, nameFirst: string, nameLast: string): {error: 'error'} | {} {
   if (userExists(token) && nameFirst.length <= 50 && nameLast.length <= 50) {
     let index = 0;
-    let userToEdit = findUser(token) as user;
+    const userToEdit = findUser(token) as user;
     for (const user of getData().users) {
       if (user.uId === userToEdit.uId) {
-        let data = getData();
+        const data = getData();
         data.users[index].nameFirst = nameFirst;
         data.users[index].nameLast = nameLast;
         setData(data);
@@ -88,27 +86,27 @@ function userProfileSetNameV1(token: string, nameFirst: string, nameLast: string
       index++;
     }
   } else {
-    return {error: 'error'}
+    return { error: 'error' };
   }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function userProfileSetEmailV1(token: string, email: string): {error: 'error'} | {} {
   if (userExists(token) && validator.isEmail(email)) {
     let alreadyUsed = false;
     for (const user of getData().users) {
       if (user.email === email) {
-        alreadyUsed = true
+        alreadyUsed = true;
       }
     }
 
     if (alreadyUsed === false) {
       let index = 0;
-      let userToEdit = findUser(token) as user;
+      const userToEdit = findUser(token) as user;
       for (const user of getData().users) {
         if (user.uId === userToEdit.uId) {
-          let data = getData();
+          const data = getData();
           data.users[index].email = email;
           setData(data);
         }
@@ -116,45 +114,42 @@ function userProfileSetEmailV1(token: string, email: string): {error: 'error'} |
         index++;
       }
     } else {
-      return {error: 'error'}
+      return { error: 'error' };
     }
-      
   } else {
-    return {error: 'error'}
+    return { error: 'error' };
   }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function userProfileSetHandleV1(token: string, handleStr: string): {error: 'error'} | {} {
   if (userExists(token) && handleStr.length >= 3 && handleStr.length <= 20 && /^[A-Za-z0-9]*$/.test(handleStr)) {
     let alreadyUsed = false;
     for (const user of getData().users) {
       if (user.handleStr === handleStr) {
-        alreadyUsed = true
+        alreadyUsed = true;
       }
     }
 
     if (alreadyUsed === false) {
       let index = 0;
-      let userToEdit = findUser(token) as user;
+      const userToEdit = findUser(token) as user;
       for (const user of getData().users) {
         if (user.uId === userToEdit.uId) {
-          let data = getData();
+          const data = getData();
           data.users[index].handleStr = handleStr;
           setData(data);
         }
 
         index++;
       }
-
     } else {
-      return {error: 'error'}
+      return { error: 'error' };
     }
-
   } else {
-    return {error: 'error'}
+    return { error: 'error' };
   }
 }
 
-export { userProfileV1, usersListAllV1, userProfileSetNameV1, userProfileSetEmailV1, userProfileSetHandleV1};
+export { userProfileV1, usersListAllV1, userProfileSetNameV1, userProfileSetEmailV1, userProfileSetHandleV1 };

@@ -112,7 +112,7 @@ function channelsListV1(token: string): {error: 'error'} | {channels: channels[]
       }
     }
   }
-  return {channels};
+  return { channels };
 }
 
 function channelsListallV1(token: string): {error: 'error'} | {channels: channels[]} {
@@ -144,12 +144,12 @@ Return Value:
         }
       }
 
-      return {channels: channels};
+      return { channels: channels };
     }
   }
 
   if (valid === 0) {
-    return {channels};
+    return { channels };
   }
 }
 

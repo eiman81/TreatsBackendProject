@@ -210,19 +210,19 @@ app.get('/users/all/v1', (req: Request, res: Response) => {
 app.put('/user/profile/setname/v1', (req: Request, res: Response) => {
   let { token, nameFirst, nameLast } = req.body;
   token = token.toString();
-  res.json(userProfileSetNameV1(token, nameFirst, nameLast))
+  res.json(userProfileSetNameV1(token, nameFirst, nameLast));
 });
 
 app.put('/user/profile/setemail/v1', (req: Request, res: Response) => {
   let { token, email } = req.body;
   token = token.toString();
-  res.json(userProfileSetEmailV1(token, email))
+  res.json(userProfileSetEmailV1(token, email));
 });
 
 app.put('/user/profile/sethandle/v1', (req: Request, res: Response) => {
   let { token, handleStr } = req.body;
   token = token.toString();
-  res.json(userProfileSetEmailV1(token, handleStr))
+  res.json(userProfileSetEmailV1(token, handleStr));
 });
 
 // start server
