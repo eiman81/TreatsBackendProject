@@ -79,3 +79,24 @@ export const authLogoutV1: authLogoutV1Fn = (token: string) => {
         return JSON.parse(res.body as string);
     }
 }
+
+export type userProfileV1Fn = (token: string, uId: number) => {uId: number, nameFirst: string, nameLast: string, email: string, handleStr: string} | Iter2Error;
+
+export const userProfileV1: userProfileV1Fn = (token: string, uId: number) => {
+    const res = request(
+        "GET",
+        `${url}:${port}/user/profile/v2`,
+        {
+            qs: {
+                token: token,
+                uId: uId,
+            }
+        }
+    );
+
+    if (res.statusCode !== 200) {
+        throw res.statusCode;
+    } else {
+        return JSON.parse(res.body as string);
+    }
+}
