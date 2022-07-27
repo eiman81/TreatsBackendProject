@@ -85,7 +85,7 @@ Return Value:
   };
 }
 
-function channelsListV1(token: string): {error: 'error'} | channels[] {
+function channelsListV1(token: string): {error: 'error'} | {channels: channels[]} {
   const data = getData();
   const channels = [];
   let tokenMatched = false;
@@ -112,10 +112,10 @@ function channelsListV1(token: string): {error: 'error'} | channels[] {
       }
     }
   }
-  return channels;
+  return {channels};
 }
 
-function channelsListallV1(token: string): {error: 'error'} | channels[] {
+function channelsListallV1(token: string): {error: 'error'} | {channels: channels[]} {
 /*
 < Given a authUserId, Provide an array of all channels, including private channels, (and their associated details) >
 
@@ -144,12 +144,12 @@ Return Value:
         }
       }
 
-      return channels;
+      return {channels: channels};
     }
   }
 
   if (valid === 0) {
-    return channels;
+    return {channels};
   }
 }
 

@@ -115,6 +115,8 @@ Return Value:
       return { error: 'error' };
     } else {
       data.users[found].token = tokenGenerate();
+      data.users[found].isOnline = true;
+      setData(data);
       return {
         token: data.users[found].token,
         authUserId: data.users[found].uId
@@ -146,6 +148,7 @@ Return Value:
     for (const person of getData().users) {
       if (user.uId === person.uId) {
         person.token = '';
+        person.isOnline = false;
         const newData = getData();
         newData.users[counter] = person;
         setData(newData);
