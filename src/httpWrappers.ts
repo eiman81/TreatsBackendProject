@@ -5,9 +5,9 @@ import { token } from "morgan";
 
 export type Iter2Error = {error: "error"};
 
-export type ClearV1Fn = () => {};
+export type clearV1Fn = () => {};
 
-export const clearV1: ClearV1Fn = () => {
+export const clearV1: clearV1Fn = () => {
   const res = request(
     "DELETE",
     `${url}:${port}/clear/v1`,
