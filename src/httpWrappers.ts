@@ -100,3 +100,26 @@ export const userProfileV1: userProfileV1Fn = (token: string, uId: number) => {
         return JSON.parse(res.body as string);
     }
 }
+
+
+export type channelsCreateV1Fn = (token: string, name: string, isPublic: boolean) => { channelId: number } | Iter2Error;
+
+export const channelsCreateV1: channelsCreateV1Fn = (token: string, name: string, isPublic: boolean) => {
+    const res = request(
+        "POST",
+        `${url}:${port}/channels/create/v2`,
+        {
+            json: {
+                token: token,
+                name: name,
+                isPublic: isPublic,
+            }
+        }
+    );
+
+    if (res.statusCode !== 200) {
+        throw res.statusCode;
+    } else {
+        return JSON.parse(res.body as string);
+    }
+}
