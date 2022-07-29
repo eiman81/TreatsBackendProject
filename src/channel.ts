@@ -130,7 +130,7 @@ Return Value:
   }
 }
 
-/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function channelInviteV1(token: string, channelId: number, uId: number): {error: 'error'} | {} {
 /*
@@ -193,7 +193,7 @@ Return Value:
   }
 }
 
-/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function channelMessagesV1(token: string, channelId: number, start: number): {error:'error'} | returnMessages {
 /*
@@ -245,7 +245,7 @@ Return Value:
           }
 
           const returnMessages = {
-            messages: messages,
+            messages: messages.reverse(),
             start: start,
             end: -1
           };
@@ -265,7 +265,7 @@ Return Value:
           }
 
           const returnMessages = {
-            messages: messages,
+            messages: messages.reverse(),
             start: start,
             end: end
           };

@@ -7,10 +7,10 @@ import { authRegisterV1, authLoginV1, authUserId, authLogoutV1 } from './auth';
 import { channelsCreateV1, channelsListV1, channelsListallV1 } from './channels';
 import { messageSendV1, messageEditV1, messageRemoveV1 } from './channel';
 import { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1, channelLeaveV1, channelAddOwnerV1, channelRemoveOwnerV1 } from './channel';
-import { userProfileV1 } from './users';
+import { userProfileSetNameV1, userProfileV1, usersListAllV1, userProfileSetEmailV1, userProfileSetHandleV1 } from './users';
 import { clearV1, findUser, userExists } from './other';
 import { getData, getTokens, setData, setTokens, user } from './dataStore';
-import { dmCreateV1, dmListV1 } from './directMessages';
+import { dmCreateV1, dmListV1, dmRemoveV1, dmDetailsV1, dmLeaveV1, dmMessagesV1, messageSendDmV1 } from './directMessages';
 
 // Set up web app, use JSON
 const app = express();
@@ -65,8 +65,8 @@ app.get('/channels/listall/v2', (req: Request, res: Response) => {
 });
 
 app.get('/channel/details/v2', (req: Request, res: Response) => {
-  const channelId = Number(req.query.channelId.toString());
   const token = req.query.token.toString();
+  const channelId = Number(req.query.channelId.toString());
   const details = channelDetailsV1(token, channelId);
   res.json(details);
 });
@@ -138,6 +138,8 @@ app.post('/channel/removeowner/v2', (req: Request, res: Response) => {
 app.post('/message/send/v1', (req: Request, res: Response) => {
   let { token, channelId, message } = req.body;
   token = token.toString();
+  channelId = Number(channelId);
+  message = message.toString();
   const messageId = messageSendV1(token, channelId, message);
   res.json(messageId);
 });
@@ -145,6 +147,7 @@ app.post('/message/send/v1', (req: Request, res: Response) => {
 app.put('/message/edit/v1', (req: Request, res: Response) => {
   let { token, messageId, message } = req.body;
   token = token.toString();
+  messageId = Number(messageId);
   res.json(messageEditV1(token, messageId, message));
 });
 
@@ -163,44 +166,63 @@ app.post('/dm/create/v1', (req: Request, res: Response) => {
 app.get('/dm/list/v1', (req: Request, res: Response) => {
   const token = req.query.token.toString();
   const dms = dmListV1(token);
-  res.json({ dms })
-
+  res.json(dms);
 });
 
 app.delete('/dm/remove/v1', (req: Request, res: Response) => {
-  const { token, dmId } = req.query;
+  const token = req.query.token.toString();
+  const dmId = Number(req.query.dmId);
+  res.json(dmRemoveV1(token, dmId));
 });
 
 app.get('/dm/details/v1', (req: Request, res: Response) => {
-  const { token, dmId } = req.query;
+  const token = req.query.token.toString();
+  const dmId = Number(req.query.dmId);
+  res.json(dmDetailsV1(token, dmId));
 });
 
 app.post('/dm/leave/v1', (req: Request, res: Response) => {
-  const { token, dmId } = req.body;
+  let { token, dmId } = req.body;
+  token = token.toString();
+  res.json(dmLeaveV1(token, dmId));
 });
 
 app.get('/dm/messages/v1', (req: Request, res: Response) => {
-  const { token, dmId, start } = req.query;
+  const token = req.query.token.toString();
+  const dmId = Number(req.query.dmId);
+  const start = Number(req.query.start);
+  res.json(dmMessagesV1(token, dmId, start));
 });
 
 app.post('/message/senddm/v1', (req: Request, res: Response) => {
-  const { token, dmId, message } = req.body;
+  let { token, dmId, message } = req.body;
+  token = token.toString();
+  dmId = Number(dmId);
+  message = message.toString();
+  res.json(messageSendDmV1(token, dmId, message));
 });
 
 app.get('/users/all/v1', (req: Request, res: Response) => {
-  const { token } = req.query;
+  const token = req.query.token.toString();
+  res.json(usersListAllV1(token));
 });
 
 app.put('/user/profile/setname/v1', (req: Request, res: Response) => {
-  const { token, nameFirst, nameLast } = req.body;
+  let { token, nameFirst, nameLast } = req.body;
+  token = token.toString();
+  res.json(userProfileSetNameV1(token, nameFirst, nameLast));
 });
 
 app.put('/user/profile/setemail/v1', (req: Request, res: Response) => {
-  const { token, email } = req.body;
+  let { token, email } = req.body;
+  token = token.toString();
+  res.json(userProfileSetEmailV1(token, email));
 });
 
 app.put('/user/profile/sethandle/v1', (req: Request, res: Response) => {
-  const { token, handleStr } = req.body;
+  let { token, handleStr } = req.body;
+  token = token.toString();
+  res.json(userProfileSetEmailV1(token, handleStr));
 });
 
 // start server
