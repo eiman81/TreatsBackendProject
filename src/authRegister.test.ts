@@ -1,6 +1,5 @@
-import { authRegisterV1, authLoginV1, authUserId } from './auth';
-import { userProfileV1 } from './users';
-import { clearV1 } from './other';
+import { clearV1, authRegisterV1, authLoginV1, userProfileV1 } from "./httpWrappers";
+import { authUserId } from './auth';
 
 test('authRegisterV1: correct output for 1st user', () => {
   clearV1();
@@ -21,6 +20,9 @@ test('authRegisterV1: correct output for 4th user', () => {
 
 test('authRegisterV1: error for email address not valid', () => {
   clearV1();
+
+  // expect(authRegisterV1('not$%@valid@unsw.edu.au', 'notvalid123', 'not', 'valid').toThrow(400)
+
   const a = authRegisterV1('not$%@valid@unsw.edu.au', 'notvalid123', 'not', 'valid');
   expect(a).toStrictEqual({ error: 'error' });
 });

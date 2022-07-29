@@ -47,7 +47,7 @@ app.post('/auth/login/v2', (req: Request, res: Response) => {
 
 app.post('/channels/create/v2', (req: Request, res: Response) => {
   let { token, name, isPublic } = req.body;
-  token = token.toString();
+  //token = token.toString();
   const channelId = channelsCreateV1(token, name, isPublic);
   res.json(channelId);
 });
