@@ -1,9 +1,8 @@
 
-import { channel, data, getData, setData, user } from './dataStore';
-import { channelInviteV1, channelJoinV1, channelDetailsV1, channelMessagesV1 } from './channel';
-import { channelsCreateV1, channelId } from './channels';
-import { authRegisterV1, authUserId } from './auth';
-import { clearV1 } from './other';
+import { user } from './dataStore';
+import { clearV1, authRegisterV1, channelsCreateV1, channelInviteV1 } from './httpWrappers';
+import { channelId } from './channels';
+import { authUserId } from './auth';
 
 const validuser1 = authRegisterV1('another_cristiano@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
 const validuser2 = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
@@ -32,7 +31,7 @@ const invaliduser: user = {
 test('channelInviteV1: invalid authuserId, valid uId, valid channel', () => {
   clearV1();
 
-  const result = channelInviteV1(invaliduser.token, validuser2.authUserId, validchannel.channelId);
+  const result = channelInviteV1(invaliduser.token, validchannel.channelId, validuser2.authUserId);
 
   expect(result).toStrictEqual({ error: 'error' });
 });
@@ -40,7 +39,7 @@ test('channelInviteV1: invalid authuserId, valid uId, valid channel', () => {
 test('channelInviteV1: valid authuserId (in channel), valid uId, valid channel', () => {
   clearV1();
 
-  const result = channelInviteV1(validuser1.token, validuser2.authUserId, validchannel.channelId);
+  const result = channelInviteV1(validuser1.token, validchannel.channelId, validuser2.authUserId);
 
   expect(result).toStrictEqual({ error: 'error' });
 });
@@ -48,7 +47,7 @@ test('channelInviteV1: valid authuserId (in channel), valid uId, valid channel',
 test('channelInviteV1: valid authuserId (not in channel), valid uId, valid channel', () => {
   clearV1();
 
-  const result = channelInviteV1(validuser2.token, validuser1.authUserId, validchannel.channelId);
+  const result = channelInviteV1(validuser2.token, validchannel.channelId, validuser2.authUserId);
 
   expect(result).toStrictEqual({ error: 'error' });
 });

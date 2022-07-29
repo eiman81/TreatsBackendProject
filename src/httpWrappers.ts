@@ -2,6 +2,7 @@ import { url, port } from "./config.json";
 
 import request from "sync-request";
 import { channels } from "./channels";
+import { channeldetails, returnMessages, messageId } from "./channel";
 import { token } from "morgan";
 
 export type Iter2Error = {error: "error"};
@@ -155,6 +156,114 @@ export const channelsListallV1: channelsListallV1Fn = (token: string) => {
         {
             qs: {
                 token: token,
+            }
+        }
+    );
+
+    if (res.statusCode !== 200) {
+        throw res.statusCode;
+    } else {
+        return JSON.parse(res.body as string);
+    }
+}
+
+export type channelDetailsV1Fn = (token: string, channelId: number) => channeldetails | Iter2Error;
+
+export const channelDetailsV1: channelDetailsV1Fn = (token: string, channelId: number) => {
+    const res = request(
+        "GET",
+        `${url}:${port}/channel/details/v2`,
+        {
+            qs: {
+                token: token,
+                channelId: channelId,
+            }
+        }
+    );
+
+    if (res.statusCode !== 200) {
+        throw res.statusCode;
+    } else {
+        return JSON.parse(res.body as string);
+    }
+}
+
+export type channelJoinV1Fn = (token: string, channelId: number) => {} | Iter2Error;
+
+export const channelJoinV1: channelJoinV1Fn = (token: string, channelId: number) => {
+    const res = request(
+        "POST",
+        `${url}:${port}/channel/join/v2`,
+        {
+            json: {
+                token: token,
+                channelId: channelId,
+            }
+        }
+    );
+
+    if (res.statusCode !== 200) {
+        throw res.statusCode;
+    } else {
+        return JSON.parse(res.body as string);
+    }
+}
+
+export type channelInviteV1Fn = (token: string, channelId: number, uId: number) => {} | Iter2Error;
+
+export const channelInviteV1: channelInviteV1Fn = (token: string, channelId: number, uId: number) => {
+    const res = request(
+        "POST",
+        `${url}:${port}/channel/invite/v2`,
+        {
+            json: {
+                token: token,
+                channelId: channelId,
+                uId: uId,
+            }
+        }
+    );
+
+    if (res.statusCode !== 200) {
+        throw res.statusCode;
+    } else {
+        return JSON.parse(res.body as string);
+    }
+}
+
+export type channelMessagesV1Fn = (token: string, channelId: number, start: number) => returnMessages | Iter2Error;
+
+export const channelMessagesV1: channelMessagesV1Fn = (token: string, channelId: number, start: number) => {
+    const res = request(
+        "GET",
+        `${url}:${port}/channel/messages/v2`,
+        {
+            qs: {
+                token: token,
+                channelId: channelId,
+                start: start,
+            }
+        }
+    );
+
+    if (res.statusCode !== 200) {
+        throw res.statusCode;
+    } else {
+        return JSON.parse(res.body as string);
+    }
+}
+
+export type messageSendV1Fn = (token: string, channelId: number, message: string) => messageId | Iter2Error;
+
+export const messageSendV1: messageSendV1Fn = (token: string, channelId: number, message: string) => {
+    const res = request(
+        "POST",
+        `${url}:${port}/message/send/v1`,
+        {
+            json: {
+                token: token,
+                channelId: channelId,
+                message: message,
             }
         }
     );

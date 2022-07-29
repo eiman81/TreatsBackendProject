@@ -1,10 +1,7 @@
-import { authRegisterV1, authLoginV1, authUserId, authLogoutV1 } from './auth';
-import { channelsCreateV1, channelsListV1, channelsListallV1, channelId } from './channels';
-import { messageSendV1, returnMessages } from './channel';
-import { channelDetailsV1, channelJoinV1, channelInviteV1, messageId, channelMessagesV1, channelLeaveV1, channelAddOwnerV1, channelRemoveOwnerV1 } from './channel';
-import { userProfileV1 } from './users';
-import { clearV1, findUser, userExists } from './other';
-import { getData, getTokens, setData, setTokens, user } from './dataStore';
+import { clearV1, authRegisterV1, channelsCreateV1, channelMessagesV1, messageSendV1 } from './httpWrappers';
+import { returnMessages, messageId } from './channel';
+import { channelId } from './channels';
+import { authUserId } from './auth';
 
 test('ChannelMessageSend Working', () => {
   clearV1();
@@ -36,7 +33,7 @@ test('ChannelMessageSend error when user is not a member', () => {
   clearV1();
   const user = authRegisterV1('sean.ocononnor@gmail.com', 'qwerty5', 'sean', 'oconnor') as authUserId;
   const user2 = authRegisterV1('bob.grate@gmail.com', '5tsgs', 'bob', 'grate') as authUserId;
-  const channel = channelsCreateV1(user.token, 'newchannel', false) as channelId;
-  const messageid = messageSendV1(user2.token, channel.channelId, 'message');
+  const channel = channelsCreateV1(user2.token, 'newchannel', false) as channelId;
+  const messageid = messageSendV1(user.token, channel.channelId, 'message');
   expect(messageid).toStrictEqual({ error: 'error' });
 });
