@@ -85,7 +85,7 @@ Return Value:
   };
 }
 
-function channelsListV1(token: string): {error: 'error'} | channels[] {
+function channelsListV1(token: string): {error: 'error'} | Array<channels> {
   const data = getData();
   const channels = [];
   let tokenMatched = false;
@@ -98,7 +98,7 @@ function channelsListV1(token: string): {error: 'error'} | channels[] {
     }
   }
   if (tokenMatched === false) {
-    return { error: 'error' };
+    return channels;
   }
 
   for (let c = 0; c < data.channels.length; c++) {

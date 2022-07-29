@@ -1,14 +1,13 @@
-import { channelsCreateV1, channelsListV1, channelsListallV1, channelId, channels } from './channels';
-import { authRegisterV1, authUserId } from './auth';
-import { clearV1 } from './other';
-import { channel } from './dataStore';
+import { channelId, channels } from './channels';
+import { clearV1, authRegisterV1, channelsCreateV1, channelsListallV1 } from "./httpWrappers";
+import { authUserId } from './auth';
 
 test('ChannelsListallV1 userId not found', () => {
   clearV1();
   const token = authRegisterV1('sean@gmail.com', '2737', 'Sean', 'OConnor') as authUserId;
   const token1 = 'hohoho';
   channelsCreateV1(token.token, 'first', true);
-  expect(channelsListallV1(token1) as channels[]).toStrictEqual([]);
+  expect(channelsListallV1(token1)).toStrictEqual([]);
 });
 
 test('ChannelsListallV1 working', () => {
@@ -21,6 +20,6 @@ test('ChannelsListallV1 working', () => {
       name: 'first',
     }
   ];
-  const result = channelsListallV1(token.token) as channels[];
+  const result = channelsListallV1(token.token);
   expect(result).toStrictEqual(list);
 });

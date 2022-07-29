@@ -1,5 +1,5 @@
 import { channelId } from './channels';
-import { clearV1, authRegisterV1, authLoginV1, channelsCreateV1 } from "./httpWrappers";
+import { clearV1, authRegisterV1, channelsCreateV1 } from "./httpWrappers";
 import { authUserId } from './auth';
 
 test('channelsCreateV1: error for name less than 1 character', () => {

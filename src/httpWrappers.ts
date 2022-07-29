@@ -1,6 +1,7 @@
 import { url, port } from "./config.json";
 
 import request from "sync-request";
+import { channels } from "./channels";
 import { token } from "morgan";
 
 export type Iter2Error = {error: "error"};
@@ -113,6 +114,47 @@ export const channelsCreateV1: channelsCreateV1Fn = (token: string, name: string
                 token: token,
                 name: name,
                 isPublic: isPublic,
+            }
+        }
+    );
+
+    if (res.statusCode !== 200) {
+        throw res.statusCode;
+    } else {
+        return JSON.parse(res.body as string);
+    }
+}
+
+export type channelsListV1Fn = (token: string) => Array<channels> | Iter2Error;
+
+export const channelsListV1: channelsListV1Fn = (token: string) => {
+    const res = request(
+        "GET",
+        `${url}:${port}/channels/list/v2`,
+        {
+            qs: {
+                token: token,
+            }
+        }
+    );
+
+    if (res.statusCode !== 200) {
+        throw res.statusCode;
+    } else {
+        return JSON.parse(res.body as string);
+    }
+}
+
+
+export type channelsListallV1Fn = (token: string) => {channelId: number, name: string} | Iter2Error;
+
+export const channelsListallV1: channelsListallV1Fn = (token: string) => {
+    const res = request(
+        "GET",
+        `${url}:${port}/channels/listall/v2`,
+        {
+            qs: {
+                token: token,
             }
         }
     );

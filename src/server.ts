@@ -47,7 +47,7 @@ app.post('/auth/login/v2', (req: Request, res: Response) => {
 
 app.post('/channels/create/v2', (req: Request, res: Response) => {
   let { token, name, isPublic } = req.body;
-  token = token.toString();
+  //token = token.toString();
   const channelId = channelsCreateV1(token, name, isPublic);
   res.json(channelId);
 });
@@ -55,13 +55,13 @@ app.post('/channels/create/v2', (req: Request, res: Response) => {
 app.get('/channels/list/v2', (req: Request, res: Response) => {
   const token = req.query.token.toString();
   const channels = channelsListV1(token);
-  res.json({ channels });
+  res.json(channels);
 });
 
 app.get('/channels/listall/v2', (req: Request, res: Response) => {
   const token = req.query.token.toString();
   const channels = channelsListallV1(token);
-  res.json({ channels });
+  res.json(channels);
 });
 
 app.get('/channel/details/v2', (req: Request, res: Response) => {
