@@ -31,7 +31,7 @@ const invaliduser: user = {
 test('channelInviteV1: invalid authuserId, valid uId, valid channel', () => {
   clearV1();
 
-  const result = channelInviteV1(invaliduser.token, validchannel.channelId, validuser2.authUserId);
+  const result = channelInviteV1('23', validchannel.channelId, validuser2.authUserId);
 
   expect(result).toStrictEqual({ error: 'error' });
 });

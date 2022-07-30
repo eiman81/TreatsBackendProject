@@ -315,6 +315,11 @@ function messageSendV1(token: string, channelId: number, message: string): messa
       }
       index++;
     }
+
+    if (channel.allMembers.includes(user.uId) === false) {
+      return { error: 'error' }
+    }
+
   } else {
     return { error: 'error' };
   }
@@ -398,7 +403,7 @@ function channelAddOwnerV1(token: string, channelId: number, uId: number): {erro
   }
 }
 
-/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function channelRemoveOwnerV1(token: string, channelId: number, uId: number): {error: 'error'} | {} {
   const store = getData();
