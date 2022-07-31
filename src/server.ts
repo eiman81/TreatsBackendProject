@@ -3,13 +3,14 @@ import { echo } from './echo';
 import morgan from 'morgan';
 import config from './config.json';
 import cors from 'cors';
+import fs from 'fs';
 import { authRegisterV1, authLoginV1, authUserId, authLogoutV1 } from './auth';
 import { channelsCreateV1, channelsListV1, channelsListallV1 } from './channels';
 import { messageSendV1, messageEditV1, messageRemoveV1 } from './channel';
 import { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1, channelLeaveV1, channelAddOwnerV1, channelRemoveOwnerV1 } from './channel';
 import { userProfileSetNameV1, userProfileV1, usersListAllV1, userProfileSetEmailV1, userProfileSetHandleV1 } from './users';
 import { clearV1, findUser, userExists } from './other';
-import { getData, getTokens, setData, setTokens, user } from './dataStore';
+import { user } from './dataStore';
 import { dmCreateV1, dmListV1, dmRemoveV1, dmDetailsV1, dmLeaveV1, dmMessagesV1, messageSendDmV1 } from './directMessages';
 
 // Set up web app, use JSON

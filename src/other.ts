@@ -1,3 +1,4 @@
+import fs from 'fs';
 import { NewLineKind } from 'typescript';
 import { getData, setData, data, user, channel } from './dataStore';
 interface nodata {}
@@ -87,10 +88,12 @@ function findChannel(channelId: number): channel | {error: 'error'} {
   }
 }
 
-const messageIds: number[] = [];
+let messageIds: number[] = [];
+fs.writeFileSync('./src/messageIds.json', JSON.stringify(messageIds));
 
 function generateMessageId(): number {
   let i = 1;
+  messageIds = JSON.parse(String(fs.readFileSync('./src/messageIds.json', {flag: 'r'})));
   const newId = messageIds.length + 1;
   while (i === 1) {
     i = 0;
@@ -101,6 +104,7 @@ function generateMessageId(): number {
     }
   }
   messageIds.push(newId);
+  fs.writeFileSync('./src/messageIds.json', JSON.stringify(messageIds));
   return newId;
 }
 

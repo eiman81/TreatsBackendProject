@@ -152,44 +152,30 @@ Error   -Occurs when
 Return Value:
     Returns <{}> on <all test pass>
 */
-
-  const store = getData();
-  let authUserId: number;
-  for (const user of store.users) {
-    if (user.token === token) {
-      authUserId = user.uId;
-      break;
-    }
-  }
-  const profile = userProfileV1(token, authUserId);
-
-  // checks no error is returned
-  if ('error' in profile) {
-    return { error: 'error' };
-  } else {
-    if (userExists(token) && channelExists(channelId)) {
-      // check if user is already in channel and if uId is real
-      const channelDetails = channelDetailsV1(token, channelId);
-      if ('allMembers' in channelDetails) {
-        if (userExists(uId) === false || channelDetails.allMembers.includes(uId)) {
-          return { error: 'error' };
-        } else {
-          // add user to channel
-          let counter = 0;
-          for (const channel of getData().channels) {
-            if (channel.channelId === channelId) {
-              channel.allMembers.push(uId);
-              store.channels[counter] = channel;
-              setData(store);
-              return {};
-            }
-            counter++;
-          }
-        }
-      }
-    } else {
+  if (userExists(token) && channelExists(channelId) && userExists(uId)) {
+  // check if user is already in channel and if uId is real
+    const user = findUser(token) as user;
+    const channel = findChannel(channelId) as channel;
+    // already includes user to be added or user is not apart of channel
+    if (channel.allMembers.includes(uId) || channel.allMembers.includes(user.uId) === false) {
       return { error: 'error' };
+    
+    } else {
+      let counter = 0;
+      let store = getData();
+      for (const channel of getData().channels) {
+        if (channel.channelId === channelId) {
+          channel.allMembers.push(uId);
+          store.channels[counter] = channel;
+          setData(store);
+          return {};
+        }
+        counter++;
+      }
     }
+
+  } else {
+    return { error: 'error' };
   }
 }
 
