@@ -10,6 +10,7 @@ import { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1, ch
 import { userProfileV1 } from './users';
 import { clearV1, findUser, userExists } from './other';
 import { getData, getTokens, setData, setTokens, user } from './dataStore';
+import errorHandler from 'middleware-http-errors';
 
 // Set up web app, use JSON
 const app = express();
@@ -140,8 +141,18 @@ app.post('/channel/removeowner/v2', (req: Request, res: Response) => {
   const channelRemoveOwner = channelRemoveOwnerV1(token, channelId, uId);
   res.json(channelRemoveOwner);
 });
+// handles errors nicely
+app.use(errorHandler());
+
+// for logging errors
+app.use(morgan('dev'));
 
 // start server
-app.listen(PORT, HOST, () => {
+const server = app.listen(PORT, HOST, () => {
   console.log(`⚡️ Server listening on port ${PORT} at ${HOST}`);
+});
+
+// For coverage, handle Ctrl+C gracefully
+process.on('SIGINT', () => {
+  server.close(() => console.log('Shutting down server gracefully.'));
 });
