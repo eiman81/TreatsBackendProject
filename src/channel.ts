@@ -159,10 +159,9 @@ Return Value:
     // already includes user to be added or user is not apart of channel
     if (channel.allMembers.includes(uId) || channel.allMembers.includes(user.uId) === false) {
       return { error: 'error' };
-    
     } else {
       let counter = 0;
-      let store = getData();
+      const store = getData();
       for (const channel of getData().channels) {
         if (channel.channelId === channelId) {
           channel.allMembers.push(uId);
@@ -173,7 +172,6 @@ Return Value:
         counter++;
       }
     }
-
   } else {
     return { error: 'error' };
   }
@@ -303,9 +301,8 @@ function messageSendV1(token: string, channelId: number, message: string): messa
     }
 
     if (channel.allMembers.includes(user.uId) === false) {
-      return { error: 'error' }
+      return { error: 'error' };
     }
-
   } else {
     return { error: 'error' };
   }
@@ -389,7 +386,7 @@ function channelAddOwnerV1(token: string, channelId: number, uId: number): {erro
   }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function channelRemoveOwnerV1(token: string, channelId: number, uId: number): {error: 'error'} | {} {
   const store = getData();

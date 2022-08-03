@@ -7,7 +7,7 @@ test('Channel Messages error when it recieves an invalid channel id', () => {
   clearV1();
 
   const user = authRegisterV1('sean@gmail.com', '27hgfu37', 'Sean', 'OConnor') as authUserId;
-  //const channelid = channelsCreateV1(user.token, 'first', false) as channelId;
+  // const channelid = channelsCreateV1(user.token, 'first', false) as channelId;
 
   expect(channelMessagesV1(user.token, 994, 0)).toStrictEqual({ error: 'error' });
 });

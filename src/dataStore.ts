@@ -43,7 +43,7 @@ let data : data = {
 
 // Use get() to access the data
 function getData(): data {
-  data = JSON.parse(String(fs.readFileSync('./src/data.json', {flag: 'r'})));
+  data = JSON.parse(String(fs.readFileSync('./src/data.json', { flag: 'r' })));
   return data;
 }
 

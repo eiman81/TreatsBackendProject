@@ -93,7 +93,7 @@ fs.writeFileSync('./src/messageIds.json', JSON.stringify(messageIds));
 
 function generateMessageId(): number {
   let i = 1;
-  messageIds = JSON.parse(String(fs.readFileSync('./src/messageIds.json', {flag: 'r'})));
+  messageIds = JSON.parse(String(fs.readFileSync('./src/messageIds.json', { flag: 'r' })));
   const newId = messageIds.length + 1;
   while (i === 1) {
     i = 0;

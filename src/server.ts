@@ -13,6 +13,7 @@ import { clearV1, findUser, userExists } from './other';
 import { user } from './dataStore';
 import { dmCreateV1, dmListV1, dmRemoveV1, dmDetailsV1, dmLeaveV1, dmMessagesV1, messageSendDmV1 } from './directMessages';
 
+
 // Set up web app, use JSON
 const app = express();
 app.use(express.json());
@@ -136,6 +137,9 @@ app.post('/channel/removeowner/v2', (req: Request, res: Response) => {
   res.json(channelRemoveOwner);
 });
 
+// for logging errors
+app.use(morgan('dev'));
+
 app.post('/message/send/v1', (req: Request, res: Response) => {
   let { token, channelId, message } = req.body;
   token = token.toString();
@@ -227,6 +231,11 @@ app.put('/user/profile/sethandle/v1', (req: Request, res: Response) => {
 });
 
 // start server
-app.listen(PORT, HOST, () => {
+const server = app.listen(PORT, HOST, () => {
   console.log(`⚡️ Server listening on port ${PORT} at ${HOST}`);
+});
+
+// For coverage, handle Ctrl+C gracefully
+process.on('SIGINT', () => {
+  server.close(() => console.log('Shutting down server gracefully.'));
 });

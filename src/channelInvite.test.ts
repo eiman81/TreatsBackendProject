@@ -31,9 +31,9 @@ const invaliduser: user = {
 test('channelInviteV1: invalid authuserId, valid uId, valid channel', () => {
   clearV1();
   const validuser1 = authRegisterV1('another_cristiano@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
-const validuser2 = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
-const validchannel = channelsCreateV1(validuser1.token, 'Discussion', true) as channelId;
-const privatechannel = channelsCreateV1(validuser2.token, 'Discussion', false) as channelId;
+  const validuser2 = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
+  const validchannel = channelsCreateV1(validuser1.token, 'Discussion', true) as channelId;
+  const privatechannel = channelsCreateV1(validuser2.token, 'Discussion', false) as channelId;
 
   const result = channelInviteV1('23', validchannel.channelId, validuser2.authUserId);
 
@@ -43,9 +43,9 @@ const privatechannel = channelsCreateV1(validuser2.token, 'Discussion', false) a
 test('channelInviteV1: valid authuserId (in channel), valid uId, valid channel', () => {
   clearV1();
   const validuser1 = authRegisterV1('another_cristiano@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
-const validuser2 = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
-const validchannel = channelsCreateV1(validuser1.token, 'Discussion', true) as channelId;
-const privatechannel = channelsCreateV1(validuser2.token, 'Discussion', false) as channelId;
+  const validuser2 = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
+  const validchannel = channelsCreateV1(validuser1.token, 'Discussion', true) as channelId;
+  const privatechannel = channelsCreateV1(validuser2.token, 'Discussion', false) as channelId;
 
   const result = channelInviteV1(validuser1.token, validchannel.channelId, validuser2.authUserId);
 
@@ -57,7 +57,7 @@ test('channelInviteV1: valid authuserId (not in channel), valid uId, valid chann
   const validuser1 = authRegisterV1('another_cristiano@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
   const validuser2 = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
   const validchannel = channelsCreateV1(validuser1.token, 'Discussion', true) as channelId;
-  
+
   const result = channelInviteV1(validuser2.token, validchannel.channelId, validuser2.authUserId);
 
   expect(result).toStrictEqual({ error: 'error' });
