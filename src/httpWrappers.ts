@@ -5,7 +5,6 @@ import { channels } from './channels';
 import { channeldetails, returnMessages, messageId } from './channel';
 import { token } from 'morgan';
 import isEmail from 'validator/lib/isEmail';
-import { userProfile } from './users';
 
 export type Iter2Error = {error: 'error'};
 
@@ -317,72 +316,6 @@ export const channelMessagesV1: channelMessagesV1Fn = (token: string, channelId:
   }
 };
 
-export type channelLeaveV1Fn = (token: string, channelId: number) => {} | Iter2Error;
-
-export const channelLeaveV1: channelLeaveV1Fn = (token: string, channelId: number) => {
-  const res = request(
-    'POST',
-        `${url}:${port}/channel/leave/v1`,
-        {
-          json: {
-            token: token,
-            channelId: channelId,
-          }
-        }
-  );
-
-  if (res.statusCode !== 200) {
-    throw res.statusCode;
-  } else {
-    return JSON.parse(res.body as string);
-  }
-
-}
-
-export type channelAddOwnerV1Fn = (token: string, channelId: number, uId: number) => {} | Iter2Error;
-
-export const channelAddOwnerV1: channelAddOwnerV1Fn = (token: string, channelId: number, uId: number) => {
-  const res = request(
-    'POST',
-        `${url}:${port}/channel/addowner/v1`,
-        {
-          json: {
-            token: token,
-            channelId: channelId,
-            uId: uId,
-          }
-        }
-  );
-
-  if (res.statusCode !== 200) {
-    throw res.statusCode;
-  } else {
-    return JSON.parse(res.body as string);
-  }
-}
-
-export type channelRemoveOwnerV1Fn = (token: string, channelId: number, uId: number) => {} | Iter2Error;
-
-export const channelRemoveOwnerV1: channelRemoveOwnerV1Fn = (token: string, channelId: number, uId: number) => {
-  const res = request(
-    'POST',
-        `${url}:${port}/channel/removeowner/v1`,
-        {
-          json: {
-            token: token,
-            channelId: channelId,
-            uId: uId,
-          }
-        }
-  );
-
-  if (res.statusCode !== 200) {
-    throw res.statusCode;
-  } else {
-    return JSON.parse(res.body as string);
-  }
-}
-
 export type messageSendV1Fn = (token: string, channelId: number, message: string) => messageId | Iter2Error;
 
 export const messageSendV1: messageSendV1Fn = (token: string, channelId: number, message: string) => {
@@ -404,88 +337,3 @@ export const messageSendV1: messageSendV1Fn = (token: string, channelId: number,
     return JSON.parse(res.body as string);
   }
 };
-
-export type messageEditV1Fn = (token: string, messageId: number, message: string) => {} | Iter2Error;
-
-export const messageEditV1: messageEditV1Fn = (token: string, messageId: number, message: string) => {
-  const res = request(
-    'PUT',
-        `${url}:${port}/message/edit/v1`,
-        {
-          json: {
-            token: token,
-            messageId: messageId,
-            message: message,
-          }
-        }
-  );
-
-  if (res.statusCode !== 200) {
-    throw res.statusCode;
-  } else {
-    return JSON.parse(res.body as string);
-  }
-};
-
-export type messageRemoveV1Fn = (token: string, messageId: number, message: string) => {} | Iter2Error;
-
-export const messageRemoveV1: messageRemoveV1Fn = (token: string, messageId: number) => {
-  const res = request(
-    'DELETE',
-        `${url}:${port}/message/remove/v1`,
-        {
-          qs: {
-            token: token,
-            messageId: messageId,
-          }
-        }
-  );
-
-  if (res.statusCode !== 200) {
-    throw res.statusCode;
-  } else {
-    return JSON.parse(res.body as string);
-  }
-};
-
-export type messageSendDmV1Fn = (token: string, dmId: number, message: string) => messageId | Iter2Error;
-
-export const messageSendDmV1: messageSendDmV1Fn = (token: string, dmId: number, message: string) => {
-  const res = request(
-    'POST',
-        `${url}:${port}/message/senddm/v1`,
-        {
-          json: {
-            token: token,
-            dmId: dmId,
-            message: message,
-          }
-        }
-  );
-
-  if (res.statusCode !== 200) {
-    throw res.statusCode;
-  } else {
-    return JSON.parse(res.body as string);
-  }
-};
-
-export type usersListAllV1Fn = (token: string) => {users: userProfile[]} | Iter2Error;
-
-export const usersListAllV1: usersListAllV1Fn = (token: string) => {
-  const res = request(
-    'GET',
-        `${url}:${port}/users/all/v1`,
-        {
-          qs: {
-            token: token,
-          }
-        }
-  );
-
-  if (res.statusCode !== 200) {
-    throw res.statusCode;
-  } else {
-    return JSON.parse(res.body as string);
-  }
-}
