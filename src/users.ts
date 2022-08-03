@@ -3,7 +3,7 @@ import { findUser, userExists } from './other';
 import validator from 'validator';
 import { isPrivateIdentifier } from 'typescript';
 
-interface userProfile {
+export interface userProfile {
   uId: number,
   email: string,
   nameFirst: string,
