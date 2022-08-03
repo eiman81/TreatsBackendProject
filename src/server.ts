@@ -123,14 +123,14 @@ app.post('/channel/leave/v1', (req: Request, res: Response) => {
   res.json(channelLeave);
 });
 
-app.post('/channel/addowner/v1', (req: Request, res: Response) => {
+app.post('/channel/addowner/v2', (req: Request, res: Response) => {
   let { token, channelId, uId } = req.body;
   token = token.toString();
   const channelAddOwner = channelAddOwnerV1(token, channelId, uId);
   res.json(channelAddOwner);
 });
 
-app.post('/channel/removeowner/v1', (req: Request, res: Response) => {
+app.post('/channel/removeowner/v2', (req: Request, res: Response) => {
   let { token, channelId, uId } = req.body;
   token = token.toString();
   const channelRemoveOwner = channelRemoveOwnerV1(token, channelId, uId);
