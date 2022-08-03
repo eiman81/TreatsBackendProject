@@ -1,4 +1,5 @@
 import { updateLanguageServiceSourceFile } from 'typescript';
+import fs from 'fs';
 
 export interface messages {
   messageId: number,
@@ -42,12 +43,14 @@ let data : data = {
 
 // Use get() to access the data
 function getData(): data {
+  data = JSON.parse(String(fs.readFileSync('./src/data.json', { flag: 'r' })));
   return data;
 }
 
 // Use set(newData) to pass in the entire data object, with modifications made
 function setData(newData: data) {
   data = newData;
+  fs.writeFileSync('./src/data.json', JSON.stringify(data));
 }
 
 let currentTokens: string[] = [];

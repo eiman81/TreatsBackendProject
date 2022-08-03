@@ -1,4 +1,4 @@
-import { clearV1, authRegisterV1, authLoginV1 } from "./httpWrappers";
+import { clearV1, authRegisterV1, authLoginV1 } from './httpWrappers';
 import { authUserId } from './auth';
 
 test('authLoginV1: correct input', () => {

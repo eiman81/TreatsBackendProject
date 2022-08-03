@@ -4,14 +4,14 @@ import { authUserId } from './auth';
 test('Test 1: successful userProfileSetEmailV1', () => {
     clearV1();
     const a = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
-    const newEmail = 'mohammedmayweatherjr'
+    const newEmail = 'mohammedmayweatherjr@unsw.edu.au'
     expect(userProfileSetEmailV1(a.token, newEmail)).toStrictEqual({});
   });
 
 test('Test 2: invalid chars in handlestr ', () => {
     clearV1();
     const a = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
-    const newEmail =  'mo$%^&*@gmail.com'
+    const newEmail =  'mo$@%^&*@gmail.com'
     expect(userProfileSetEmailV1(a.token, newEmail)).toStrictEqual({ error: 'error' });
   });
 

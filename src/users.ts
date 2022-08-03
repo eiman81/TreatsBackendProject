@@ -1,6 +1,7 @@
 import { getData, setData, user } from './dataStore';
 import { findUser, userExists } from './other';
 import validator from 'validator';
+import { isPrivateIdentifier } from 'typescript';
 
 interface userProfile {
   uId: number,
@@ -82,6 +83,7 @@ function userProfileSetNameV1(token: string, nameFirst: string, nameLast: string
         data.users[index].nameFirst = nameFirst;
         data.users[index].nameLast = nameLast;
         setData(data);
+        return {};
       }
       index++;
     }
@@ -109,6 +111,7 @@ function userProfileSetEmailV1(token: string, email: string): {error: 'error'} |
           const data = getData();
           data.users[index].email = email;
           setData(data);
+          return {};
         }
 
         index++;
@@ -140,6 +143,7 @@ function userProfileSetHandleV1(token: string, handleStr: string): {error: 'erro
           const data = getData();
           data.users[index].handleStr = handleStr;
           setData(data);
+          return {};
         }
 
         index++;
