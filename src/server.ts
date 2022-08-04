@@ -159,7 +159,7 @@ app.delete('/message/remove/v1', (req: Request, res: Response) => {
 
 app.post('/dm/create/v1', (req: Request, res: Response) => {
   let { token, uIds } = req.body;
-  token = token.toString();
+  //token = token.toString();
   res.json(dmCreateV1(token, uIds));
 });
 

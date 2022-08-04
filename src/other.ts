@@ -53,12 +53,15 @@ function userExists(UserId: number | string): boolean {
 
 function findUser(UserId: number | string): user | {error: 'error'} {
   let found = 0;
-  if (typeof (UserId) === 'number') {
+  if (typeof(UserId) === 'number') {
     for (const user of getData().users) {
       if (user.uId === UserId) {
         found = 1;
         return user;
       }
+    }
+    if (found === 0) {
+      return { error: 'error' };
     }
   } else {
     // Case for checking user is valid from a token entry

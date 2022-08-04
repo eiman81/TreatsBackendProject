@@ -2,14 +2,18 @@ import { channelExists, clearV1, findUser, userExists } from './other';
 import { getData, getTokens, setData, setTokens, user } from './dataStore';
 import { messageSendV1, channelMessagesV1, returnMessages, messageId } from './channel';
 
-interface dmDetails {
+export interface dmDetails {
     dmId: number,
     name: string
 }
 
+export interface dmId {
+  dmId: number;
+}
+
 /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function dmCreateV1(token: string, uIds: number[]): {dmId: number} | {error: 'error'} {
+function dmCreateV1(token: string, uIds: number[]): dmId | {error: 'error'} {
   if (userExists(token)) {
     const data = getData();
     const user = findUser(token) as user;
@@ -23,8 +27,9 @@ function dmCreateV1(token: string, uIds: number[]): {dmId: number} | {error: 'er
 
     let handleStrings = [];
 
+
     for (const id of uIds) {
-      if (findUser(id)) {
+      if (userExists(id)) {
         const foundUser = findUser(id) as user;
         if (handleStrings.includes(foundUser.handleStr) === false) {
           handleStrings.push(foundUser.handleStr);
@@ -35,7 +40,7 @@ function dmCreateV1(token: string, uIds: number[]): {dmId: number} | {error: 'er
         return { error: 'error' };
       }
     }
-
+	
     handleStrings = handleStrings.sort();
     let name = `${user.handleStr}`;
     for (const handle of handleStrings) {

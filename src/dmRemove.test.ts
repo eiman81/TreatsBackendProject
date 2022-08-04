@@ -1,4 +1,4 @@
-import { dmDetailsV1 } from './directMessages';
+import { dmDetailsV1, dmId } from './directMessages';
 import { clearV1, authRegisterV1, dmCreateV1, dmRemoveV1 } from "./httpWrappers";
 import { authUserId } from './auth';
 
