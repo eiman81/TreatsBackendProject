@@ -1,5 +1,5 @@
 import { channelId, channels } from './channels';
-import { clearV1, authRegisterV1, channelsCreateV1, channelsListV1 } from "./httpWrappers";
+import { clearV1, authRegisterV1, channelsCreateV1, channelsListV1 } from './httpWrappers';
 import { authUserId } from './auth';
 
 test('ChannelsListV1: error for userId not found', () => {
