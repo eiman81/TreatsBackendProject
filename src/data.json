@@ -1,1 +1,1 @@
-{"users":[],"channels":[]}
+{"users":[{"uId":-1000,"nameFirst":"Sean","nameLast":"OConnor","email":"sean@gmail.com","password":"27334ff7","handleStr":"seanoconnor","isOnline":null,"token":"0.8278275464931413"}],"channels":[{"channelId":1000,"name":"first","numberOfMessages":0,"messages":[],"isPublic":true,"dm":false,"ownerMembers":[-1000],"allMembers":[-1000]}]}

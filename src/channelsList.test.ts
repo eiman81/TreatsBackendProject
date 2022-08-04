@@ -7,8 +7,8 @@ test('ChannelsListV1: error for userId not found', () => {
   const token = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
   const wrongToken = 'wrong';
   const channel = channelsCreateV1(wrongToken, 'new', false) as channelId;
-  const expected: channels [] = [];
-  expect(channelsListV1(wrongToken)).toStrictEqual(expected);
+  const channels: channels [] = [];
+  expect(channelsListV1(wrongToken)).toStrictEqual({channels});
 });
 
 test('channelsListV1: correct output for user being in a single channel', () => {
@@ -16,21 +16,21 @@ test('channelsListV1: correct output for user being in a single channel', () => 
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
   const channel1 = channelsCreateV1(a.token, 'new', true) as channelId;
   const channelList = channelsListV1(a.token);
-  const expectedList: channels [] = [
+  const channels: channels [] = [
     {
       channelId: channel1.channelId,
       name: 'new',
     }
   ];
-  expect(channelList).toStrictEqual(expectedList);
+  expect(channelList).toStrictEqual({channels});
 });
 
 test('channelsListV1: correct output for user with no channels', () => {
   clearV1();
   const a = authRegisterV1('cristiano.ronaldo@unsw.edu.au', '123456', 'Cristiano', 'Ronaldo') as authUserId;
   const channelList = channelsListV1(a.token);
-  const expectedList: channels[] = [];
-  expect(channelList).toStrictEqual(expectedList);
+  const channels: channels[] = [];
+  expect(channelList).toStrictEqual({channels});
 });
 
 test('channelsListV1: correct output for one user being in multiple channels', () => {
@@ -41,7 +41,7 @@ test('channelsListV1: correct output for one user being in multiple channels', (
   const channel3 = channelsCreateV1(a.token, 'new', true) as channelId;
   const channel4 = channelsCreateV1(a.token, 'new', true) as channelId;
   const channelList = channelsListV1(a.token);
-  const expectedList: channels[] = [
+  const channels: channels[] = [
     {
       channelId: channel1.channelId,
       name: 'new',
@@ -59,5 +59,5 @@ test('channelsListV1: correct output for one user being in multiple channels', (
       name: 'new2',
     },
   ];
-  expect(channelList).toStrictEqual(expectedList);
+  expect(channelList).toStrictEqual({channels});
 });
