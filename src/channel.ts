@@ -469,7 +469,7 @@ function messageEditV1(token: string, messageId: number, message: string): {} | 
 
 /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function messageRemoveV1(token: string, messageId: number) {
+function messageRemoveV1(token: string, messageId: number): {} | {error: 'error'} {
   if (userExists(token)) {
     let index = 0;
     let index1 = 0;
