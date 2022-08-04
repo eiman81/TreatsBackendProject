@@ -2,7 +2,7 @@ import { getData, setData, user } from './dataStore';
 import { findUser, userExists } from './other';
 import validator from 'validator';
 
-interface userProfile {
+export interface userProfile {
   uId: number,
   email: string,
   nameFirst: string,

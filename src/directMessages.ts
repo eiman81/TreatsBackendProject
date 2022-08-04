@@ -2,11 +2,13 @@ import { channelExists, clearV1, findUser, userExists } from './other';
 import { getData, getTokens, setData, setTokens, user } from './dataStore';
 import { messageSendV1, channelMessagesV1, returnMessages, messageId } from './channel';
 
-interface dmDetails {
+export interface dmDetails {
     dmId: number,
     name: string
 }
-
+export interface dmId {
+  dmId: number
+}
 /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function dmCreateV1(token: string, uIds: number[]): {dmId: number} | {error: 'error'} {

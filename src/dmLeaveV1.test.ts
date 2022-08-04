@@ -12,7 +12,7 @@ test('dmLeaveV1: success', () => {
     const group = dmCreateV1(a.token, [a.authUserId, b.authUserId, c.authUserId, d.authUserId]) as dmId;
 
     
-    expect(dmLeaveV1(b.token, group.dmId).toStrictEqual({}));
+    expect(dmLeaveV1(b.token, group.dmId)).toEqual({});
   });
 
 
@@ -25,7 +25,7 @@ test('dmLeaveV1: invalid dmID', () => {
     const group = dmCreateV1(a.token, [a.authUserId, b.authUserId, c.authUserId, d.authUserId]) as dmId;
 
     
-    expect(dmLeaveV1(b.token, 7932).toStrictEqual({}));
+    expect(dmLeaveV1(b.token, 7932)).toEqual({ error: 'error' });
   });
 
   test('dmLeaveV1: user not in dm', () => {
@@ -36,7 +36,6 @@ test('dmLeaveV1: invalid dmID', () => {
     const d = authRegisterV1('zero0@unsw.edu.au', '12345678', 'ZERO', '0') as authUserId;
     const group = dmCreateV1(a.token, [a.authUserId, b.authUserId, c.authUserId, d.authUserId]) as dmId;
     const e = authRegisterV1('eeeeeee@unsw.edu.au', '87654321', 'ffffff', 'EeEeE') as authUserId;
- 
     
-    expect(dmLeaveV1(e.token, group.dmId).toStrictEqual({}));
+    expect(dmLeaveV1(e.token, group.dmId)).toEqual({ error: 'error' });
   });

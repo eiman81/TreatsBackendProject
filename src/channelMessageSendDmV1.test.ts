@@ -14,7 +14,7 @@ test('messageSendDmV1 Working', () => {
 
   const messageid = messageSendDmV1(a.token, group.dmId, 'is this working?') as messageId;
   const messages = dmMessagesV1(a.token, group.dmId, 0) as returnMessages;
-  const id = messages.messages[0].dmId;
+  const id = messages.messages[0].messageId;
   expect(id).toStrictEqual(messageid.messageId);
 });
 

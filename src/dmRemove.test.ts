@@ -1,4 +1,4 @@
-import { dmDetailsV1 } from './directMessages';
+import { dmId } from './directMessages';
 import { clearV1, authRegisterV1, dmCreateV1, dmRemoveV1 } from "./httpWrappers";
 import { authUserId } from './auth';
 
@@ -10,7 +10,7 @@ test('dmRemoveV1: succcess', () => {
   const d = authRegisterV1('zero0@unsw.edu.au', '12345678', 'ZERO', '0') as authUserId;
   
   const group = dmCreateV1(a.token, [a.authUserId, b.authUserId, c.authUserId, d.authUserId]) as dmId;
-  expect(dmRemoveV1(a.token, group.dmId)).toStrictEqual({});
+  expect(dmRemoveV1(a.token, group.dmId)).toEqual({});
 });
 
 test('dmRemoveV1: error for invalid dmId', () => {
@@ -21,7 +21,7 @@ test('dmRemoveV1: error for invalid dmId', () => {
 
     
     const group = dmCreateV1(a.token, [a.authUserId, b.authUserId, c.authUserId, c.authUserId]);
-    expect(dmRemoveV1(a.token, 5832)).toStrictEqual({ error: 'error' });
+    expect(dmRemoveV1(a.token, 5832)).toEqual({ error: 'error' });
   });
 
   test('dmRemoveV1: error for authuserId not creator', () => {
@@ -32,7 +32,7 @@ test('dmRemoveV1: error for invalid dmId', () => {
     const d = authRegisterV1('zero0@unsw.edu.au', '12345678', 'ZERO', '0') as authUserId;
     
     const group = dmCreateV1(a.token, [a.authUserId, b.authUserId, c.authUserId, d.authUserId]) as dmId;
-    expect(dmRemoveV1(d.token, group.dmId)).toStrictEqual({ error: 'error' });
+    expect(dmRemoveV1(d.token, group.dmId)).toEqual({ error: 'error' });
   });
 
   test('dmRemoveV1: error for authuserId not in dm', () => {
@@ -43,5 +43,5 @@ test('dmRemoveV1: error for invalid dmId', () => {
     const d = authRegisterV1('zero0@unsw.edu.au', '12345678', 'ZERO', '0') as authUserId;
     
     const group = dmCreateV1(a.token, [a.authUserId, b.authUserId, c.authUserId]) as dmId;
-    expect(dmRemoveV1(d.token, group.dmId)).toStrictEqual({ error: 'error' });
+    expect(dmRemoveV1(d.token, group.dmId)).toEqual({ error: 'error' });
   });

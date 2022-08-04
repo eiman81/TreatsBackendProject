@@ -9,7 +9,7 @@ test('channelLeaveV1: success', () => {
     const b = channelsCreateV1(a.token, 'channelB', true) as channelId;
     const c = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
     channelJoinV1(c.token, b.channelId);
-    expect(channelLeaveV1(c.token, b.channelId).toStrictEqual({}));
+    expect(channelLeaveV1(c.token, b.channelId)).toEqual({});
   });
 
 
@@ -19,7 +19,7 @@ test('channelLeaveV1: user not in channel', () => {
     const b = channelsCreateV1(a.token, 'channelB', true) as channelId;
     const c = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
 
-    expect(channelLeaveV1(c.token, b.channelId).toStrictEqual({error: 'error'}));
+    expect(channelLeaveV1(c.token, b.channelId)).toEqual({error: 'error'});
   });
 
   test('channelLeaveV1: invalid channel', () => {
@@ -28,5 +28,5 @@ test('channelLeaveV1: user not in channel', () => {
     const b = channelsCreateV1(a.token, 'channelB', true) as channelId;
     const c = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
 
-    expect(channelLeaveV1(c.token, 3009).toStrictEqual({error: 'error'}));
+    expect(channelLeaveV1(c.token, 3009)).toEqual({error: 'error'});
   });

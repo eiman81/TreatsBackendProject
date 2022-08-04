@@ -7,7 +7,7 @@ test('ChannelsListallV1 userId not found', () => {
   const token = authRegisterV1('sean@gmail.com', '2737', 'Sean', 'OConnor') as authUserId;
   const token1 = 'hohoho';
   channelsCreateV1(token.token, 'first', true);
-  let channels = [];
+  let channels: channels[] = [];
   expect(channelsListallV1(token1)).toStrictEqual({channels});
 });
 

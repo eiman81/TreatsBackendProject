@@ -9,7 +9,7 @@ test('channelAddOwnerV1: success', () => {
     const b = channelsCreateV1(a.token, 'channelB', true) as channelId;
     const c = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
     channelJoinV1(c.token, b.channelId);
-    expect(channelAddOwnerV1(a.token, b.channelId, c.authUserId).toStrictEqual({}));
+    expect(channelAddOwnerV1(a.token, b.channelId, c.authUserId)).toEqual({});
   });
 
 
@@ -19,7 +19,7 @@ test('channelAddOwnerV1: user not in channel', () => {
     const b = channelsCreateV1(a.token, 'channelB', true) as channelId;
     const c = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
 
-    expect(channelAddOwnerV1(a.token, b.channelId, c.authUserId).toStrictEqual({error: 'error'}));
+    expect(channelAddOwnerV1(a.token, b.channelId, c.authUserId)).toEqual({error: 'error'});
   });
 
   test('channelAddOwnerV1: invalid channel', () => {
@@ -28,7 +28,7 @@ test('channelAddOwnerV1: user not in channel', () => {
     const b = channelsCreateV1(a.token, 'channelB', true) as channelId;
     const c = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
 
-    expect(channelAddOwnerV1(a.token, 3009, c.authUserId).toStrictEqual({error: 'error'}));
+    expect(channelAddOwnerV1(a.token, 3009, c.authUserId)).toEqual({error: 'error'});
   });
 
 test('channelAddOwnerV1: invalid uID', () => {
@@ -37,7 +37,7 @@ test('channelAddOwnerV1: invalid uID', () => {
     const b = channelsCreateV1(a.token, 'channelB', true) as channelId;
     const c = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
 
-    expect(channelAddOwnerV1(a.token, b.channelId, 8979).toStrictEqual({error: 'error'}));
+    expect(channelAddOwnerV1(a.token, b.channelId, 8979)).toEqual({error: 'error'});
   });
 
 test('channelAddOwnerV1: user already owner', () => {
@@ -46,7 +46,7 @@ test('channelAddOwnerV1: user already owner', () => {
     const b = channelsCreateV1(a.token, 'channelB', true) as channelId;
     const c = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
     channelJoinV1(c.token, b.channelId);
-    expect(channelAddOwnerV1(a.token, b.channelId, a.authUserId).toStrictEqual({error: 'error'}));
+    expect(channelAddOwnerV1(a.token, b.channelId, a.authUserId)).toEqual({error: 'error'});
   });
 
  test('channelAddOwnerV1: authuser not owner', () => {
@@ -56,5 +56,5 @@ test('channelAddOwnerV1: user already owner', () => {
     const c = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
     const d = authRegisterV1('drew.barrymore@unsw.edu.au', 'ctrl', 'Drew', 'Barrymore') as authUserId;
     channelJoinV1(c.token, b.channelId);
-    expect(channelAddOwnerV1(c.token, b.channelId, d.authUserId).toStrictEqual({error: 'error'}));
+    expect(channelAddOwnerV1(c.token, b.channelId, d.authUserId)).toEqual({error: 'error'});
   });

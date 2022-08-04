@@ -1,4 +1,4 @@
-import { dmDetailsV1 } from './directMessages';
+import { dmId } from './directMessages';
 import { clearV1, authRegisterV1, dmCreateV1 } from "./httpWrappers";
 import { authUserId } from './auth';
 
@@ -10,7 +10,7 @@ test('dmCreateV1: succcess', () => {
   const d = authRegisterV1('zero0@unsw.edu.au', '12345678', 'ZERO', '0') as authUserId;
   
   const group = dmCreateV1(a.token, [a.authUserId, b.authUserId, c.authUserId, d.authUserId]) as dmId;
-  expect(group).toStrictEqual({ dmId });
+  expect(group).toStrictEqual({ dmId: 1000 });
 });
 
 test('dmCreateV1: error for duplicate uId', () => {
