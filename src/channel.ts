@@ -2,6 +2,8 @@ import { getData, setData, user, channel } from './dataStore';
 import { userProfileV1 } from './users';
 import { channelExists, userExists, findUser, findChannel, generateMessageId } from './other';
 import { messages } from './dataStore';
+import { getTokenSourceMapRange } from 'typescript';
+import { token } from 'morgan';
 
 export interface channeldetails {
   name: string,
@@ -487,4 +489,24 @@ function messageRemoveV1(token: string, messageId: number): {} | {error: 'error'
   }
 }
 
-export { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1, channelLeaveV1, channelAddOwnerV1, channelRemoveOwnerV1, messageSendV1, messageEditV1, messageRemoveV1 };
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function messageShareV1(ogMessageId, message, channelId, dmId): {} | {error: 'error'} {
+  let destination = 0
+  if (channelId === -1) {
+    destination  = dmId;
+  } else if (dmId === -1) {
+    destination = channelId;
+  }
+  let text = message;
+  for (const channel of getData().channels) {
+    for (const mes of channel.messages) {
+      if (mes.messageId === ogMessageId) {
+        text = text + " => " + mes.message;
+      }
+    }
+  }
+  
+  return {error : 'error'};
+}
+
+export { channelDetailsV1, channelJoinV1, channelInviteV1, channelMessagesV1, channelLeaveV1, channelAddOwnerV1, channelRemoveOwnerV1, messageSendV1, messageEditV1, messageRemoveV1, messageShareV1 };
