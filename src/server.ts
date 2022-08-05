@@ -13,7 +13,6 @@ import { clearV1, findUser, userExists } from './other';
 import { user } from './dataStore';
 import { dmCreateV1, dmListV1, dmRemoveV1, dmDetailsV1, dmLeaveV1, dmMessagesV1, messageSendDmV1 } from './directMessages';
 
-
 // Set up web app, use JSON
 const app = express();
 app.use(express.json());
@@ -48,8 +47,8 @@ app.post('/auth/login/v2', (req: Request, res: Response) => {
 });
 
 app.post('/channels/create/v2', (req: Request, res: Response) => {
-  let { token, name, isPublic } = req.body;
-  //token = token.toString();
+  const { token, name, isPublic } = req.body;
+  // token = token.toString();
   const channelId = channelsCreateV1(token, name, isPublic);
   res.json(channelId);
 });
@@ -126,8 +125,7 @@ app.post('/channel/leave/v1', (req: Request, res: Response) => {
 app.post('/channel/addowner/v1', (req: Request, res: Response) => {
   let { token, channelId, uId } = req.body;
   token = token.toString();
-  const channelAddOwner = channelAddOwnerV1(token, channelId, uId);
-  res.json(channelAddOwner);
+  res.json(channelAddOwnerV1(token, channelId, uId));
 });
 
 app.post('/channel/removeowner/v1', (req: Request, res: Response) => {

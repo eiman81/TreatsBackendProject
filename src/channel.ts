@@ -91,42 +91,30 @@ Return Value:
   // check if user id is valid
   // check if channel id is valid
   const store = getData();
-  let authUserId: number;
-  for (const user of store.users) {
-    if (user.token === token) {
-      authUserId = user.uId;
-      break;
-    }
-  }
-  const profile = userProfileV1(token, authUserId);
 
-  // checks no error is returned
-  if ('error' in profile) {
-    return { error: 'error' };
-  } else {
-    if (userExists(authUserId) && channelExists(channelId)) {
-      // check if user is already in channel
-      const channelDetails = channelDetailsV1(token, channelId);
-      if ('allMembers' in channelDetails) {
-        if (channelDetails.allMembers.includes(authUserId)) {
-          return { error: 'error' };
-        } else if (channelDetails.isPublic === false) {
-          return { error: 'error' };
-        } else {
-          // add user to channel
-          let counter = 0;
-          for (const channel of getData().channels) {
-            if (channel.channelId === channelId) {
-              channel.allMembers.push(authUserId);
-              store.channels[counter] = channel;
-              setData(store);
-              return {};
-            }
-            counter++;
-          }
+  if (userExists(token) && channelExists(channelId)) {
+    const profile = findUser(token) as user;
+    const channelDetails = findChannel(channelId) as channel;
+
+    if (channelDetails.allMembers.includes(profile.uId)) {
+      return { error: 'error' };
+    } else if (channelDetails.isPublic === false) {
+      return { error: 'error' };
+    } else {
+      // add user to channel
+      let counter = 0;
+      for (const channel of getData().channels) {
+        if (channel.channelId === channelId) {
+          channel.allMembers.push(profile.uId);
+          store.channels[counter] = channel;
+          setData(store);
+          return {};
         }
+        counter++;
       }
     }
+  } else {
+    return { error: 'error' };
   }
 }
 
@@ -312,37 +300,60 @@ function messageSendV1(token: string, channelId: number, message: string): messa
 
 function channelLeaveV1(token: string, channelId: number): {error: 'error'} | {} {
   const store = getData();
-  let authUserId: number;
-  for (const user of store.users) {
-    if (user.token === token) {
-      authUserId = user.uId;
-      break;
-    }
-  }
-  const profile = userProfileV1(token, authUserId);
+  if (userExists(token) && channelExists(channelId)) {
+    const profile = findUser(token) as user;
+    const channelDetails = findChannel(channelId) as channel;
 
-  if ('error' in profile) {
-    return { error: 'error' };
-  } else {
-    if (userExists(authUserId) && channelExists(channelId)) {
-      const channelDetails = channelDetailsV1(token, channelId);
-      if ('allMembers' in channelDetails) {
-        if (channelDetails.allMembers.includes(authUserId)) {
-          let counter = 0;
-          for (const channel of getData().channels) {
-            if (channel.channelId === channelId) {
-              channel.allMembers.splice(authUserId);
+    if (channelDetails.ownerMembers.includes(profile.uId)) {
+      let counter = 0;
+      for (const channel of getData().channels) {
+        if (channel.channelId === channelId) {
+          let counter2 = 0;
+          let counter3 = 0;
+          // delete out of ownermemebr array
+          for (const member of channel.ownerMembers) {
+            if (member === profile.uId) {
+              channel.ownerMembers.splice(counter2, 1);
+              break;
+            }
+            counter2++;
+          }
+          // delete out of allmember array
+          for (const member of channel.allMembers) {
+            if (member === profile.uId) {
+              channel.allMembers.splice(counter3, 1);
               store.channels[counter] = channel;
               setData(store);
               return {};
             }
-            counter++;
+            counter3++;
           }
-        } else {
-          return { error: 'error' };
         }
+
+        counter++;
       }
+    } else if (channelDetails.allMembers.includes(profile.uId)) {
+      let counter = 0;
+      for (const channel of getData().channels) {
+        if (channel.channelId === channelId) {
+          let counter2 = 0;
+          for (const member of channel.allMembers) {
+            if (member === profile.uId) {
+              channel.allMembers.splice(counter2, 1);
+              store.channels[counter] = channel;
+              setData(store);
+              return {};
+            }
+            counter2++;
+          }
+        }
+        counter++;
+      }
+    } else {
+      return { error: 'error' };
     }
+  } else {
+    return { error: 'error' };
   }
 }
 
@@ -351,10 +362,9 @@ function channelLeaveV1(token: string, channelId: number): {error: 'error'} | {}
 function channelAddOwnerV1(token: string, channelId: number, uId: number): {error: 'error'} | {} {
   const store = getData();
   if (userExists(token) && userExists(uId) && channelExists(channelId)) {
-    let channelDetails = findChannel(channelId) as channel
+    const channelDetails = findChannel(channelId) as channel;
     if (channelDetails.ownerMembers.includes(uId) || !(channelDetails.allMembers.includes(uId))) {
       return { error: 'error' };
-
     } else {
       let counter = 0;
       for (const channel of getData().channels) {
@@ -367,9 +377,8 @@ function channelAddOwnerV1(token: string, channelId: number, uId: number): {erro
         counter++;
       }
     }
-
   } else {
-    return { error: 'error' }
+    return { error: 'error' };
   }
 }
 
@@ -400,9 +409,8 @@ function channelRemoveOwnerV1(token: string, channelId: number, uId: number): {e
     } else {
       return { error: 'error' };
     }
-
-  } else { 
-    return { error: 'error' }
+  } else {
+    return { error: 'error' };
   }
 }
 

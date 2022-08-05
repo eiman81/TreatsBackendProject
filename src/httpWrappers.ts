@@ -1,10 +1,10 @@
 import { url, port } from './config.json';
 
-import request from "sync-request";
-import { channels } from "./channels";
-import { channeldetails, returnMessages, messageId } from "./channel";
-import { token } from "morgan";
-import { dmDetails } from "./directMessages";
+import request from 'sync-request';
+import { channels } from './channels';
+import { channeldetails, returnMessages, messageId } from './channel';
+import { token } from 'morgan';
+import { dmDetails } from './directMessages';
 import isEmail from 'validator/lib/isEmail';
 import { userProfile } from './users';
 
@@ -115,7 +115,7 @@ export const userProfileSetNameV1: userProfileSetNameV1Fn = (token: string, name
         {
           json: {
             token: token,
-            nameFirst: nameFirst, 
+            nameFirst: nameFirst,
             nameLast: nameLast,
           }
         }
@@ -318,7 +318,6 @@ export const channelMessagesV1: channelMessagesV1Fn = (token: string, channelId:
   }
 };
 
-
 export type channelLeaveV1Fn = (token: string, channelId: number) => {} | Iter2Error;
 
 export const channelLeaveV1: channelLeaveV1Fn = (token: string, channelId: number) => {
@@ -338,8 +337,7 @@ export const channelLeaveV1: channelLeaveV1Fn = (token: string, channelId: numbe
   } else {
     return JSON.parse(res.body as string);
   }
-
-}
+};
 
 export type channelAddOwnerV1Fn = (token: string, channelId: number, uId: number) => {} | Iter2Error;
 
@@ -361,7 +359,7 @@ export const channelAddOwnerV1: channelAddOwnerV1Fn = (token: string, channelId:
   } else {
     return JSON.parse(res.body as string);
   }
-}
+};
 
 export type channelRemoveOwnerV1Fn = (token: string, channelId: number, uId: number) => {} | Iter2Error;
 
@@ -383,8 +381,7 @@ export const channelRemoveOwnerV1: channelRemoveOwnerV1Fn = (token: string, chan
   } else {
     return JSON.parse(res.body as string);
   }
-}
-
+};
 
 export type messageSendV1Fn = (token: string, channelId: number, message: string) => messageId | Iter2Error;
 
@@ -399,15 +396,14 @@ export const messageSendV1: messageSendV1Fn = (token: string, channelId: number,
             message: message,
           }
         }
-    );
+  );
 
-    if (res.statusCode !== 200) {
-        throw res.statusCode;
-    } else {
-        return JSON.parse(res.body as string);
-    }
-}
-
+  if (res.statusCode !== 200) {
+    throw res.statusCode;
+  } else {
+    return JSON.parse(res.body as string);
+  }
+};
 
 export type messageEditV1Fn = (token: string, messageId: number, message: string) => {} | Iter2Error;
 
@@ -474,7 +470,6 @@ export const messageSendDmV1: messageSendDmV1Fn = (token: string, dmId: number, 
   }
 };
 
-
 export type usersListAllV1Fn = (token: string) => {users: userProfile[]} | Iter2Error;
 
 export const usersListAllV1: usersListAllV1Fn = (token: string) => {
@@ -493,63 +488,20 @@ export const usersListAllV1: usersListAllV1Fn = (token: string) => {
   } else {
     return JSON.parse(res.body as string);
   }
-}
-
+};
 
 export type dmCreateV1Fn = (token: string, uIds: number[]) => {dmId: number} | {error: 'error'};
 
 export const dmCreateV1: dmCreateV1Fn = (token: string, uIds: number[]) => {
-    const res = request(
-        "POST",
+  const res = request(
+    'POST',
         `${url}:${port}/dm/create/v1`,
         {
-            json: {
-                token: token,
-                uIds: uIds,
-            }
+          json: {
+            token: token,
+            uIds: uIds,
+          }
         }
-    );
-
-    if (res.statusCode !== 200) {
-        throw res.statusCode;
-    } else {
-        return JSON.parse(res.body as string);
-    }
-}
-
-export type dmListV1Fn = (token: string) => {dms: dmDetails[]} | Iter2Error;
-
-export const dmListV1: dmListV1Fn = (token: string) => {
-    const res = request(
-        "GET",
-        `${url}:${port}/dm/list/v1`,
-        {
-            qs: {
-                token: token,
-            }
-        }
-    );
-
-    if (res.statusCode !== 200) {
-        throw res.statusCode;
-    } else {
-        return JSON.parse(res.body as string);
-    }
-}
-
-
-export type dmRemoveV1Fn = (token: string, dmId: number ) => {} | Iter2Error;
-
-export const dmRemoveV1: dmRemoveV1Fn = (token: string, dmId: number) => {
-  const res = request(
-    "DELETE",
-    `${url}:${port}/dm/remove/v1`,
-    {
-      qs: {
-          token: token,
-          dmId: dmId 
-      }
-  }
   );
 
   if (res.statusCode !== 200) {
@@ -557,76 +509,109 @@ export const dmRemoveV1: dmRemoveV1Fn = (token: string, dmId: number) => {
   } else {
     return JSON.parse(res.body as string);
   }
-  
-}
+};
 
+export type dmListV1Fn = (token: string) => {dms: dmDetails[]} | Iter2Error;
 
-export type dmLeaveV1Fn = (token: string, dmId: number ) => {} | Iter2Error;
-
-export const dmLeaveV1: dmLeaveV1Fn = (token: string, dmId: number) => {
-    const res = request(
-        "POST",
-        `${url}:${port}/dm/leave/v1`,
+export const dmListV1: dmListV1Fn = (token: string) => {
+  const res = request(
+    'GET',
+        `${url}:${port}/dm/list/v1`,
         {
-            json: {
-                token: token,
-                dmId: dmId,
-            }
+          qs: {
+            token: token,
+          }
         }
-    );
+  );
 
   if (res.statusCode !== 200) {
     throw res.statusCode;
   } else {
     return JSON.parse(res.body as string);
   }
-  
-}
+};
 
+export type dmRemoveV1Fn = (token: string, dmId: number) => {} | Iter2Error;
+
+export const dmRemoveV1: dmRemoveV1Fn = (token: string, dmId: number) => {
+  const res = request(
+    'DELETE',
+    `${url}:${port}/dm/remove/v1`,
+    {
+      qs: {
+        token: token,
+        dmId: dmId
+      }
+    }
+  );
+
+  if (res.statusCode !== 200) {
+    throw res.statusCode;
+  } else {
+    return JSON.parse(res.body as string);
+  }
+};
+
+export type dmLeaveV1Fn = (token: string, dmId: number) => {} | Iter2Error;
+
+export const dmLeaveV1: dmLeaveV1Fn = (token: string, dmId: number) => {
+  const res = request(
+    'POST',
+        `${url}:${port}/dm/leave/v1`,
+        {
+          json: {
+            token: token,
+            dmId: dmId,
+          }
+        }
+  );
+
+  if (res.statusCode !== 200) {
+    throw res.statusCode;
+  } else {
+    return JSON.parse(res.body as string);
+  }
+};
 
 export type dmDetailsV1Fn = (token: string, dmId: number) => {name: string, members: number[]} | Iter2Error;
 
 export const dmDetailsV1: dmDetailsV1Fn = (token: string, dmId: number) => {
-    const res = request(
-        "GET",
+  const res = request(
+    'GET',
         `${url}:${port}/dm/details/v1`,
         {
-            qs: {
-                token: token,
-                dmId: dmId,
-            }
+          qs: {
+            token: token,
+            dmId: dmId,
+          }
         }
-    );
+  );
 
-    if (res.statusCode !== 200) {
-        throw res.statusCode;
-    } else {
-        return JSON.parse(res.body as string);
-    }
-}
-
+  if (res.statusCode !== 200) {
+    throw res.statusCode;
+  } else {
+    return JSON.parse(res.body as string);
+  }
+};
 
 export type dmMessagesV1Fn = (token: string, dmId: number, start: number) => Iter2Error | returnMessages;
 
 export const dmMessagesV1: dmMessagesV1Fn = (token: string, dmId: number, start: number) => {
-    const res = request(
-        "GET",
+  const res = request(
+    'GET',
         `${url}:${port}/dm/messages/v1`,
         {
-            qs: {
-                token: token,
-                dmId: dmId,
-                start: start,
-            }
+          qs: {
+            token: token,
+            dmId: dmId,
+            start: start,
+          }
         }
-    );
+  );
 
-    if (res.statusCode !== 200) {
-        throw res.statusCode;
-    } else {
-        return JSON.parse(res.body as string);
-    }
-}
-
-
-
+  if (res.statusCode !== 200) {
+    throw res.statusCode;
+  } else {
+    return JSON.parse(res.body as string);
+  }
+};
