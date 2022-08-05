@@ -1,0 +1,22 @@
+2/08/22:
+Meeting location: Microsoft Teams
+Meeting objective: Check in + Further completing http wrappers
+
+- Today we met up on teams to discuss the progress of each person in the work they were assigned to. We also checked the tests and looked at implementing some iteration 3 stuff.
+
+
+3/08/22:
+Meeting location: In person 
+Meeting objective: Fix http test errors
+
+- Today, we worked on solving errors regarding the written http tests together with people who implemented the functions and tests as the people writing http tests were not
+completely aware of the inner workings of functions and the errors were mostly related to the functions and local tests.
+
+
+31/08/22:
+Meeting location: Facebook Messenger
+Meeting objective: Complete http tests and fix errors
+
+- Today, two people completed the http wrappers for all functions while fixing any errors they could. Then when finished, they pushed and handed it over to the people 
+implementing the functions and tests to fix errors and pass the tests.
+

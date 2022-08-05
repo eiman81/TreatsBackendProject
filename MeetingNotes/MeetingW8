@@ -1,5 +1,5 @@
-20/08/22:
-Meeting location: Microsoft Teams and in person
+20/07/22:
+Meeting location: In person
 Meeting objective: Complete Iteration 2 function implementations plus tests
 
 
@@ -8,7 +8,9 @@ We were missing some functions from Iter2 such as the dm functions, which needed
 individuals in group and discussed the overall state of the project.
 
 
-23/08/22:
+23/07/22:
+Meeting location: Microsoft Teams
+Meeting objective: Fix errors and pass tests
 - We continued working to finish functions and talked about the errors and ways to fix them on teams. The meeting ended with the members testing the newly 
 implemented functions and making sure the tests pass locally.
 

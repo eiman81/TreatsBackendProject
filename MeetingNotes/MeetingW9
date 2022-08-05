@@ -1,0 +1,24 @@
+25/07/22:
+Meeting location: Facebook Messenger
+Meeting objective: Get updated with project progress + attempt at http tests
+
+- Today we met up on messenger to discuss the stage of our project and what out next steps will be. Minjun and Eiman tried to impement the http tests by rewriting
+each test individually, however, they were not successful.
+
+
+23/07/22:
+Meeting location: In person 
+Meeting objective: Implement http tests for the basic v2 functions
+
+- Today, we asked from our tutor about the way to impement http tests and he suggested that the most efficient way is just wrapping the functions in httpWrappers
+which was good news as we didn't need to write individual tests one by one and it sped up our project timeline.
+
+
+31/07/22:
+Meeting location: Facebook Messenger
+Meeting objective: Check in + implement http tests
+
+- Throughout week 9, we implemented http wappers to test functions on server, there were some problems with server and some tests but they were solved. In this 
+meeting we discussed that two people need to work on implementing some other functions and writing tests while two people need to continiously write the wrappers 
+for these new functions and tests.
+
