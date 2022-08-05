@@ -229,7 +229,7 @@ app.put('/user/profile/setemail/v1', (req: Request, res: Response) => {
 app.put('/user/profile/sethandle/v1', (req: Request, res: Response) => {
   let { token, handleStr } = req.body;
   token = token.toString();
-  res.json(userProfileSetEmailV1(token, handleStr));
+  res.json(userProfileSetHandleV1(token, handleStr));
 });
 
 // start server

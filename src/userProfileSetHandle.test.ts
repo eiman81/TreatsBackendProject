@@ -4,7 +4,7 @@ import { authUserId } from './auth';
 test('Test 1: successful userProfileSetHandleV1', () => {
     clearV1();
     const a = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
-    const newHandleStr = 'jeff'
+    const newHandleStr = 'jeffoo';
     expect(userProfileSetHandleV1(a.token, newHandleStr)).toStrictEqual({});
   });
 
@@ -34,6 +34,6 @@ test('Test 5: already used handlestr ', () => {
     clearV1();
     const a = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
     const b = authRegisterV1('another_cristiano@unsw.edu.au', 'cristiano7', 'Cristiano', 'Ronaldo') as authUserId;
-    const newHandleStr =  'christianoronaldo'
+    const newHandleStr =  'cristianoronaldo'
     expect(userProfileSetHandleV1(a.token, newHandleStr)).toStrictEqual({ error: 'error' });
   });
