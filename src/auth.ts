@@ -1,13 +1,14 @@
 import { token } from 'morgan';
 import { getData, setData, tokenGenerate, setTokens, getTokens, user } from './dataStore';
 import { findUser } from './other';
+import HTTPError from 'http-errors';
 
 export interface authUserId {
   token: string,
   authUserId: number
 }
 
-function authRegisterV1(email: string, password: string, nameFirst: string, nameLast: string): authUserId | {error: 'error'} {
+function authRegisterV1(email: string, password: string, nameFirst: string, nameLast: string): authUserId {
 /*
 < Given users's email, password, first name and last name, creat a new account for them and return their authUserId.
   Also the function will give user their handle, a handle is the concatenation of their casted-to-lowercase alphanumeric
@@ -30,58 +31,59 @@ Error   -Occurs when
 Return Value:
     Returns <authUserId> on <all test pass>
 */
-  const data = getData();
-  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) === false) {
-    return { error: 'error' };
-  } else if (password.length < 6) {
-    return { error: 'error' };
-  } else if (nameFirst.length > 50 || nameFirst.length < 1 || nameLast.length > 50 || nameLast.length < 1) {
-    return { error: 'error' };
-  } else if (data.users !== null) {
-    for (let i = 0; i < data.users.length; i++) {
-      if (email === data.users[i].email) {
-        return { error: 'error' };
-      }
-    }
-  }
-  let handle = '';
-  handle = nameFirst + nameLast;
-  handle = handle.toLowerCase();
-  handle = handle.replace(/[^a-zA-Z0-9 ]/g, '');
-  handle = handle.slice(0, 20);
-  let count = 0;
+const data = getData();
+if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) === false) {
+  throw HTTPError(400, 'Invalid Email');
+} else if (password.length < 6) {
+  throw HTTPError(400, 'Invalid Password');
+} else if (nameFirst.length > 50 || nameFirst.length < 1 || nameLast.length > 50 || nameLast.length < 1) {
+  throw HTTPError(400, 'Invalid Name');
+} else if (data.users !== null) {
   for (let i = 0; i < data.users.length; i++) {
-    if (handle === data.users[i].handleStr.slice(0, handle.length)) {
-      count++;
+    if (email === data.users[i].email) {
+      throw HTTPError(400, 'Email already used');
     }
   }
-  if (count > 0) {
-    handle = handle + (count - 1).toString();
-  }
-  let lowest = -995;
-  for (let i = 0; i < data.users.length; i++) {
-    if (data.users[i].uId <= lowest) {
-      lowest = data.users[i].uId;
-    }
-  }
-  const userId = lowest - 5;
-  const token = tokenGenerate();
-  data.users.push({
-    uId: userId,
-    nameFirst: nameFirst,
-    nameLast: nameLast,
-    email: email,
-    password: password,
-    handleStr: handle,
-    isOnline: null,
-    token: token
-  });
-  setData(data);
-  return {
-    token: token,
-    authUserId: userId,
-  };
 }
+let handle = '';
+handle = nameFirst + nameLast;
+handle = handle.toLowerCase();
+handle = handle.replace(/[^a-zA-Z0-9 ]/g, '');
+handle = handle.slice(0, 20);
+let count = 0;
+for (let i = 0; i < data.users.length; i++) {
+  if (handle === data.users[i].handleStr.slice(0, handle.length)) {
+    count++;
+  }
+}
+if (count > 0) {
+  handle = handle + (count - 1).toString();
+}
+let lowest = -995;
+for (let i = 0; i < data.users.length; i++) {
+  if (data.users[i].uId <= lowest) {
+    lowest = data.users[i].uId;
+  }
+}
+const userId = lowest - 5;
+const token = tokenGenerate();
+data.users.push({
+  uId: userId,
+  nameFirst: nameFirst,
+  nameLast: nameLast,
+  email: email,
+  password: password,
+  handleStr: handle,
+  isOnline: null,
+  token: token
+});
+setData(data);
+return {
+  token: token,
+  authUserId: userId,
+};
+}
+
 
 function authLoginV1(email: string, password: string): authUserId | {error: 'error'} {
 /*
