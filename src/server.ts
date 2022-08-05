@@ -136,6 +136,11 @@ app.post('/channel/removeowner/v1', (req: Request, res: Response) => {
   const channelRemoveOwner = channelRemoveOwnerV1(token, channelId, uId);
   res.json(channelRemoveOwner);
 });
+// handles errors nicely
+app.use(errorHandler());
+
+// for logging errors
+app.use(morgan('dev'));
 
 // for logging errors
 app.use(morgan('dev'));
