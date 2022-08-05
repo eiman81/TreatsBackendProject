@@ -20,11 +20,10 @@ user with PermissionStatus, private channel
 
 */
 
-import { channel, getData, setData, user } from './dataStore';
-import { channelInviteV1, channelJoinV1, channelDetailsV1, channelMessagesV1 } from './channel';
-import { channelsCreateV1, channelId } from './channels';
-import { authRegisterV1, authUserId } from './auth';
-import { clearV1 } from './other';
+import { channel, user } from './dataStore';
+import { clearV1, authRegisterV1, channelsCreateV1, channelJoinV1 } from './httpWrappers';
+import { channelId } from './channels';
+import { authUserId } from './auth';
 
 /*
 // Setup
@@ -144,10 +143,10 @@ const invaliduser: user = {
 const invalidchannel: channel = {
   channelId: 7890,
   name: 'Argument',
-  latestMsg: 'Shut Up!!',
   messages: [],
   numberOfMessages: 3,
   isPublic: true,
+  dm: false,
   ownerMembers: [],
   allMembers: [],
 };

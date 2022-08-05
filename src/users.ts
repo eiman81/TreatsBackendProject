@@ -1,10 +1,12 @@
-import { getData, user } from './dataStore';
+import { getData, setData, user } from './dataStore';
+import { findUser, userExists } from './other';
+import validator from 'validator';
 
-interface userProfile {
+export interface userProfile {
   uId: number,
+  email: string,
   nameFirst: string,
   nameLast: string,
-  email: string,
   handleStr: string,
 }
 
@@ -31,9 +33,9 @@ Return Value:
         if (uId === user.uId) {
           const userProfile = {
             uId: user.uId,
+            email: user.email,
             nameFirst: user.nameFirst,
             nameLast: user.nameLast,
-            email: user.email,
             handleStr: user.handleStr,
           };
 
@@ -46,4 +48,109 @@ Return Value:
   return { error: 'error' };
 }
 
-export { userProfileV1 };
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function usersListAllV1(token: string): {error: 'error'} | {users: userProfile[]} {
+  if (userExists(token)) {
+    const users = [];
+    for (const user of getData().users) {
+      const userDetails = {
+        uId: user.uId,
+        email: user.email,
+        nameFirst: user.nameFirst,
+        nameLast: user.nameLast,
+        handleStr: user.handleStr
+      };
+      users.push(userDetails);
+    }
+
+    return { users };
+  } else {
+    return { error: 'error' };
+  }
+}
+
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function userProfileSetNameV1(token: string, nameFirst: string, nameLast: string): {error: 'error'} | {} {
+  if (userExists(token) && nameFirst.length <= 50 && nameLast.length <= 50) {
+    let index = 0;
+    const userToEdit = findUser(token) as user;
+    for (const user of getData().users) {
+      if (user.uId === userToEdit.uId) {
+        const data = getData();
+        data.users[index].nameFirst = nameFirst;
+        data.users[index].nameLast = nameLast;
+        setData(data);
+        return {};
+      }
+      index++;
+    }
+  } else {
+    return { error: 'error' };
+  }
+}
+
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function userProfileSetEmailV1(token: string, email: string): {error: 'error'} | {} {
+  if (userExists(token) && validator.isEmail(email)) {
+    let alreadyUsed = false;
+    for (const user of getData().users) {
+      if (user.email === email) {
+        alreadyUsed = true;
+      }
+    }
+
+    if (alreadyUsed === false) {
+      let index = 0;
+      const userToEdit = findUser(token) as user;
+      for (const user of getData().users) {
+        if (user.uId === userToEdit.uId) {
+          const data = getData();
+          data.users[index].email = email;
+          setData(data);
+          return {};
+        }
+        index++;
+      }
+    } else {
+      return { error: 'error' };
+    }
+  } else {
+    return { error: 'error' };
+  }
+}
+
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function userProfileSetHandleV1(token: string, handleStr: string): {error: 'error'} | {} {
+  if (userExists(token) && handleStr.length >= 3 && handleStr.length <= 20 && /^[A-Za-z0-9]*$/.test(handleStr)) {
+    let alreadyUsed = false;
+    for (const user of getData().users) {
+      if (user.handleStr === handleStr) {
+        alreadyUsed = true;
+      }
+    }
+
+    if (alreadyUsed === false) {
+      let index = 0;
+      const userToEdit = findUser(token) as user;
+      for (const user of getData().users) {
+        if (user.uId === userToEdit.uId) {
+          const data = getData();
+          data.users[index].handleStr = handleStr;
+          setData(data);
+          return {};
+        }
+        index++;
+      }
+    } else {
+      return { error: 'error' };
+    }
+  } else {
+    return { error: 'error' };
+  }
+}
+
+export { userProfileV1, usersListAllV1, userProfileSetNameV1, userProfileSetEmailV1, userProfileSetHandleV1 };

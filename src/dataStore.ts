@@ -1,7 +1,8 @@
 import { updateLanguageServiceSourceFile } from 'typescript';
+import fs from 'fs';
 
 export interface messages {
-  messageid: number,
+  messageId: number,
   uId: number,
   message: string,
   timeSent: number
@@ -21,10 +22,10 @@ export interface user {
 export interface channel {
   channelId: number,
   name: string,
-  latestMsg: string,
   numberOfMessages: number,
   messages: messages[],
   isPublic: boolean,
+  dm: boolean,
   ownerMembers: number[],
   allMembers: number[]
 }
@@ -42,12 +43,14 @@ let data : data = {
 
 // Use get() to access the data
 function getData(): data {
+  data = JSON.parse(String(fs.readFileSync('./src/data.json', { flag: 'r' })));
   return data;
 }
 
 // Use set(newData) to pass in the entire data object, with modifications made
 function setData(newData: data) {
   data = newData;
+  fs.writeFileSync('./src/data.json', JSON.stringify(data));
 }
 
 let currentTokens: string[] = [];
@@ -64,8 +67,8 @@ function setTokens(tokens: string[]) {
 function tokenGenerate(): string {
   const tokenNum = Math.random();
   const newToken = tokenNum.toString();
-  let newTokens = getTokens();
-  newTokens.push(newToken)
+  const newTokens = getTokens();
+  newTokens.push(newToken);
   setTokens(newTokens);
   return newToken;
 }

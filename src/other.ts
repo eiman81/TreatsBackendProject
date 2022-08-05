@@ -1,5 +1,6 @@
+import fs from 'fs';
 import { NewLineKind } from 'typescript';
-import { getData, setData, data, user, channel } from './dataStore'
+import { getData, setData, data, user, channel } from './dataStore';
 interface nodata {}
 
 function clearV1(): nodata {
@@ -17,6 +18,7 @@ Return Value:
     users: [],
     channels: [],
   };
+
   const nodata = {};
   setData(data);
   if (getData().users.length === 0 && getData().channels.length === 0) {
@@ -38,12 +40,11 @@ function channelExists(channelId: number): boolean {
 }
 
 function userExists(UserId: number | string): boolean {
-
   let found = 0;
   for (const user of getData().users) {
     if (user.uId === UserId || user.token === UserId) {
       found = 1;
-      return true
+      return true;
     }
   }
   if (found === 0) {
@@ -53,7 +54,7 @@ function userExists(UserId: number | string): boolean {
 
 function findUser(UserId: number | string): user | {error: 'error'} {
   let found = 0;
-  if (typeof(UserId) === 'number') {
+  if (typeof (UserId) === 'number') {
     for (const user of getData().users) {
       if (user.uId === UserId) {
         found = 1;
@@ -71,7 +72,7 @@ function findUser(UserId: number | string): user | {error: 'error'} {
   }
 
   if (found === 0) {
-    return {error: 'error'};
+    return { error: 'error' };
   }
 }
 
@@ -79,30 +80,32 @@ function findChannel(channelId: number): channel | {error: 'error'} {
   if (channelExists(channelId)) {
     for (const channel of getData().channels) {
       if (channel.channelId === channelId) {
-        return channel
+        return channel;
       }
     }
   } else {
-    return {error: 'error'};
+    return { error: 'error' };
   }
 }
 
 let messageIds: number[] = [];
+fs.writeFileSync('./src/messageIds.json', JSON.stringify(messageIds));
 
 function generateMessageId(): number {
   let i = 1;
-  let newId = 0
+  messageIds = JSON.parse(String(fs.readFileSync('./src/messageIds.json', { flag: 'r' })));
+  const newId = messageIds.length + 1;
   while (i === 1) {
     i = 0;
-    newId = Math.random();
     for (const id of messageIds) {
       if (newId === id) {
         i = 1;
       }
     }
-  } 
+  }
   messageIds.push(newId);
+  fs.writeFileSync('./src/messageIds.json', JSON.stringify(messageIds));
   return newId;
 }
 
-export {clearV1, channelExists, userExists, findUser, findChannel, generateMessageId};
+export { clearV1, channelExists, userExists, findUser, findChannel, generateMessageId };

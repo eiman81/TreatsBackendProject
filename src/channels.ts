@@ -47,7 +47,7 @@ Return Value:
     }
   }
   if (tokenMatched === false) {
-    return { error: 'error' }
+    return { error: 'error' };
   }
 
   let count = 0;
@@ -71,10 +71,10 @@ Return Value:
   data.channels.push({
     channelId: channelId,
     name: name,
-    latestMsg: null,
     numberOfMessages: 0,
     messages: [],
     isPublic: isPublic,
+    dm: false,
     ownerMembers: [authUserNum],
     allMembers: [authUserNum]
   });
@@ -85,9 +85,9 @@ Return Value:
   };
 }
 
-function channelsListV1(token: string): {error: 'error'} | channels[] {
+function channelsListV1(token: string): {error: 'error'} | {channels: channels[]} {
   const data = getData();
-  const channels = [];
+  const channels: channels[] = [];
   let tokenMatched = false;
   let authUserId: number;
   for (let i = 0; i < data.users.length; i++) {
@@ -98,12 +98,12 @@ function channelsListV1(token: string): {error: 'error'} | channels[] {
     }
   }
   if (tokenMatched === false) {
-    return { error: 'error' };
+    return { channels };
   }
 
   for (let c = 0; c < data.channels.length; c++) {
     for (let i = 0; i < data.channels[c].allMembers.length; i++) {
-      if (data.channels[c].allMembers[i] === authUserId) {
+      if (data.channels[c].allMembers[i] === authUserId && data.channels[c].dm === false) {
         const channel = {
           channelId: data.channels[c].channelId,
           name: data.channels[c].name
@@ -112,10 +112,10 @@ function channelsListV1(token: string): {error: 'error'} | channels[] {
       }
     }
   }
-  return channels;
+  return { channels };
 }
 
-function channelsListallV1(token: string): {error: 'error'} | channels[] {
+function channelsListallV1(token: string): {error: 'error'} | {channels: channels[]} {
 /*
 < Given a authUserId, Provide an array of all channels, including private channels, (and their associated details) >
 
@@ -135,18 +135,21 @@ Return Value:
     if (user.token === token) {
       valid = 1;
       for (const channel of data.channels) {
-        const channeldetails = {
-          channelId: channel.channelId,
-          name: channel.name
-        };
-        channels.push(channeldetails);
+        if (channel.dm === false) {
+          const channeldetails = {
+            channelId: channel.channelId,
+            name: channel.name
+          };
+          channels.push(channeldetails);
+        }
       }
-      return channels;
+
+      return { channels };
     }
   }
 
   if (valid === 0) {
-    return channels;
+    return { channels };
   }
 }
 

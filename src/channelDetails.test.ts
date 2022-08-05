@@ -1,9 +1,6 @@
-
-import { getData, setData } from './dataStore';
-import { channelInviteV1, channelJoinV1, channelDetailsV1, channelMessagesV1 } from './channel';
-import { channelsCreateV1, channelId } from './channels';
-import { authRegisterV1, authUserId } from './auth';
-import { clearV1 } from './other';
+import { clearV1, authRegisterV1, channelDetailsV1, channelsCreateV1 } from './httpWrappers';
+import { channelId } from './channels';
+import { authUserId } from './auth';
 
 test('ChannelDetail error both invalid codes', () => {
   clearV1();
