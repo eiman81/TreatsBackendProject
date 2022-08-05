@@ -12,6 +12,7 @@ import { userProfileSetNameV1, userProfileV1, usersListAllV1, userProfileSetEmai
 import { clearV1, findUser, userExists } from './other';
 import { user } from './dataStore';
 import { dmCreateV1, dmListV1, dmRemoveV1, dmDetailsV1, dmLeaveV1, dmMessagesV1, messageSendDmV1 } from './directMessages';
+import errorHandler from 'middleware-http-errors';
 
 // Set up web app, use JSON
 const app = express();
