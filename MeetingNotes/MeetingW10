@@ -13,10 +13,16 @@ Meeting objective: Fix http test errors
 completely aware of the inner workings of functions and the errors were mostly related to the functions and local tests.
 
 
-31/08/22:
+4/08/22:
 Meeting location: Facebook Messenger
 Meeting objective: Complete http tests and fix errors
 
 - Today, two people completed the http wrappers for all functions while fixing any errors they could. Then when finished, they pushed and handed it over to the people 
 implementing the functions and tests to fix errors and pass the tests.
+
+5/08/22
+Meeting location: Facebook Messenger, Microsoft Teams
+Meeting objective: Final touches before submitting Iter3
+
+- As this is the final day of working on iter3, we did all the final touches such as, finish writing planning.pdf and successfully write and test some iter3 functions such as message share. We also deployed our server.
 
