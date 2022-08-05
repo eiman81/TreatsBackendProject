@@ -18,13 +18,12 @@ test('dmListV1: correct output', () => {
   const b = authRegisterV1('another_cristiano@unsw.edu.au', 'cristiano7', 'Cristiano', 'Ronaldo') as authUserId;;
   const c = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;;
   const d = authRegisterV1('zero0@unsw.edu.au', '12345678', 'ZERO', '0') as authUserId;
-  const group1 = dmCreateV1(a.token, [a.authUserId, b.authUserId, c.authUserId]) as dmId;
-  const group2 = dmCreateV1(b.token, [a.authUserId, b.authUserId]) as dmId;
-  const group3 = dmCreateV1(d.token, [b.authUserId, c.authUserId, d.authUserId]) as dmId;
+  const group1 = dmCreateV1(a.token, [b.authUserId, c.authUserId]) as dmId;
+  const group2 = dmCreateV1(b.token, [a.authUserId]) as dmId;
   const dmList = dmListV1(a.token);
-  const expected: dmDetails[] = [
-    {dmId: group1.dmId, name: "cristianoronaldo, cristianoronaldo1, mohammadmayweatherjr"},
-    {dmId: group2.dmId, name: "cristianoronaldo, cristianoronaldo1"},
+  const dms: dmDetails[] = [
+    {dmId: group1.dmId, name: "cristianoronaldo, cristianoronaldo0, mohammedmayweatherjr"},
+    {dmId: group2.dmId, name: "cristianoronaldo0, cristianoronaldo"}
   ];
-  expect(dmList).toStrictEqual(expected);
+  expect(dmList).toStrictEqual({dms});
 });

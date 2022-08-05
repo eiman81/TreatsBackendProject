@@ -133,6 +133,8 @@ app.post('/channel/addowner/v1', (req: Request, res: Response) => {
 app.post('/channel/removeowner/v1', (req: Request, res: Response) => {
   let { token, channelId, uId } = req.body;
   token = token.toString();
+  channelId = Number(channelId);
+  uId = Number(uId);
   const channelRemoveOwner = channelRemoveOwnerV1(token, channelId, uId);
   res.json(channelRemoveOwner);
 });

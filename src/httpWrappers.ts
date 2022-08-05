@@ -589,7 +589,7 @@ export type dmDetailsV1Fn = (token: string, dmId: number) => {name: string, memb
 export const dmDetailsV1: dmDetailsV1Fn = (token: string, dmId: number) => {
     const res = request(
         "GET",
-        `${url}:${port}/dm/list/v1`,
+        `${url}:${port}/dm/details/v1`,
         {
             qs: {
                 token: token,

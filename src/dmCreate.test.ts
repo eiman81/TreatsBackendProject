@@ -31,6 +31,6 @@ test('dmCreateV1: error for duplicate uId', () => {
     const c = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;;
 
     
-    const group = dmCreateV1(a.token, [a.authUserId, b.authUserId, c.authUserId, 9871]);
+    const group = dmCreateV1(a.token, [b.authUserId, c.authUserId, 9871]);
     expect(group).toStrictEqual({ error: 'error' });
   });

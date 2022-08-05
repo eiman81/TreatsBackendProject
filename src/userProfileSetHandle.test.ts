@@ -4,7 +4,7 @@ import { authUserId } from './auth';
 test('Test 1: successful userProfileSetHandleV1', () => {
     clearV1();
     const a = authRegisterV1('mohammed.mayweatherjr@unsw.edu.au', 'notfloyd', 'Mohammed', 'MayweatherJr') as authUserId;
-    const newHandleStr = 'mohammedmayweatherjr'
+    const newHandleStr = 'jeff'
     expect(userProfileSetHandleV1(a.token, newHandleStr)).toStrictEqual({});
   });
 

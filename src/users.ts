@@ -140,8 +140,8 @@ function userProfileSetHandleV1(token: string, handleStr: string): {error: 'erro
           const data = getData();
           data.users[index].handleStr = handleStr;
           setData(data);
+          return {};
         }
-
         index++;
       }
     } else {

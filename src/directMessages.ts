@@ -26,7 +26,7 @@ function dmCreateV1(token: string, uIds: number[]): {dmId: number} | {error: 'er
     let handleStrings = [];
 
     for (const id of uIds) {
-      if (findUser(id)) {
+      if (userExists(id)) {
         const foundUser = findUser(id) as user;
         if (handleStrings.includes(foundUser.handleStr) === false) {
           handleStrings.push(foundUser.handleStr);
