@@ -1,0 +1,270 @@
+
+src/auth.ts
+    1:10  error  'token' is defined but never used                                                                                                                                                                                                                                                                                                                     no-unused-vars
+  128:39  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+
+src/authLogin.test.ts
+  15:9  error  'a' is assigned a value but never used  no-unused-vars
+  22:9  error  'a' is assigned a value but never used  no-unused-vars
+
+src/authLogout.test.ts
+  3:35  error  'authLoginV1' is defined but never used  no-unused-vars
+
+src/authRegister.test.ts
+   1:35  error  'authLoginV1' is defined but never used      no-unused-vars
+  13:9   error  'a' is assigned a value but never used       no-unused-vars
+  14:9   error  'b' is assigned a value but never used       no-unused-vars
+  15:9   error  'c' is assigned a value but never used       no-unused-vars
+  24:3   error  Expected space or tab after '//' in comment  spaced-comment
+  32:9   error  'a' is assigned a value but never used       no-unused-vars
+  85:9   error  'b' is assigned a value but never used       no-unused-vars
+
+src/channel.ts
+    2:10  error  'userProfileV1' is defined but never used                                                                                                                                                                                                                                                                                                             no-unused-vars
+   73:78  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+  123:93  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+  301:79  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+  362:95  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+  387:98  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+  419:76  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+  460:61  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+
+src/channelAddOwner.test.ts
+  27:9  error  'b' is assigned a value but never used  no-unused-vars
+  37:9  error  'c' is assigned a value but never used  no-unused-vars
+
+src/channelDetails.test.ts
+  0:0  passing  No linting issues  success
+
+src/channelInvite.test.ts
+   9:7  error  'validchannel' is assigned a value but never used    no-unused-vars
+  10:7  error  'privatechannel' is assigned a value but never used  no-unused-vars
+  13:7  error  'invaliduser' is assigned a value but never used     no-unused-vars
+  36:9  error  'privatechannel' is assigned a value but never used  no-unused-vars
+  48:9  error  'privatechannel' is assigned a value but never used  no-unused-vars
+
+src/channelJoin.test.ts
+   24:10  error  'clearV1' is defined but never used                  no-unused-vars
+  132:7   error  'invaliduser' is assigned a value but never used     no-unused-vars
+  143:7   error  'invalidchannel' is assigned a value but never used  no-unused-vars
+
+src/channelLeave.test.ts
+  37:9  error  'b' is assigned a value but never used  no-unused-vars
+
+src/channelMessageEdit.test.ts
+  30:9  error  'messageid' is assigned a value but never used  no-unused-vars
+
+src/channelMessageRemove.test.ts
+   1:53  error  'channelMessagesV1' is defined but never used   no-unused-vars
+   2:10  error  'returnMessages' is defined but never used      no-unused-vars
+  18:9   error  'messageid' is assigned a value but never used  no-unused-vars
+
+src/channelMessageSend.test.ts
+  0:0  passing  No linting issues  success
+
+src/channelMessageSendDmV1.test.ts
+  28:9  error  'group' is assigned a value but never used  no-unused-vars
+
+src/channelMessages.test.ts
+  0:0  passing  No linting issues  success
+
+src/channelRemoveOwner.test.ts
+  20:9  error  'b' is assigned a value but never used  no-unused-vars
+
+src/channels.ts
+  0:0  passing  No linting issues  success
+
+src/channelsCreate.test.ts
+  36:9  error  'b' is assigned a value but never used  no-unused-vars
+  37:9  error  'c' is assigned a value but never used  no-unused-vars
+  38:9  error  'd' is assigned a value but never used  no-unused-vars
+  39:9  error  'e' is assigned a value but never used  no-unused-vars
+
+src/channelsList.test.ts
+  7:9  error  'token' is assigned a value but never used    no-unused-vars
+  9:9  error  'channel' is assigned a value but never used  no-unused-vars
+
+src/channelsListAll.test.ts
+  0:0  passing  No linting issues  success
+
+src/clear.test.ts
+  4:10  error  'channel' is defined but never used           no-unused-vars
+  4:19  error  'user' is defined but never used              no-unused-vars
+  4:25  error  'data' is defined but never used              no-unused-vars
+  9:9   error  'channel' is assigned a value but never used  no-unused-vars
+
+src/dataStore.ts
+   1:10  error  'updateLanguageServiceSourceFile' is defined but never used  no-unused-vars
+  39:5   error  'data' is already defined                                    no-redeclare
+
+src/directMessages.ts
+    1:25  error  'clearV1' is defined but never used                                                                                                                                                                                                                                                                                                                   no-unused-vars
+    2:19  error  'getTokens' is defined but never used                                                                                                                                                                                                                                                                                                                 no-unused-vars
+    2:39  error  'setTokens' is defined but never used                                                                                                                                                                                                                                                                                                                 no-unused-vars
+   97:51  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+  149:50  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+
+src/dmCreate.test.ts
+  0:0  passing  No linting issues  success
+
+src/dmDetailsV1.test.ts
+  25:9  error  'group' is assigned a value but never used  no-unused-vars
+
+src/dmLeaveV1.test.ts
+  23:9  error  'group' is assigned a value but never used  no-unused-vars
+
+src/dmListV1.test.ts
+   1:10  error  'channelId' is defined but never used         no-unused-vars
+   1:21  error  'channels' is defined but never used          no-unused-vars
+   2:35  error  'channelsCreateV1' is defined but never used  no-unused-vars
+   2:53  error  'channelsListV1' is defined but never used    no-unused-vars
+   8:9   error  'token' is assigned a value but never used    no-unused-vars
+  20:9   error  'd' is assigned a value but never used        no-unused-vars
+
+src/dmRemove.test.ts
+  22:9  error  'group' is assigned a value but never used  no-unused-vars
+
+src/echo.test.ts
+  0:0  passing  No linting issues  success
+
+src/echo.ts
+  0:0  passing  No linting issues  success
+
+src/httpWrappers.ts
+    6:10  error  'token' is defined but never used                                                                                                                                                                                                                                                                                                                     no-unused-vars
+    8:8   error  'isEmail' is defined but never used                                                                                                                                                                                                                                                                                                                   no-unused-vars
+   13:31  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+   16:9   error  'res' is assigned a value but never used                                                                                                                                                                                                                                                                                                              no-unused-vars
+   68:49  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+  109:94  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+  131:73  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+  152:78  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+  256:69  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+  277:84  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+  321:70  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+  342:86  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+  364:89  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+  408:86  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+  430:71  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+  534:61  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+  555:60  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+
+src/other.ts
+  2:10  error  'NewLineKind' is defined but never used   no-unused-vars
+  4:11  error  An empty interface is equivalent to `{}`  @typescript-eslint/no-empty-interface
+
+src/server.ts
+    1:19  error  'json' is defined but never used           no-unused-vars
+    6:8   error  'fs' is defined but never used             no-unused-vars
+   12:29  error  'userExists' is defined but never used     no-unused-vars
+  103:9   error  'user' is assigned a value but never used  no-unused-vars
+
+src/userProfile.test.ts
+   1:35  error  'authLoginV1' is defined but never used  no-unused-vars
+  33:9   error  'a' is assigned a value but never used   no-unused-vars
+  49:9   error  'b' is assigned a value but never used   no-unused-vars
+  50:9   error  'c' is assigned a value but never used   no-unused-vars
+
+src/userProfileSetEmail.test.ts
+   1:35  error  'authLoginV1' is defined but never used  no-unused-vars
+  21:9   error  'b' is assigned a value but never used   no-unused-vars
+
+src/userProfileSetHandle.test.ts
+   1:35  error  'authLoginV1' is defined but never used  no-unused-vars
+  35:9   error  'b' is assigned a value but never used   no-unused-vars
+
+src/userProfileSetName.test.ts
+  1:35  error  'authLoginV1' is defined but never used  no-unused-vars
+
+src/users.ts
+   75:103  error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+   96:82   error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+  127:87   error  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.
+- If you want a type meaning "empty object", you probably want `Record<string, never>` instead  @typescript-eslint/ban-types
+
+src/usersListAllV1.test.ts
+  1:10  error  'channelId' is defined but never used  no-unused-vars
+  1:21  error  'channels' is defined but never used   no-unused-vars
+
+✖ 100 problems (100 errors, 0 warnings)
+  1 error, 0 warnings potentially fixable with the `--fix` option.
