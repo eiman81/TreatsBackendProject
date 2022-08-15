@@ -20,9 +20,6 @@ test('authRegisterV1: correct output for 4th user', () => {
 
 test('authRegisterV1: error for email address not valid', () => {
   clearV1();
-
-  // expect(authRegisterV1('not$%@valid@unsw.edu.au', 'notvalid123', 'not', 'valid')).toThrow(400);
-
   const a = authRegisterV1('not$%@valid@unsw.edu.au', 'notvalid123', 'not', 'valid');
   expect(a).toStrictEqual({ error: 'error' });
 });
