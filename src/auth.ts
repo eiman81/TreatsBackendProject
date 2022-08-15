@@ -1,6 +1,6 @@
 import { token } from 'morgan';
 import { getData, setData, tokenGenerate, setTokens, getTokens, user } from './dataStore';
-import { findUser } from './other';
+import { findUser, userExists } from './other';
 
 export interface authUserId {
   token: string,
@@ -139,11 +139,10 @@ Error   -Occurs when
 Return Value:
     {} on success
 */
-  let user = findUser(token);
-  if (user === { error: 'error' }) {
+  if (userExists(token) === false) {
     return { error: 'error' };
   } else {
-    user = findUser(token) as user;
+    const user = findUser(token) as user;
     let counter = 0;
     for (const person of getData().users) {
       if (user.uId === person.uId) {

@@ -8,3 +8,9 @@ test('AuthLogout Working', () => {
   const token = user.token;
   expect(authLogoutV1(token)).toStrictEqual({});
 });
+
+test('AuthLogout with invalid user', () => {
+  clearV1();
+  const user = authRegisterV1('sean.ocononnor@gmail.com', 'qwerty5', 'sean', 'oconnor');
+  expect(authLogoutV1('eywugf')).toStrictEqual({ error: 'error' });
+});
