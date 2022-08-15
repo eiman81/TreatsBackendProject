@@ -263,6 +263,11 @@ function messageSendV1(token: string, channelId: number, message: string): messa
     const newData = getData();
     let index = 0;
     const user = findUser(token) as user;
+
+    if (channel.allMembers.includes(user.uId) === false) {
+      return { error: 'error' };
+    }
+
     for (const chan of getData().channels) {
       if (chan.channelId === channel.channelId && channel.allMembers.includes(user.uId)) {
         if (message.length < 1000 && message.length !== 0) {
@@ -286,10 +291,6 @@ function messageSendV1(token: string, channelId: number, message: string): messa
         }
       }
       index++;
-    }
-
-    if (channel.allMembers.includes(user.uId) === false) {
-      return { error: 'error' };
     }
   } else {
     return { error: 'error' };

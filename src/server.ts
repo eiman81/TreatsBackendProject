@@ -48,49 +48,49 @@ app.post('/auth/login/v3', (req: Request, res: Response) => {
 });
 
 app.post('/channels/create/v3', (req: Request, res: Response) => {
-  const { token, name, isPublic } = req.body;
-  // token = token.toString();
+  const { name, isPublic } = req.body;
+  const token = req.headers.token.toString();
   const channelId = channelsCreateV1(token, name, isPublic);
   res.json(channelId);
 });
 
 app.get('/channels/list/v3', (req: Request, res: Response) => {
-  const token = req.query.token.toString();
+  const token = req.headers.token.toString();
   const channels = channelsListV1(token);
   res.json(channels);
 });
 
 app.get('/channels/listall/v3', (req: Request, res: Response) => {
-  const token = req.query.token.toString();
+  const token = req.headers.token.toString();
   const channels = channelsListallV1(token);
   res.json(channels);
 });
 
 app.get('/channel/details/v3', (req: Request, res: Response) => {
-  const token = req.query.token.toString();
+  const token = req.headers.token.toString();
   const channelId = Number(req.query.channelId.toString());
   const details = channelDetailsV1(token, channelId);
   res.json(details);
 });
 
 app.post('/channel/join/v3', (req: Request, res: Response) => {
-  let { token, channelId } = req.body;
-  token = token.toString();
+  const { channelId } = req.body;
+  const token = req.headers.token.toString();
   const channelJoin = channelJoinV1(token, channelId);
   res.json(channelJoin);
 });
 
 app.post('/channel/invite/v3', (req: Request, res: Response) => {
-  let { token, channelId, uId } = req.body;
+  let { channelId, uId } = req.body;
   channelId = Number(channelId);
   uId = Number(uId);
-  token = token.toString();
+  const token = req.headers.token.toString();
   const invitation = channelInviteV1(token, channelId, uId);
   res.json(invitation);
 });
 
 app.get('/channel/messages/v3', (req: Request, res: Response) => {
-  const token = req.query.token.toString();
+  const token = req.headers.token.toString();
   const channelId = Number(req.query.channelId);
   const start = Number(req.query.start);
   const messages = channelMessagesV1(token, channelId, start);
@@ -98,7 +98,7 @@ app.get('/channel/messages/v3', (req: Request, res: Response) => {
 });
 
 app.get('/user/profile/v3', (req: Request, res: Response) => {
-  const token = req.query.token.toString();
+  const token = req.headers.token.toString();
   const uId = Number(req.query.uId);
   const user = findUser(token) as user;
   const profile = userProfileV1(token, uId);
@@ -111,34 +111,31 @@ app.delete('/clear/v1', (req: Request, res: Response) => {
 });
 
 app.post('/auth/logout/v2', (req: Request, res: Response) => {
-  let { token } = req.body;
-  token = token.toString();
+  const token = req.headers.token.toString();
   res.json(authLogoutV1(token));
 });
 
 app.post('/channel/leave/v2', (req: Request, res: Response) => {
-  let { token, channelId } = req.body;
-  token = token.toString();
+  const { channelId } = req.body;
+  const token = req.headers.token.toString();
   const channelLeave = channelLeaveV1(token, channelId);
   res.json(channelLeave);
 });
 
 app.post('/channel/addowner/v2', (req: Request, res: Response) => {
-  let { token, channelId, uId } = req.body;
-  token = token.toString();
+  const { channelId, uId } = req.body;
+  const token = req.headers.token.toString();
   res.json(channelAddOwnerV1(token, channelId, uId));
 });
 
 app.post('/channel/removeowner/v2', (req: Request, res: Response) => {
-  let { token, channelId, uId } = req.body;
-  token = token.toString();
+  let { channelId, uId } = req.body;
+  const token = req.headers.token.toString();
   channelId = Number(channelId);
   uId = Number(uId);
   const channelRemoveOwner = channelRemoveOwnerV1(token, channelId, uId);
   res.json(channelRemoveOwner);
 });
-// handles errors nicely
-app.use(errorHandler());
 
 // for logging errors
 app.use(morgan('dev'));
@@ -147,8 +144,8 @@ app.use(morgan('dev'));
 app.use(morgan('dev'));
 
 app.post('/message/send/v2', (req: Request, res: Response) => {
-  let { token, channelId, message } = req.body;
-  token = token.toString();
+  let { channelId, message } = req.body;
+  const token = req.headers.token.toString();
   channelId = Number(channelId);
   message = message.toString();
   const messageId = messageSendV1(token, channelId, message);
@@ -156,85 +153,88 @@ app.post('/message/send/v2', (req: Request, res: Response) => {
 });
 
 app.put('/message/edit/v2', (req: Request, res: Response) => {
-  let { token, messageId, message } = req.body;
-  token = token.toString();
+  let { messageId, message } = req.body;
+  const token = req.headers.token.toString();
   messageId = Number(messageId);
   res.json(messageEditV1(token, messageId, message));
 });
 
 app.delete('/message/remove/v2', (req: Request, res: Response) => {
-  const token = req.query.token.toString();
+  const token = req.headers.token.toString();
   const messageId = Number(req.query.messageId);
   res.json(messageRemoveV1(token, messageId));
 });
 
 app.post('/dm/create/v2', (req: Request, res: Response) => {
-  let { token, uIds } = req.body;
-  token = token.toString();
+  const { uIds } = req.body;
+  const token = req.headers.token.toString();
   res.json(dmCreateV1(token, uIds));
 });
 
 app.get('/dm/list/v2', (req: Request, res: Response) => {
-  const token = req.query.token.toString();
+  const token = req.headers.token.toString();
   const dms = dmListV1(token);
   res.json(dms);
 });
 
 app.delete('/dm/remove/v2', (req: Request, res: Response) => {
-  const token = req.query.token.toString();
+  const token = req.headers.token.toString();
   const dmId = Number(req.query.dmId);
   res.json(dmRemoveV1(token, dmId));
 });
 
 app.get('/dm/details/v2', (req: Request, res: Response) => {
-  const token = req.query.token.toString();
+  const token = req.headers.token.toString();
   const dmId = Number(req.query.dmId);
   res.json(dmDetailsV1(token, dmId));
 });
 
 app.post('/dm/leave/v2', (req: Request, res: Response) => {
-  let { token, dmId } = req.body;
-  token = token.toString();
+  const { dmId } = req.body;
+  const token = req.headers.token.toString();
   res.json(dmLeaveV1(token, dmId));
 });
 
 app.get('/dm/messages/v2', (req: Request, res: Response) => {
-  const token = req.query.token.toString();
+  const token = req.headers.token.toString();
   const dmId = Number(req.query.dmId);
   const start = Number(req.query.start);
   res.json(dmMessagesV1(token, dmId, start));
 });
 
 app.post('/message/senddm/v2', (req: Request, res: Response) => {
-  let { token, dmId, message } = req.body;
-  token = token.toString();
+  let { dmId, message } = req.body;
+  const token = req.headers.token.toString();
   dmId = Number(dmId);
   message = message.toString();
   res.json(messageSendDmV1(token, dmId, message));
 });
 
 app.get('/users/all/v2', (req: Request, res: Response) => {
-  const token = req.query.token.toString();
+  const token = req.headers.token.toString();
   res.json(usersListAllV1(token));
 });
 
 app.put('/user/profile/setname/v2', (req: Request, res: Response) => {
-  let { token, nameFirst, nameLast } = req.body;
-  token = token.toString();
+  const { nameFirst, nameLast } = req.body;
+  const token = req.headers.token.toString();
   res.json(userProfileSetNameV1(token, nameFirst, nameLast));
 });
 
 app.put('/user/profile/setemail/v2', (req: Request, res: Response) => {
-  let { token, email } = req.body;
-  token = token.toString();
+  const { email } = req.body;
+  const token = req.headers.token.toString();
   res.json(userProfileSetEmailV1(token, email));
 });
 
 app.put('/user/profile/sethandle/v2', (req: Request, res: Response) => {
-  let { token, handleStr } = req.body;
-  token = token.toString();
+  const { handleStr } = req.body;
+  const token = req.headers.token.toString();
   res.json(userProfileSetHandleV1(token, handleStr));
 });
+
+// handles errors nicely
+app.use(errorHandler());
 
 // start server
 const server = app.listen(PORT, HOST, () => {

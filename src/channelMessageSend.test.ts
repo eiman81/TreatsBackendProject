@@ -32,7 +32,7 @@ test('ChannelMessageSend error when invalid message length', () => {
 test('ChannelMessageSend error when user is not a member', () => {
   clearV1();
   const user = authRegisterV1('sean.ocononnor@gmail.com', 'qwerty5', 'sean', 'oconnor') as authUserId;
-  const user2 = authRegisterV1('bob.grate@gmail.com', '5tsgs', 'bob', 'grate') as authUserId;
+  const user2 = authRegisterV1('bob.grate@gmail.com', '5tsg77s', 'bob', 'grate') as authUserId;
   const channel = channelsCreateV1(user2.token, 'newchannel', false) as channelId;
   const messageid = messageSendV1(user.token, channel.channelId, 'message');
   expect(messageid).toStrictEqual({ error: 'error' });

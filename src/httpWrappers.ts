@@ -72,8 +72,8 @@ export const authLogoutV1: authLogoutV1Fn = (token: string) => {
     'POST',
         `${url}:${port}/auth/logout/v2`,
         {
-          json: {
-            token: token,
+          headers: {
+            token: token
           }
         }
   );
@@ -93,8 +93,10 @@ export const userProfileV1: userProfileV1Fn = (token: string, uId: number) => {
         `${url}:${port}/user/profile/v3`,
         {
           qs: {
-            token: token,
             uId: uId,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -114,9 +116,11 @@ export const userProfileSetNameV1: userProfileSetNameV1Fn = (token: string, name
         `${url}:${port}/user/profile/setname/v2`,
         {
           json: {
-            token: token,
             nameFirst: nameFirst,
             nameLast: nameLast,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -136,8 +140,10 @@ export const userProfileSetEmailV1: userProfileSetEmailV1Fn = (token: string, em
         `${url}:${port}/user/profile/setemail/v2`,
         {
           json: {
-            token: token,
             email: email,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -157,8 +163,10 @@ export const userProfileSetHandleV1: userProfileSetHandleV1Fn = (token: string, 
         `${url}:${port}/user/profile/sethandle/v2`,
         {
           json: {
-            token: token,
             handleStr: handleStr,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -178,9 +186,11 @@ export const channelsCreateV1: channelsCreateV1Fn = (token: string, name: string
         `${url}:${port}/channels/create/v3`,
         {
           json: {
-            token: token,
             name: name,
             isPublic: isPublic,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -199,8 +209,8 @@ export const channelsListV1: channelsListV1Fn = (token: string) => {
     'GET',
         `${url}:${port}/channels/list/v3`,
         {
-          qs: {
-            token: token,
+          headers: {
+            token: token
           }
         }
   );
@@ -219,8 +229,8 @@ export const channelsListallV1: channelsListallV1Fn = (token: string) => {
     'GET',
         `${url}:${port}/channels/listall/v3`,
         {
-          qs: {
-            token: token,
+          headers: {
+            token: token
           }
         }
   );
@@ -240,8 +250,10 @@ export const channelDetailsV1: channelDetailsV1Fn = (token: string, channelId: n
         `${url}:${port}/channel/details/v3`,
         {
           qs: {
-            token: token,
             channelId: channelId,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -261,8 +273,10 @@ export const channelJoinV1: channelJoinV1Fn = (token: string, channelId: number)
         `${url}:${port}/channel/join/v3`,
         {
           json: {
-            token: token,
             channelId: channelId,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -282,10 +296,13 @@ export const channelInviteV1: channelInviteV1Fn = (token: string, channelId: num
         `${url}:${port}/channel/invite/v3`,
         {
           json: {
-            token: token,
             channelId: channelId,
             uId: uId,
+          },
+          headers: {
+            token: token
           }
+
         }
   );
 
@@ -304,9 +321,11 @@ export const channelMessagesV1: channelMessagesV1Fn = (token: string, channelId:
         `${url}:${port}/channel/messages/v3`,
         {
           qs: {
-            token: token,
             channelId: channelId,
             start: start,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -326,8 +345,10 @@ export const channelLeaveV1: channelLeaveV1Fn = (token: string, channelId: numbe
         `${url}:${port}/channel/leave/v2`,
         {
           json: {
-            token: token,
             channelId: channelId,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -347,9 +368,11 @@ export const channelAddOwnerV1: channelAddOwnerV1Fn = (token: string, channelId:
         `${url}:${port}/channel/addowner/v2`,
         {
           json: {
-            token: token,
             channelId: channelId,
             uId: uId,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -369,9 +392,11 @@ export const channelRemoveOwnerV1: channelRemoveOwnerV1Fn = (token: string, chan
         `${url}:${port}/channel/removeowner/v2`,
         {
           json: {
-            token: token,
             channelId: channelId,
             uId: uId,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -391,9 +416,11 @@ export const messageSendV1: messageSendV1Fn = (token: string, channelId: number,
         `${url}:${port}/message/send/v2`,
         {
           json: {
-            token: token,
             channelId: channelId,
             message: message,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -413,9 +440,11 @@ export const messageEditV1: messageEditV1Fn = (token: string, messageId: number,
         `${url}:${port}/message/edit/v2`,
         {
           json: {
-            token: token,
             messageId: messageId,
             message: message,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -435,8 +464,10 @@ export const messageRemoveV1: messageRemoveV1Fn = (token: string, messageId: num
         `${url}:${port}/message/remove/v2`,
         {
           qs: {
-            token: token,
             messageId: messageId,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -456,9 +487,11 @@ export const messageSendDmV1: messageSendDmV1Fn = (token: string, dmId: number, 
         `${url}:${port}/message/senddm/v2`,
         {
           json: {
-            token: token,
             dmId: dmId,
             message: message,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -477,8 +510,8 @@ export const usersListAllV1: usersListAllV1Fn = (token: string) => {
     'GET',
         `${url}:${port}/users/all/v2`,
         {
-          qs: {
-            token: token,
+          headers: {
+            token: token
           }
         }
   );
@@ -498,8 +531,10 @@ export const dmCreateV1: dmCreateV1Fn = (token: string, uIds: number[]) => {
         `${url}:${port}/dm/create/v2`,
         {
           json: {
-            token: token,
             uIds: uIds,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -518,8 +553,8 @@ export const dmListV1: dmListV1Fn = (token: string) => {
     'GET',
         `${url}:${port}/dm/list/v2`,
         {
-          qs: {
-            token: token,
+          headers: {
+            token: token
           }
         }
   );
@@ -539,8 +574,10 @@ export const dmRemoveV1: dmRemoveV1Fn = (token: string, dmId: number) => {
     `${url}:${port}/dm/remove/v2`,
     {
       qs: {
-        token: token,
         dmId: dmId
+      },
+      headers: {
+        token: token
       }
     }
   );
@@ -560,8 +597,10 @@ export const dmLeaveV1: dmLeaveV1Fn = (token: string, dmId: number) => {
         `${url}:${port}/dm/leave/v2`,
         {
           json: {
-            token: token,
             dmId: dmId,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -581,8 +620,10 @@ export const dmDetailsV1: dmDetailsV1Fn = (token: string, dmId: number) => {
         `${url}:${port}/dm/details/v2`,
         {
           qs: {
-            token: token,
             dmId: dmId,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -602,9 +643,11 @@ export const dmMessagesV1: dmMessagesV1Fn = (token: string, dmId: number, start:
         `${url}:${port}/dm/messages/v2`,
         {
           qs: {
-            token: token,
             dmId: dmId,
             start: start,
+          },
+          headers: {
+            token: token
           }
         }
   );
