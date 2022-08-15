@@ -4,7 +4,7 @@ import { authUserId } from './auth';
 
 test('ChannelsListallV1 userId not found', () => {
   clearV1();
-  const token = authRegisterV1('sean@gmail.com', '2737', 'Sean', 'OConnor') as authUserId;
+  const token = authRegisterV1('sean@gmail.com', '27rfvg37', 'Sean', 'OConnor') as authUserId;
   const token1 = 'hohoho';
   channelsCreateV1(token.token, 'first', true);
   const channels: channels[] = [];

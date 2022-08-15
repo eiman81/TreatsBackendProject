@@ -26,7 +26,7 @@ export type authRegisterV1Fn = (email: string, password: string, nameFirst: stri
 export const authRegisterV1: authRegisterV1Fn = (email: string, password: string, nameFirst: string, nameLast: string) => {
   const res = request(
     'POST',
-        `${url}:${port}/auth/register/v2`,
+        `${url}:${port}/auth/register/v3`,
         {
           json: {
             email: email,
@@ -49,7 +49,7 @@ export type authLoginV1Fn = (email: string, password: string) => { token: string
 export const authLoginV1: authLoginV1Fn = (email: string, password: string) => {
   const res = request(
     'POST',
-        `${url}:${port}/auth/login/v2`,
+        `${url}:${port}/auth/login/v3`,
         {
           json: {
             email: email,
@@ -70,10 +70,10 @@ export type authLogoutV1Fn = (token: string) => {} | Iter2Error;
 export const authLogoutV1: authLogoutV1Fn = (token: string) => {
   const res = request(
     'POST',
-        `${url}:${port}/auth/logout/v1`,
+        `${url}:${port}/auth/logout/v2`,
         {
-          json: {
-            token: token,
+          headers: {
+            token: token
           }
         }
   );
@@ -90,11 +90,13 @@ export type userProfileV1Fn = (token: string, uId: number) => {uId: number, name
 export const userProfileV1: userProfileV1Fn = (token: string, uId: number) => {
   const res = request(
     'GET',
-        `${url}:${port}/user/profile/v2`,
+        `${url}:${port}/user/profile/v3`,
         {
           qs: {
-            token: token,
             uId: uId,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -111,12 +113,14 @@ export type userProfileSetNameV1Fn = (token: string, nameFirst: string, nameLast
 export const userProfileSetNameV1: userProfileSetNameV1Fn = (token: string, nameFirst: string, nameLast: string) => {
   const res = request(
     'PUT',
-        `${url}:${port}/user/profile/setname/v1`,
+        `${url}:${port}/user/profile/setname/v2`,
         {
           json: {
-            token: token,
             nameFirst: nameFirst,
             nameLast: nameLast,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -133,11 +137,13 @@ export type userProfileSetEmailV1Fn = (token: string, email: string) => {} | Ite
 export const userProfileSetEmailV1: userProfileSetEmailV1Fn = (token: string, email: string) => {
   const res = request(
     'PUT',
-        `${url}:${port}/user/profile/setemail/v1`,
+        `${url}:${port}/user/profile/setemail/v2`,
         {
           json: {
-            token: token,
             email: email,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -154,11 +160,13 @@ export type userProfileSetHandleV1Fn = (token: string, handleStr: string) => {} 
 export const userProfileSetHandleV1: userProfileSetHandleV1Fn = (token: string, handleStr: string) => {
   const res = request(
     'PUT',
-        `${url}:${port}/user/profile/sethandle/v1`,
+        `${url}:${port}/user/profile/sethandle/v2`,
         {
           json: {
-            token: token,
             handleStr: handleStr,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -175,12 +183,14 @@ export type channelsCreateV1Fn = (token: string, name: string, isPublic: boolean
 export const channelsCreateV1: channelsCreateV1Fn = (token: string, name: string, isPublic: boolean) => {
   const res = request(
     'POST',
-        `${url}:${port}/channels/create/v2`,
+        `${url}:${port}/channels/create/v3`,
         {
           json: {
-            token: token,
             name: name,
             isPublic: isPublic,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -197,10 +207,10 @@ export type channelsListV1Fn = (token: string) => Array<channels> | Iter2Error;
 export const channelsListV1: channelsListV1Fn = (token: string) => {
   const res = request(
     'GET',
-        `${url}:${port}/channels/list/v2`,
+        `${url}:${port}/channels/list/v3`,
         {
-          qs: {
-            token: token,
+          headers: {
+            token: token
           }
         }
   );
@@ -217,10 +227,10 @@ export type channelsListallV1Fn = (token: string) => {channelId: number, name: s
 export const channelsListallV1: channelsListallV1Fn = (token: string) => {
   const res = request(
     'GET',
-        `${url}:${port}/channels/listall/v2`,
+        `${url}:${port}/channels/listall/v3`,
         {
-          qs: {
-            token: token,
+          headers: {
+            token: token
           }
         }
   );
@@ -237,11 +247,13 @@ export type channelDetailsV1Fn = (token: string, channelId: number) => channelde
 export const channelDetailsV1: channelDetailsV1Fn = (token: string, channelId: number) => {
   const res = request(
     'GET',
-        `${url}:${port}/channel/details/v2`,
+        `${url}:${port}/channel/details/v3`,
         {
           qs: {
-            token: token,
             channelId: channelId,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -258,11 +270,13 @@ export type channelJoinV1Fn = (token: string, channelId: number) => {} | Iter2Er
 export const channelJoinV1: channelJoinV1Fn = (token: string, channelId: number) => {
   const res = request(
     'POST',
-        `${url}:${port}/channel/join/v2`,
+        `${url}:${port}/channel/join/v3`,
         {
           json: {
-            token: token,
             channelId: channelId,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -279,13 +293,16 @@ export type channelInviteV1Fn = (token: string, channelId: number, uId: number) 
 export const channelInviteV1: channelInviteV1Fn = (token: string, channelId: number, uId: number) => {
   const res = request(
     'POST',
-        `${url}:${port}/channel/invite/v2`,
+        `${url}:${port}/channel/invite/v3`,
         {
           json: {
-            token: token,
             channelId: channelId,
             uId: uId,
+          },
+          headers: {
+            token: token
           }
+          
         }
   );
 
@@ -301,12 +318,14 @@ export type channelMessagesV1Fn = (token: string, channelId: number, start: numb
 export const channelMessagesV1: channelMessagesV1Fn = (token: string, channelId: number, start: number) => {
   const res = request(
     'GET',
-        `${url}:${port}/channel/messages/v2`,
+        `${url}:${port}/channel/messages/v3`,
         {
           qs: {
-            token: token,
             channelId: channelId,
             start: start,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -323,11 +342,13 @@ export type channelLeaveV1Fn = (token: string, channelId: number) => {} | Iter2E
 export const channelLeaveV1: channelLeaveV1Fn = (token: string, channelId: number) => {
   const res = request(
     'POST',
-        `${url}:${port}/channel/leave/v1`,
+        `${url}:${port}/channel/leave/v2`,
         {
           json: {
-            token: token,
             channelId: channelId,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -344,12 +365,14 @@ export type channelAddOwnerV1Fn = (token: string, channelId: number, uId: number
 export const channelAddOwnerV1: channelAddOwnerV1Fn = (token: string, channelId: number, uId: number) => {
   const res = request(
     'POST',
-        `${url}:${port}/channel/addowner/v1`,
+        `${url}:${port}/channel/addowner/v2`,
         {
           json: {
-            token: token,
             channelId: channelId,
             uId: uId,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -366,12 +389,14 @@ export type channelRemoveOwnerV1Fn = (token: string, channelId: number, uId: num
 export const channelRemoveOwnerV1: channelRemoveOwnerV1Fn = (token: string, channelId: number, uId: number) => {
   const res = request(
     'POST',
-        `${url}:${port}/channel/removeowner/v1`,
+        `${url}:${port}/channel/removeowner/v2`,
         {
           json: {
-            token: token,
             channelId: channelId,
             uId: uId,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -388,12 +413,14 @@ export type messageSendV1Fn = (token: string, channelId: number, message: string
 export const messageSendV1: messageSendV1Fn = (token: string, channelId: number, message: string) => {
   const res = request(
     'POST',
-        `${url}:${port}/message/send/v1`,
+        `${url}:${port}/message/send/v2`,
         {
           json: {
-            token: token,
             channelId: channelId,
             message: message,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -410,12 +437,14 @@ export type messageEditV1Fn = (token: string, messageId: number, message: string
 export const messageEditV1: messageEditV1Fn = (token: string, messageId: number, message: string) => {
   const res = request(
     'PUT',
-        `${url}:${port}/message/edit/v1`,
+        `${url}:${port}/message/edit/v2`,
         {
           json: {
-            token: token,
             messageId: messageId,
             message: message,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -432,11 +461,13 @@ export type messageRemoveV1Fn = (token: string, messageId: number) => {} | Iter2
 export const messageRemoveV1: messageRemoveV1Fn = (token: string, messageId: number) => {
   const res = request(
     'DELETE',
-        `${url}:${port}/message/remove/v1`,
+        `${url}:${port}/message/remove/v2`,
         {
           qs: {
-            token: token,
             messageId: messageId,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -453,12 +484,14 @@ export type messageSendDmV1Fn = (token: string, dmId: number, message: string) =
 export const messageSendDmV1: messageSendDmV1Fn = (token: string, dmId: number, message: string) => {
   const res = request(
     'POST',
-        `${url}:${port}/message/senddm/v1`,
+        `${url}:${port}/message/senddm/v2`,
         {
           json: {
-            token: token,
             dmId: dmId,
             message: message,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -475,10 +508,10 @@ export type usersListAllV1Fn = (token: string) => {users: userProfile[]} | Iter2
 export const usersListAllV1: usersListAllV1Fn = (token: string) => {
   const res = request(
     'GET',
-        `${url}:${port}/users/all/v1`,
+        `${url}:${port}/users/all/v2`,
         {
-          qs: {
-            token: token,
+          headers: {
+            token: token
           }
         }
   );
@@ -495,11 +528,13 @@ export type dmCreateV1Fn = (token: string, uIds: number[]) => {dmId: number} | {
 export const dmCreateV1: dmCreateV1Fn = (token: string, uIds: number[]) => {
   const res = request(
     'POST',
-        `${url}:${port}/dm/create/v1`,
+        `${url}:${port}/dm/create/v2`,
         {
           json: {
-            token: token,
             uIds: uIds,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -516,10 +551,10 @@ export type dmListV1Fn = (token: string) => {dms: dmDetails[]} | Iter2Error;
 export const dmListV1: dmListV1Fn = (token: string) => {
   const res = request(
     'GET',
-        `${url}:${port}/dm/list/v1`,
+        `${url}:${port}/dm/list/v2`,
         {
-          qs: {
-            token: token,
+          headers: {
+            token: token
           }
         }
   );
@@ -536,11 +571,13 @@ export type dmRemoveV1Fn = (token: string, dmId: number) => {} | Iter2Error;
 export const dmRemoveV1: dmRemoveV1Fn = (token: string, dmId: number) => {
   const res = request(
     'DELETE',
-    `${url}:${port}/dm/remove/v1`,
+    `${url}:${port}/dm/remove/v2`,
     {
       qs: {
-        token: token,
         dmId: dmId
+      },
+      headers: {
+        token: token
       }
     }
   );
@@ -557,11 +594,13 @@ export type dmLeaveV1Fn = (token: string, dmId: number) => {} | Iter2Error;
 export const dmLeaveV1: dmLeaveV1Fn = (token: string, dmId: number) => {
   const res = request(
     'POST',
-        `${url}:${port}/dm/leave/v1`,
+        `${url}:${port}/dm/leave/v2`,
         {
           json: {
-            token: token,
             dmId: dmId,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -578,11 +617,13 @@ export type dmDetailsV1Fn = (token: string, dmId: number) => {name: string, memb
 export const dmDetailsV1: dmDetailsV1Fn = (token: string, dmId: number) => {
   const res = request(
     'GET',
-        `${url}:${port}/dm/details/v1`,
+        `${url}:${port}/dm/details/v2`,
         {
           qs: {
-            token: token,
             dmId: dmId,
+          },
+          headers: {
+            token: token
           }
         }
   );
@@ -599,12 +640,14 @@ export type dmMessagesV1Fn = (token: string, dmId: number, start: number) => Ite
 export const dmMessagesV1: dmMessagesV1Fn = (token: string, dmId: number, start: number) => {
   const res = request(
     'GET',
-        `${url}:${port}/dm/messages/v1`,
+        `${url}:${port}/dm/messages/v2`,
         {
           qs: {
-            token: token,
             dmId: dmId,
             start: start,
+          },
+          headers: {
+            token: token
           }
         }
   );
