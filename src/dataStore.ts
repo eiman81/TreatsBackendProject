@@ -1,5 +1,6 @@
 import { updateLanguageServiceSourceFile } from 'typescript';
 import fs from 'fs';
+import crypto from 'crypto';
 
 export interface messages {
   messageId: number,
@@ -65,8 +66,8 @@ function setTokens(tokens: string[]) {
 }
 
 function tokenGenerate(): string {
-  const tokenNum = Math.random();
-  const newToken = tokenNum.toString();
+  const tokenNum = Math.random().toString();
+  const newToken = crypto.createHash('sha256').update(tokenNum + 'iter3remark').digest('hex');
   const newTokens = getTokens();
   newTokens.push(newToken);
   setTokens(newTokens);

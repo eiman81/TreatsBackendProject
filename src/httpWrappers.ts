@@ -302,7 +302,7 @@ export const channelInviteV1: channelInviteV1Fn = (token: string, channelId: num
           headers: {
             token: token
           }
-          
+
         }
   );
 
